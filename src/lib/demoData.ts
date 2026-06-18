@@ -8,13 +8,16 @@ import type { InstanceRow, VarRow } from "./exchange";
 export const DEMO_INSTANCE_ID = "demo-exchange-0007";
 export const DEMO_TASK_ID = 900007;
 
+// Opened a few hours ago so "Time open" renders a realistic duration on camera.
+const hoursAgo = (h: number): string => new Date(Date.now() - h * 3_600_000).toISOString();
+
 export const demoInstances: InstanceRow[] = [
   {
     id: DEMO_INSTANCE_ID,
     processKey: "exchange-recon",
     status: "Paused - pending approval",
     displayName: "HM Exchange - Crude settlement - Cargo 2207",
-    startedAt: "2026-06-18T09:12:00Z",
+    startedAt: hoursAgo(3.8),
   },
 ];
 
