@@ -7,6 +7,7 @@ import {
   type InstanceRow,
   type GateDecision,
 } from "../lib/exchange";
+import { fmt, timeOpen } from "../lib/format";
 
 type Var = { name?: string; value?: unknown };
 
@@ -154,21 +155,3 @@ function Stat({ label, value, tone }: { label: string; value: string; tone: "amb
   );
 }
 
-function fmt(v: unknown): string {
-  if (v == null) return "";
-  if (typeof v === "object") return JSON.stringify(v);
-  return String(v);
-}
-
-/** How long this instance has been open — the productivity signal: minutes, not hours. */
-function timeOpen(startedAt: string): string {
-  const start = new Date(startedAt).getTime();
-  if (!Number.isFinite(start)) return "—";
-  const mins = Math.floor((Date.now() - start) / 60000);
-  if (mins < 1) return "just now";
-  if (mins < 60) return `${mins}m`;
-  const hrs = Math.floor(mins / 60);
-  if (hrs < 24) return `${hrs}h ${mins % 60}m`;
-  const days = Math.floor(hrs / 24);
-  return `${days}d ${hrs % 24}h`;
-}
