@@ -41,6 +41,24 @@ analyst-to-analyst, and every hour a variance sits unresolved is $ exposure.
   **$345k / year** — softer, but the real prize. *(Label clearly; this is the
   sensitivity case, not a guarantee.)*
 
+## Grounded in published benchmarks
+
+The illustrative numbers sit inside published industry ranges, so the model holds
+even before desk actuals go in:
+
+- **~30% of finance teams' time goes to manual reconciliation** (PwC) — the labor
+  pool this attacks is large and well-documented.
+- **AI-assisted reconciliation runs ~85% faster** than manual, with **~90% of the
+  process automatable** — our ~87% per-variance reduction is *consistent with*
+  this, not optimistic.
+- Manual reconciliation's hidden costs — errors, reporting delays, analyst
+  burnout — are widely reported; the governance here (audit trail, named human
+  approver) attacks those directly.
+
+Sources: PwC via [Simplus](https://www.simplus.com/costs-manual-reconciliation/) ·
+[reconciliation automation statistics](https://resolvepay.com/blog/17-statistics-that-prove-automated-reconciliation-slashes-month-end-close) ·
+[BlackLine finance KPIs](https://www.blackline.com/blog/22-financial-kpi-metrics-for-future-ready-financial-operations/)
+
 ## Why agentic, not just RPA
 
 RPA can move data; it can't *read two mismatched statements and explain why they
