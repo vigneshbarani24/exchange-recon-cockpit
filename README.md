@@ -56,7 +56,8 @@ point, not a limitation:
 ## The engine: Maestro BPMN process
 
 The process this cockpit windows into lives in
-[`ExchangeReconBpmn/`](./ExchangeReconBpmn/) — a UiPath Maestro BPMN 2.0 process.
+[`ExchangeReconSolution/ExchangeReconBpmn/`](./ExchangeReconSolution/ExchangeReconBpmn/) —
+a UiPath Maestro BPMN 2.0 process inside a UiPath solution.
 It implements the flow above as real BPMN element classes: business-rule tasks
 (tolerance check + ledger postings), a service task that runs the variance agent
 (`Orchestrator.StartAgentJob`), and an Action Center user task for the human gate
@@ -66,7 +67,7 @@ that escalate to the desk so work never stalls.
 Validate it locally:
 
 ```bash
-uip maestro bpmn validate ExchangeReconBpmn/ExchangeReconBpmn.bpmn
+uip maestro bpmn validate ExchangeReconSolution/ExchangeReconBpmn/ExchangeReconBpmn.bpmn
 ```
 
 Build lifecycle: **author** (the `.bpmn`, done and validated) → **enrich** (the CLI
