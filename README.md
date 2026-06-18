@@ -16,8 +16,21 @@ agents, and audit trail run on the UiPath Platform; this app is the window into 
 - Lists live instances of the Exchange Recon process (polls every 8s).
 - Flags instances needing a human: faulted, paused, or pending approval.
 - Opens a variance drawer per instance: the agent's variance, confidence, and proposed
-  RightAngle correction, pulled from instance variables, plus the full variable set.
+  correction, pulled from instance variables, plus the full variable set.
 - Completes the linked Action Center task with the operator's decision.
+
+## How it flows
+
+```mermaid
+flowchart LR
+    R[Refiner statement] --> T{Tolerance check<br/>· deterministic ·}
+    C[Counterparty statement] --> T
+    T -->|within tolerance| P[(Post to ledger<br/>· deterministic ·)]
+    T -->|variance| A[Variance agent<br/>· judgment only ·<br/>explain · confidence · propose]
+    A --> H{Human gate<br/>Action Center}
+    H -->|approve| P
+    H -->|escalate| D[Trading desk]
+```
 
 ## The split that matters
 
@@ -80,6 +93,14 @@ A few shapes vary by tenant/configuration on the preview APIs. They are marked i
   Action Center task to a Maestro instance against a real task payload.
 - `decideGate` — align the `data` keys with your User task's outcome form fields.
 - `getInstanceVariables` — variable container shape is normalized defensively.
+
+## Submission checklist
+
+- [x] Build green (`npm run build`), repo clean, MIT licensed, no secrets or branding.
+- [x] Demo run-of-show written ([DEMO.md](./DEMO.md)).
+- [ ] Record the ~3-min demo — stage one instance parked at the human gate first.
+- [ ] Flip this repo public: `gh repo edit --visibility public --accept-visibility-change-consequences`.
+- [ ] Submit to AgentHack with the video link.
 
 ## License
 
