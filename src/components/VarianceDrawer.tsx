@@ -84,9 +84,10 @@ export function VarianceDrawer({
       </div>
 
       <div className="px-6 py-5 space-y-4">
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-3 gap-3">
           <Stat label="Variance" value={fmt(variance)} tone="amber" />
           <Stat label="Agent confidence" value={fmt(confidence)} tone="teal" />
+          <Stat label="Time open" value={timeOpen(instance.startedAt)} tone="ink" />
         </div>
 
         <div className="rounded-lg border border-line p-4">
@@ -143,8 +144,8 @@ export function VarianceDrawer({
   );
 }
 
-function Stat({ label, value, tone }: { label: string; value: string; tone: "amber" | "teal" }) {
-  const c = tone === "amber" ? "text-amberb" : "text-tealb";
+function Stat({ label, value, tone }: { label: string; value: string; tone: "amber" | "teal" | "ink" }) {
+  const c = tone === "amber" ? "text-amberb" : tone === "teal" ? "text-tealb" : "text-ink";
   return (
     <div className="rounded-lg border border-line p-3">
       <div className="font-mono text-[0.6rem] uppercase tracking-wide text-muted">{label}</div>
@@ -157,4 +158,17 @@ function fmt(v: unknown): string {
   if (v == null) return "";
   if (typeof v === "object") return JSON.stringify(v);
   return String(v);
+}
+
+/** How long this instance has been open — the productivity signal: minutes, not hours. */
+function timeOpen(startedAt: string): string {
+  const start = new Date(startedAt).getTime();
+  if (!Number.isFinite(start)) return "—";
+  const mins = Math.floor((Date.now() - start) / 60000);
+  if (mins < 1) return "just now";
+  if (mins < 60) return `${mins}m`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs}h ${mins % 60}m`;
+  const days = Math.floor(hrs / 24);
+  return `${days}d ${hrs % 24}h`;
 }
