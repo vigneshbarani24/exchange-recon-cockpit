@@ -11,6 +11,14 @@ agents, and audit trail run on the UiPath Platform; this app is the window into 
 
 > **Watch it:** the ~3-minute demo run-of-show is in [DEMO.md](./DEMO.md).
 
+## Business impact
+
+Settlement variances are reconciled by hand today — slow, inconsistent, and every
+unresolved hour is $ exposure. On a representative exchange desk (assumptions in
+[BUSINESS-CASE.md](./BUSINESS-CASE.md)): **~87% less time per variance**, **~560
+analyst-hours/year recovered**, and millions in settlement exposure cleared in
+minutes instead of hours — with the agent doing judgment only, never the posting.
+
 ## What it does
 
 - Lists live instances of the Exchange Recon process (polls every 8s).
@@ -54,6 +62,16 @@ point, not a limitation:
 | UiPath Data Fabric (Entities API) | open positions and counterparty statements (demo data) |
 | UiPath TypeScript SDK `@uipath/uipath-typescript` | all of the above, via modular imports |
 
+## Agent type & track
+
+**Track:** UiPath Maestro BPMN (Track 2) — a predictable, end-to-end process
+orchestrating deterministic rules, a judgment agent, and a human gate.
+
+**Agent type:** Combination. At runtime, Maestro BPMN sequences deterministic
+Business Rules, the variance (judgment) agent, and the Action Center human gate.
+The solution was **built with a coding agent** — Claude Code, through UiPath for
+Coding Agents — with verifiable evidence in [CODING-AGENTS.md](./CODING-AGENTS.md).
+
 ## Prerequisites
 
 - Node.js 18+
@@ -84,6 +102,9 @@ uip login                            # authenticate the CLI to your tenant
 
 The skills give the coding agent the domain knowledge to build, run, test, and deploy
 the Maestro process and the coded variance agent from the terminal.
+
+See [CODING-AGENTS.md](./CODING-AGENTS.md) for documented, verifiable evidence of the
+coding-agent contribution — commits, artifacts, and how to reproduce the checks.
 
 ## Preview-API seams
 
