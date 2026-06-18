@@ -11,6 +11,7 @@ import type {
 } from "@uipath/uipath-typescript/maestro-processes";
 import { services, unwrap } from "./sdk";
 import { config } from "./config";
+import { demoInstances, demoVariables, demoTask, DEMO_TASK_ID } from "./demoData";
 
 export type InstanceRow = {
   id: string;
@@ -31,22 +32,32 @@ export async function findExchangeProcess(
 
 /** Live instances for the Exchange process, newest first. */
 export async function listExchangeInstances(sdk: UiPath): Promise<InstanceRow[]> {
-  const proc = await findExchangeProcess(sdk);
-  const procKey = proc?.processKey ?? "";
+  const live = async (): Promise<InstanceRow[]> => {
+    const proc = await findExchangeProcess(sdk);
+    const procKey = proc?.processKey ?? "";
 
-  const res = await services.instances(sdk).getAll();
-  const items = unwrap<ProcessInstanceGetResponse>(res);
+    const res = await services.instances(sdk).getAll();
+    const items = unwrap<ProcessInstanceGetResponse>(res);
 
-  const rows: InstanceRow[] = items.map((r) => ({
-    id: r.instanceId,
-    processKey: r.processKey,
-    status: r.latestRunStatus,
-    displayName: r.instanceDisplayName || "Exchange instance",
-    startedAt: r.startedTime,
-  }));
+    const rows: InstanceRow[] = items.map((r) => ({
+      id: r.instanceId,
+      processKey: r.processKey,
+      status: r.latestRunStatus,
+      displayName: r.instanceDisplayName || "Exchange instance",
+      startedAt: r.startedTime,
+    }));
 
-  const scoped = procKey ? rows.filter((r) => r.processKey === procKey) : rows;
-  return scoped.sort((a, b) => (b.startedAt || "").localeCompare(a.startedAt || ""));
+    const scoped = procKey ? rows.filter((r) => r.processKey === procKey) : rows;
+    return scoped.sort((a, b) => (b.startedAt || "").localeCompare(a.startedAt || ""));
+  };
+
+  if (!config.demoFallback) return live();
+  try {
+    const rows = await live();
+    return rows.length ? rows : demoInstances;
+  } catch {
+    return demoInstances;
+  }
 }
 
 /** Instances that need a human: faulted, paused, pending, or running. */
@@ -59,8 +70,18 @@ export type VarRow = { name: string; value: unknown; source?: string };
 
 /** Variables for one instance — where the agent's variance proposal lives. */
 export async function getInstanceVariables(sdk: UiPath, instanceId: string): Promise<VarRow[]> {
-  const res = await services.instances(sdk).getVariables(instanceId, config.folderKey);
-  return (res.globalVariables ?? []).map((v) => ({ name: v.name, value: v.value, source: v.source }));
+  const live = async (): Promise<VarRow[]> => {
+    const res = await services.instances(sdk).getVariables(instanceId, config.folderKey);
+    return (res.globalVariables ?? []).map((v) => ({ name: v.name, value: v.value, source: v.source }));
+  };
+
+  if (!config.demoFallback) return live();
+  try {
+    const vars = await live();
+    return vars.length ? vars : demoVariables;
+  } catch {
+    return demoVariables;
+  }
 }
 
 /** Execution timeline for the instance detail view. */
@@ -76,19 +97,33 @@ export async function getInstanceHistory(sdk: UiPath, instanceId: string) {
  * in the task payload — confirm against a real Tasks.getAll() result and tighten.
  */
 export async function findOpenTaskForInstance(sdk: UiPath, instanceId: string) {
-  const res = await services.tasks(sdk).getAll();
-  const tasks = unwrap<Record<string, unknown>>(res);
-  return tasks.find((t) => {
-    const status = String(t.status ?? "").toLowerCase();
-    const open = status === "" || status.includes("pending") || status.includes("unassigned") || status.includes("assigned");
-    return open && JSON.stringify(t).includes(instanceId);
-  });
+  const live = async () => {
+    const res = await services.tasks(sdk).getAll();
+    const tasks = unwrap<Record<string, unknown>>(res);
+    return tasks.find((t) => {
+      const status = String(t.status ?? "").toLowerCase();
+      const open = status === "" || status.includes("pending") || status.includes("unassigned") || status.includes("assigned");
+      return open && JSON.stringify(t).includes(instanceId);
+    });
+  };
+
+  if (!config.demoFallback) return live();
+  try {
+    return (await live()) ?? demoTask;
+  } catch {
+    return demoTask;
+  }
 }
 
 export type GateDecision = "Approve" | "Escalate";
 
 /** Complete the human-gate task. `data` keys must match the User task's form fields. */
 export async function decideGate(sdk: UiPath, taskId: number, decision: GateDecision, note: string) {
+  if (config.demoFallback && taskId === DEMO_TASK_ID) {
+    // Demo short-circuit: the cached task isn't a real Action Center task, so
+    // don't call the live API. Report success so the final beat lands on camera.
+    return { demo: true, decision, note } as const;
+  }
   return services.tasks(sdk).complete(
     { taskId, data: { action: decision, reviewerNote: note } } as never,
     config.folderId,

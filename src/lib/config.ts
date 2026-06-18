@@ -29,4 +29,9 @@ export const config = {
 
   // Poll interval for the live queue (ms).
   pollMs: Number(import.meta.env.VITE_POLL_MS ?? "8000"),
+
+  // DEMO-ONLY (vb/demo/safe-mode branch). When on, live tenant calls that fail
+  // or come back empty fall back to cached data so a recording never dies
+  // mid-take. Off by default; the real tenant is always tried first.
+  demoFallback: ["1", "true"].includes((import.meta.env.VITE_DEMO_FALLBACK ?? "").toLowerCase()),
 } as const;

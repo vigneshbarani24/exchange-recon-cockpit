@@ -51,6 +51,16 @@ escalates — the agent never touches the ledger.
 - **UiPath for Coding Agents** — the automation side was built with Claude Code
   using the official `uip skills` for the platform.
 
+## Recording safety (safe-mode)
+
+If you'd rather not bet the recording on the live tenant, record from the
+`vb/demo/safe-mode` branch with `VITE_DEMO_FALLBACK=1` in `.env`. The cockpit
+always tries the real tenant first; only if a call fails or returns empty does it
+fall back to one cached, representative variance instance (cargo 2207) so the
+queue, drawer, and approve action always land. Approving the cached task is
+short-circuited — it won't hit the real API. **This branch never merges to main;**
+the live tenant is the real demo, this is just the net.
+
 ## Don't
 
 - Don't show invoice/AP/claims anything. One flow.
