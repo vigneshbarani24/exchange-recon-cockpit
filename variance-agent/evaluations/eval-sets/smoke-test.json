@@ -1,0 +1,38 @@
+{
+  "version": "1.0",
+  "id": "smoke-test",
+  "name": "Smoke Test",
+  "evaluatorRefs": ["LLMJudgeOutputEvaluator"],
+  "evaluations": [
+    {
+      "id": "temp-basis",
+      "name": "Temperature-basis variance (cargo 2207)",
+      "inputs": {
+        "refiner_statement": "Lifting ticket LT-2207: 412,580.0 bbl at observed temperature, crude exchange cargo 2207.",
+        "counterparty_statement": "Statement CP-9931: 414,000.5 bbl at 60F, crude exchange cargo 2207."
+      },
+      "evaluationCriterias": {
+        "LLMJudgeOutputEvaluator": {
+          "expectedOutput": {
+            "explanation": "The roughly 1,420 bbl variance is a temperature-basis mismatch: one statement is at observed temperature, the other at 60F. It recommends aligning both volumes to a common temperature basis."
+          }
+        }
+      }
+    },
+    {
+      "id": "demurrage",
+      "name": "Demurrage line-item variance",
+      "inputs": {
+        "refiner_statement": "Settlement SR-5512: net due $2,310,000 for 300,000 bbl exchanged, no demurrage line.",
+        "counterparty_statement": "Statement CP-5512: net due $2,355,000 for 300,000 bbl exchanged, includes $45,000 demurrage."
+      },
+      "evaluationCriterias": {
+        "LLMJudgeOutputEvaluator": {
+          "expectedOutput": {
+            "explanation": "The $45,000 variance is an unmatched demurrage charge present on the counterparty statement but missing from the refiner's. It recommends reconciling the demurrage line item."
+          }
+        }
+      }
+    }
+  ]
+}

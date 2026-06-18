@@ -1,0 +1,98 @@
+{
+    "$schema": "https://cloud.uipath.com/draft/2024-12/entry-point",
+    "$id": "entry-points.json",
+    "entryPoints": [
+        {
+            "filePath": "agent",
+            "uniqueId": "a5f8b244-0246-4fe1-8ab4-7ad20731e903",
+            "type": "agent",
+            "input": {
+                "type": "object",
+                "properties": {
+                    "refiner_statement": {
+                        "description": "The refiner's settlement statement (text or JSON) for the exchange.",
+                        "title": "Refiner Statement",
+                        "type": "string"
+                    },
+                    "counterparty_statement": {
+                        "description": "The counterparty's settlement statement for the same exchange.",
+                        "title": "Counterparty Statement",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "refiner_statement",
+                    "counterparty_statement"
+                ]
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "variance": {
+                        "description": "The quantified variance between the two statements, with units and currency, e.g. '-1,420.5 bbl (-$98,236)'.",
+                        "title": "Variance",
+                        "type": "string"
+                    },
+                    "confidence": {
+                        "description": "Confidence from 0.0 to 1.0 that the explanation and proposed correction are right. Lower it when the statements are ambiguous.",
+                        "title": "Confidence",
+                        "type": "number"
+                    },
+                    "explanation": {
+                        "description": "Plain-English explanation of WHY the two statements disagree.",
+                        "title": "Explanation",
+                        "type": "string"
+                    },
+                    "proposed_correction": {
+                        "description": "The proposed correction that would reconcile the statements. Advice only \u2014 never a posting.",
+                        "title": "Proposed Correction",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "variance",
+                    "confidence",
+                    "explanation",
+                    "proposed_correction"
+                ]
+            },
+            "graph": {
+                "nodes": [
+                    {
+                        "id": "__start__",
+                        "name": "__start__",
+                        "type": "__start__",
+                        "subgraph": null,
+                        "metadata": {}
+                    },
+                    {
+                        "id": "explain_variance",
+                        "name": "explain_variance",
+                        "type": "node",
+                        "subgraph": null,
+                        "metadata": {}
+                    },
+                    {
+                        "id": "__end__",
+                        "name": "__end__",
+                        "type": "__end__",
+                        "subgraph": null,
+                        "metadata": {}
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "__start__",
+                        "target": "explain_variance",
+                        "label": null
+                    },
+                    {
+                        "source": "explain_variance",
+                        "target": "__end__",
+                        "label": null
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -13,3 +13,11 @@ ExchangeReconSolution/*.uipx
 ExchangeReconSolution/resources/
 ExchangeReconSolution/AGENTS.md
 ExchangeReconSolution/CLAUDE.md
+
+# Coded agent (Python) build artifacts — regenerate from pyproject.toml + uv.lock.
+**/.venv/
+**/__pycache__/
+**/__uipath/
+variance-agent/out.json
+variance-agent/eval-results.json
+variance-agent/.env
