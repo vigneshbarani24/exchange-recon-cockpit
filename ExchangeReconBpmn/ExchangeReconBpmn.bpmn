@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:uipath="http://uipath.org/schema/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" exporter="UiPath Maestro (https://uipath.com)" exporterVersion="development">
+  <bpmn:process id="ExchangeSettlementReconciliation" name="Exchange Settlement Reconciliation">
+    <bpmn:extensionElements>
+      <uipath:variables version="v1" />
+      <uipath:bindings version="v1" />
+    </bpmn:extensionElements>
+    <bpmn:startEvent id="Event_start" name="Settlement pair ready">
+      <bpmn:extensionElements>
+        <uipath:entryPointId value="ec7053b7-6bb1-4617-a077-dc837ddc5e99" />
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_start_tolerance</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:businessRuleTask id="Task_Tolerance" name="Tolerance check">
+      <bpmn:incoming>Flow_start_tolerance</bpmn:incoming>
+      <bpmn:outgoing>Flow_tolerance_gateway</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:exclusiveGateway id="Gateway_Tolerance" name="Within tolerance?" default="Flow_variance">
+      <bpmn:incoming>Flow_tolerance_gateway</bpmn:incoming>
+      <bpmn:outgoing>Flow_within_tolerance</bpmn:outgoing>
+      <bpmn:outgoing>Flow_variance</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:businessRuleTask id="Task_PostAuto" name="Post to ledger">
+      <bpmn:incoming>Flow_within_tolerance</bpmn:incoming>
+      <bpmn:outgoing>Flow_postauto_end</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:endEvent id="End_AutoCleared" name="Auto-cleared">
+      <bpmn:incoming>Flow_postauto_end</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Task_Agent" name="Variance agent: explain variance">
+      <bpmn:incoming>Flow_variance</bpmn:incoming>
+      <bpmn:outgoing>Flow_agent_gate</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Task_HumanGate" name="Human gate: approve or escalate">
+      <bpmn:incoming>Flow_agent_gate</bpmn:incoming>
+      <bpmn:outgoing>Flow_gate_decision</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_Decision" name="Decision?" default="Flow_escalate">
+      <bpmn:incoming>Flow_gate_decision</bpmn:incoming>
+      <bpmn:outgoing>Flow_approve</bpmn:outgoing>
+      <bpmn:outgoing>Flow_escalate</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:businessRuleTask id="Task_PostCorrection" name="Post correction">
+      <bpmn:incoming>Flow_approve</bpmn:incoming>
+      <bpmn:outgoing>Flow_postcorr_end</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:endEvent id="End_Resolved" name="Resolved">
+      <bpmn:incoming>Flow_postcorr_end</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Task_RouteDesk" name="Route to trading desk">
+      <bpmn:incoming>Flow_escalate</bpmn:incoming>
+      <bpmn:outgoing>Flow_routedesk_end</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="End_Escalated" name="Escalated">
+      <bpmn:incoming>Flow_routedesk_end</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_start_tolerance" sourceRef="Event_start" targetRef="Task_Tolerance" />
+    <bpmn:sequenceFlow id="Flow_tolerance_gateway" sourceRef="Task_Tolerance" targetRef="Gateway_Tolerance" />
+    <bpmn:sequenceFlow id="Flow_within_tolerance" name="Within tolerance" sourceRef="Gateway_Tolerance" targetRef="Task_PostAuto" />
+    <bpmn:sequenceFlow id="Flow_variance" name="Variance" sourceRef="Gateway_Tolerance" targetRef="Task_Agent" />
+    <bpmn:sequenceFlow id="Flow_postauto_end" sourceRef="Task_PostAuto" targetRef="End_AutoCleared" />
+    <bpmn:sequenceFlow id="Flow_agent_gate" sourceRef="Task_Agent" targetRef="Task_HumanGate" />
+    <bpmn:sequenceFlow id="Flow_gate_decision" sourceRef="Task_HumanGate" targetRef="Gateway_Decision" />
+    <bpmn:sequenceFlow id="Flow_approve" name="Approve" sourceRef="Gateway_Decision" targetRef="Task_PostCorrection" />
+    <bpmn:sequenceFlow id="Flow_escalate" name="Escalate" sourceRef="Gateway_Decision" targetRef="Task_RouteDesk" />
+    <bpmn:sequenceFlow id="Flow_postcorr_end" sourceRef="Task_PostCorrection" targetRef="End_Resolved" />
+    <bpmn:sequenceFlow id="Flow_routedesk_end" sourceRef="Task_RouteDesk" targetRef="End_Escalated" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_1">
+    <bpmndi:BPMNPlane id="Plane_1" bpmnElement="ExchangeSettlementReconciliation">
+      <bpmndi:BPMNShape id="S_Event_start" bpmnElement="Event_start">
+        <dc:Bounds x="160" y="200" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_Tolerance" bpmnElement="Task_Tolerance">
+        <dc:Bounds x="250" y="178" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Gateway_Tolerance" bpmnElement="Gateway_Tolerance" isMarkerVisible="true">
+        <dc:Bounds x="410" y="193" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_PostAuto" bpmnElement="Task_PostAuto">
+        <dc:Bounds x="520" y="80" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_End_AutoCleared" bpmnElement="End_AutoCleared">
+        <dc:Bounds x="700" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_Agent" bpmnElement="Task_Agent">
+        <dc:Bounds x="520" y="300" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_HumanGate" bpmnElement="Task_HumanGate">
+        <dc:Bounds x="690" y="300" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Gateway_Decision" bpmnElement="Gateway_Decision" isMarkerVisible="true">
+        <dc:Bounds x="850" y="315" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_PostCorrection" bpmnElement="Task_PostCorrection">
+        <dc:Bounds x="960" y="300" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_End_Resolved" bpmnElement="End_Resolved">
+        <dc:Bounds x="1130" y="322" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_RouteDesk" bpmnElement="Task_RouteDesk">
+        <dc:Bounds x="960" y="440" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_End_Escalated" bpmnElement="End_Escalated">
+        <dc:Bounds x="1130" y="462" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="E_Flow_start_tolerance" bpmnElement="Flow_start_tolerance">
+        <di:waypoint x="196" y="218" />
+        <di:waypoint x="250" y="218" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_Flow_tolerance_gateway" bpmnElement="Flow_tolerance_gateway">
+        <di:waypoint x="360" y="218" />
+        <di:waypoint x="410" y="218" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_Flow_within_tolerance" bpmnElement="Flow_within_tolerance">
+        <di:waypoint x="435" y="193" />
+        <di:waypoint x="435" y="120" />
+        <di:waypoint x="520" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_Flow_variance" bpmnElement="Flow_variance">
+        <di:waypoint x="435" y="243" />
+        <di:waypoint x="435" y="340" />
+        <di:waypoint x="520" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_Flow_postauto_end" bpmnElement="Flow_postauto_end">
+        <di:waypoint x="630" y="120" />
+        <di:waypoint x="700" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_Flow_agent_gate" bpmnElement="Flow_agent_gate">
+        <di:waypoint x="630" y="340" />
+        <di:waypoint x="690" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_Flow_gate_decision" bpmnElement="Flow_gate_decision">
+        <di:waypoint x="800" y="340" />
+        <di:waypoint x="850" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_Flow_approve" bpmnElement="Flow_approve">
+        <di:waypoint x="900" y="340" />
+        <di:waypoint x="960" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_Flow_postcorr_end" bpmnElement="Flow_postcorr_end">
+        <di:waypoint x="1070" y="340" />
+        <di:waypoint x="1130" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_Flow_escalate" bpmnElement="Flow_escalate">
+        <di:waypoint x="875" y="365" />
+        <di:waypoint x="875" y="480" />
+        <di:waypoint x="960" y="480" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="E_Flow_routedesk_end" bpmnElement="Flow_routedesk_end">
+        <di:waypoint x="1070" y="480" />
+        <di:waypoint x="1130" y="480" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
