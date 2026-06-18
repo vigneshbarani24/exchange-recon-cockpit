@@ -4,8 +4,11 @@
   <bpmn:process id="ExchangeSettlementReconciliation" name="Exchange Settlement Reconciliation">
     <bpmn:extensionElements>
       <uipath:variables version="v1">
-        <uipath:inputOutput id="Var_RefinerStatement" name="refinerStatement" type="json" elementId="Event_start" />
-        <uipath:inputOutput id="Var_CounterpartyStatement" name="counterpartyStatement" type="json" elementId="Event_start" />
+        <uipath:inputOutput id="Var_RefinerVolume" name="refinerVolume" type="number" elementId="Event_start" />
+        <uipath:inputOutput id="Var_CounterpartyVolume" name="counterpartyVolume" type="number" elementId="Event_start" />
+        <uipath:inputOutput id="Var_ToleranceBbl" name="toleranceBbl" type="number" elementId="Event_start" />
+        <uipath:inputOutput id="Var_RefinerStatement" name="refinerStatement" type="string" elementId="Event_start" />
+        <uipath:inputOutput id="Var_CounterpartyStatement" name="counterpartyStatement" type="string" elementId="Event_start" />
         <uipath:inputOutput id="Var_WithinTolerance" name="withinTolerance" type="boolean" />
         <uipath:inputOutput id="Var_Variance" name="variance" type="string" />
         <uipath:inputOutput id="Var_Confidence" name="confidence" type="string" />
@@ -22,39 +25,44 @@
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_start_tolerance</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:businessRuleTask id="Task_Tolerance" name="Tolerance check">
+    <bpmn:scriptTask id="Task_Tolerance" name="Tolerance check" scriptFormat="JavaScript">
       <bpmn:extensionElements>
-        <uipath:activity version="v1">
-          <uipath:type value="Orchestrator.BusinessRules" version="v1" />
-          <uipath:context>
-            <uipath:input name="name" type="string" value="Exchange Tolerance Rule" />
-          </uipath:context>
-          <uipath:input name="JobArguments" type="json" target="bodyField"><![CDATA[{"refiner":"=vars.Var_RefinerStatement","counterparty":"=vars.Var_CounterpartyStatement"}]]></uipath:input>
-          <uipath:output name="Execute business rule [Preview]" type="Orchestrator.BusinessRules" var="Var_WithinTolerance" />
-        </uipath:activity>
+        <uipath:scriptVersion value="v3" />
+        <uipath:mapping version="v1">
+          <uipath:type value="BPMN.ScriptTask" version="v1" />
+          <uipath:input name="args" type="json" target="bodyField"><![CDATA[{"refinerVolume":"=vars.Var_RefinerVolume","counterpartyVolume":"=vars.Var_CounterpartyVolume","toleranceBbl":"=vars.Var_ToleranceBbl"}]]></uipath:input>
+          <uipath:output name="withinTolerance" type="boolean" var="Var_WithinTolerance" source="=result.response.withinTolerance" />
+          <uipath:output name="variance" type="string" var="Var_Variance" source="=result.response.variance" />
+        </uipath:mapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_start_tolerance</bpmn:incoming>
       <bpmn:outgoing>Flow_tolerance_gateway</bpmn:outgoing>
-    </bpmn:businessRuleTask>
+      <bpmn:script><![CDATA[
+var variance = counterpartyVolume - refinerVolume;
+var withinTolerance = Math.abs(variance) <= toleranceBbl;
+return { response: { withinTolerance: withinTolerance, variance: variance.toFixed(1) + " bbl" } };
+]]></bpmn:script>
+    </bpmn:scriptTask>
     <bpmn:exclusiveGateway id="Gateway_Tolerance" name="Within tolerance?" default="Flow_variance">
       <bpmn:incoming>Flow_tolerance_gateway</bpmn:incoming>
       <bpmn:outgoing>Flow_within_tolerance</bpmn:outgoing>
       <bpmn:outgoing>Flow_variance</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:businessRuleTask id="Task_PostAuto" name="Post to ledger">
+    <bpmn:scriptTask id="Task_PostAuto" name="Post to ledger" scriptFormat="JavaScript">
       <bpmn:extensionElements>
-        <uipath:activity version="v1">
-          <uipath:type value="Orchestrator.BusinessRules" version="v1" />
-          <uipath:context>
-            <uipath:input name="name" type="string" value="Ledger Posting Rule" />
-          </uipath:context>
-          <uipath:input name="JobArguments" type="json" target="bodyField"><![CDATA[{"refiner":"=vars.Var_RefinerStatement","counterparty":"=vars.Var_CounterpartyStatement"}]]></uipath:input>
-          <uipath:output name="Execute business rule [Preview]" type="Orchestrator.BusinessRules" var="Var_Outcome" />
-        </uipath:activity>
+        <uipath:scriptVersion value="v3" />
+        <uipath:mapping version="v1">
+          <uipath:type value="BPMN.ScriptTask" version="v1" />
+          <uipath:input name="args" type="json" target="bodyField"><![CDATA[{"variance":"=vars.Var_Variance"}]]></uipath:input>
+          <uipath:output name="outcome" type="string" var="Var_Outcome" source="=result.response" />
+        </uipath:mapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_within_tolerance</bpmn:incoming>
       <bpmn:outgoing>Flow_postauto_end</bpmn:outgoing>
-    </bpmn:businessRuleTask>
+      <bpmn:script><![CDATA[
+return { response: "Within tolerance. Auto-cleared and posted to ledger." };
+]]></bpmn:script>
+    </bpmn:scriptTask>
     <bpmn:endEvent id="End_AutoCleared" name="Auto-cleared">
       <bpmn:incoming>Flow_postauto_end</bpmn:incoming>
     </bpmn:endEvent>
@@ -68,7 +76,7 @@
             <uipath:input name="FolderPath" type="string" value="Shared/ExchangeRecon" />
             <uipath:input name="Name" type="string" value="Variance Agent" />
           </uipath:context>
-          <uipath:input name="JobArguments" type="json" target="bodyField"><![CDATA[{"refiner":"=vars.Var_RefinerStatement","counterparty":"=vars.Var_CounterpartyStatement"}]]></uipath:input>
+          <uipath:input name="JobArguments" type="json" target="bodyField"><![CDATA[{"refiner_statement":"=vars.Var_RefinerStatement","counterparty_statement":"=vars.Var_CounterpartyStatement"}]]></uipath:input>
           <uipath:output name="Process response" type="Orchestrator.RunJob" var="Var_Proposal" />
         </uipath:activity>
       </bpmn:extensionElements>
@@ -102,42 +110,42 @@
       <bpmn:outgoing>Flow_approve</bpmn:outgoing>
       <bpmn:outgoing>Flow_escalate</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:businessRuleTask id="Task_PostCorrection" name="Post correction">
+    <bpmn:scriptTask id="Task_PostCorrection" name="Post correction" scriptFormat="JavaScript">
       <bpmn:extensionElements>
-        <uipath:activity version="v1">
-          <uipath:type value="Orchestrator.BusinessRules" version="v1" />
-          <uipath:context>
-            <uipath:input name="name" type="string" value="Ledger Posting Rule" />
-          </uipath:context>
-          <uipath:input name="JobArguments" type="json" target="bodyField"><![CDATA[{"proposal":"=vars.Var_Proposal","reviewerNote":"=vars.Var_ReviewerNote"}]]></uipath:input>
-          <uipath:output name="Execute business rule [Preview]" type="Orchestrator.BusinessRules" var="Var_Outcome" />
-        </uipath:activity>
+        <uipath:scriptVersion value="v3" />
+        <uipath:mapping version="v1">
+          <uipath:type value="BPMN.ScriptTask" version="v1" />
+          <uipath:input name="args" type="json" target="bodyField"><![CDATA[{"reviewerNote":"=vars.Var_ReviewerNote"}]]></uipath:input>
+          <uipath:output name="outcome" type="string" var="Var_Outcome" source="=result.response" />
+        </uipath:mapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_approve</bpmn:incoming>
       <bpmn:outgoing>Flow_postcorr_end</bpmn:outgoing>
-    </bpmn:businessRuleTask>
+      <bpmn:script><![CDATA[
+var note = reviewerNote ? " Reviewer note: " + reviewerNote : "";
+return { response: "Correction approved by a human and posted to ledger." + note };
+]]></bpmn:script>
+    </bpmn:scriptTask>
     <bpmn:endEvent id="End_Resolved" name="Resolved">
       <bpmn:incoming>Flow_postcorr_end</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:serviceTask id="Task_RouteDesk" name="Route to trading desk">
+    <bpmn:scriptTask id="Task_RouteDesk" name="Route to trading desk" scriptFormat="JavaScript">
       <bpmn:extensionElements>
-        <uipath:activity version="v1">
-          <uipath:type value="Orchestrator.StartJob" version="v1" />
-          <uipath:context>
-            <uipath:input name="ReleaseKey" type="string" value="PROCESS_KEY_GUID" />
-            <uipath:input name="FolderKey" type="string" value="FOLDER_KEY_GUID" />
-            <uipath:input name="FolderPath" type="string" value="Shared/ExchangeRecon" />
-            <uipath:input name="Name" type="string" value="Notify Trading Desk" />
-          </uipath:context>
-          <uipath:input name="JobArguments" type="json" target="bodyField"><![CDATA[{"variance":"=vars.Var_Variance","proposal":"=vars.Var_Proposal","note":"=vars.Var_ReviewerNote"}]]></uipath:input>
-          <uipath:output name="Process response" type="Orchestrator.RunJob" var="Var_Outcome" />
-        </uipath:activity>
+        <uipath:scriptVersion value="v3" />
+        <uipath:mapping version="v1">
+          <uipath:type value="BPMN.ScriptTask" version="v1" />
+          <uipath:input name="args" type="json" target="bodyField"><![CDATA[{"variance":"=vars.Var_Variance"}]]></uipath:input>
+          <uipath:output name="outcome" type="string" var="Var_Outcome" source="=result.response" />
+        </uipath:mapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_escalate</bpmn:incoming>
       <bpmn:incoming>Flow_agent_error</bpmn:incoming>
       <bpmn:incoming>Flow_gate_timeout</bpmn:incoming>
       <bpmn:outgoing>Flow_routedesk_end</bpmn:outgoing>
-    </bpmn:serviceTask>
+      <bpmn:script><![CDATA[
+return { response: "Escalated to the trading desk for manual handling." };
+]]></bpmn:script>
+    </bpmn:scriptTask>
     <bpmn:endEvent id="End_Escalated" name="Escalated">
       <bpmn:incoming>Flow_routedesk_end</bpmn:incoming>
     </bpmn:endEvent>
