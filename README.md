@@ -9,6 +9,8 @@ leaving the app.
 This is the human-in-the-loop surface for the agentic process. The orchestration,
 agents, and audit trail run on the UiPath Platform; this app is the window into them.
 
+> **Watch it:** the ~3-minute demo run-of-show is in [DEMO.md](./DEMO.md).
+
 ## What it does
 
 - Lists live instances of the Exchange Recon process (polls every 8s).
@@ -16,6 +18,19 @@ agents, and audit trail run on the UiPath Platform; this app is the window into 
 - Opens a variance drawer per instance: the agent's variance, confidence, and proposed
   RightAngle correction, pulled from instance variables, plus the full variable set.
 - Completes the linked Action Center task with the operator's decision.
+
+## The split that matters
+
+The design keeps three kinds of work strictly separate — that separation is the
+point, not a limitation:
+
+- **Deterministic** (Business Rule / RPA): the tolerance check and the ledger
+  posting. Reconciliation math is never an LLM.
+- **Agent** (judgment only): reads two mismatched statements, explains the
+  variance, scores its confidence, proposes a correction. It never posts and
+  never moves money.
+- **Human** (authority): approves the correction or escalates to the trading
+  desk. This cockpit is where that decision happens.
 
 ## UiPath components used
 
