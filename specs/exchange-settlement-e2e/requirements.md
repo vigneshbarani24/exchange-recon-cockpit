@@ -2,7 +2,7 @@
 
 EARS notation. A UiPath Maestro BPMN process orchestrating multiple coded agents over
 **live SAP S/4HANA Cloud** purchase-order data, reached through the **SAP Cloud VB MCP**
-(`API_PURCHASEORDER_PROCESS_SRV` on system `my405139`).
+(`API_PURCHASEORDER_PROCESS_SRV` on the connected S/4HANA Cloud system).
 
 > Domain note: the connected S/4 exposes Business Partner, Purchase Order (rich, writable),
 > and Product — **no Finance/G/L**. So the process is grounded in **procurement**: reconcile

@@ -5,7 +5,7 @@
 Extend the proven governed-agency reconciliation into an end-to-end **Procure-to-Pay PO
 reconciliation**: a Maestro BPMN process orchestrating **three coded agents** over **live
 S/4HANA** purchase-order data reached through the **SAP Cloud VB MCP** (BTP CF, EU10 →
-S/4 `my405139`, service `API_PURCHASEORDER_PROCESS_SRV`). Keeps the proven spine
+the connected S/4HANA Cloud system, service `API_PURCHASEORDER_PROCESS_SRV`). Keeps the proven spine
 (tolerance gateway → variance agent → human gate) and extends it with an MCP-driven PO read
 at the front and a governed PO write-back at the back.
 

@@ -20,7 +20,7 @@ git status -sb | head -1
 echo "==> Secret / client-data scan (must be empty)"
 bad="$(git ls-files | grep -iE '\.docx$|\.pdf$|\.xlsx$|^\.env$|\.nupkg$' || true)"
 if [ -n "$bad" ]; then echo "  ! tracked sensitive files:"; echo "$bad"; exit 1; fi
-git grep -IlE 'KaarTech|Motiva|Accenture|RightAngle' -- . ':!scripts/go-public.sh' && {
+git grep -IlE 'Employer|ClientName|InternalProduct' -- . ':!scripts/go-public.sh' && {
   echo "  ! employer/client term found in tracked files — clean before publishing"; exit 1; } || true
 echo "  ok — nothing sensitive tracked"
 
