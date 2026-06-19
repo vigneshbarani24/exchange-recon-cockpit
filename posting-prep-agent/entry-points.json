@@ -1,0 +1,140 @@
+{
+    "$schema": "https://cloud.uipath.com/draft/2024-12/entry-point",
+    "$id": "entry-points.json",
+    "entryPoints": [
+        {
+            "filePath": "agent",
+            "uniqueId": "6852461c-d074-4f24-b083-ce05f9cdc00f",
+            "type": "agent",
+            "input": {
+                "type": "object",
+                "properties": {
+                    "purchase_order": {
+                        "description": "The S/4 purchase order number, e.g. '4500000021'.",
+                        "title": "Purchase Order",
+                        "type": "string"
+                    },
+                    "po_item": {
+                        "description": "The PO item number to correct, e.g. '20'.",
+                        "title": "Po Item",
+                        "type": "string"
+                    },
+                    "approved_action": {
+                        "description": "The human-APPROVED correction in plain English, e.g. 'Accept the over-delivery; update the PO order quantity to 6'.",
+                        "title": "Approved Action",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "purchase_order",
+                    "po_item",
+                    "approved_action"
+                ]
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "purchase_order": {
+                        "title": "Purchase Order",
+                        "type": "string"
+                    },
+                    "po_item": {
+                        "title": "Po Item",
+                        "type": "string"
+                    },
+                    "update_entity": {
+                        "description": "The S/4 OData entity to update (A_PurchaseOrderItemType).",
+                        "title": "Update Entity",
+                        "type": "string"
+                    },
+                    "field_updates": {
+                        "description": "The field(s) to change, each with its current and new value. The row keys are PurchaseOrder=purchase_order and PurchaseOrderItem=po_item.",
+                        "items": {
+                            "properties": {
+                                "field": {
+                                    "description": "S/4 field name, e.g. 'OrderQuantity' or 'NetPriceAmount'.",
+                                    "title": "Field",
+                                    "type": "string"
+                                },
+                                "current_value": {
+                                    "description": "Current S/4 value (read via MCP), for the audit trail.",
+                                    "title": "Current Value",
+                                    "type": "string"
+                                },
+                                "new_value": {
+                                    "description": "The new value to write.",
+                                    "title": "New Value",
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "field",
+                                "current_value",
+                                "new_value"
+                            ],
+                            "title": "FieldUpdate",
+                            "type": "object"
+                        },
+                        "title": "Field Updates",
+                        "type": "array"
+                    },
+                    "human_summary": {
+                        "description": "One line a buyer can read: what will change, from what to what.",
+                        "title": "Human Summary",
+                        "type": "string"
+                    },
+                    "ready_to_post": {
+                        "description": "True only if the update is well-formed and safe to hand to the deterministic post step.",
+                        "title": "Ready To Post",
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "purchase_order",
+                    "po_item",
+                    "update_entity",
+                    "field_updates",
+                    "human_summary",
+                    "ready_to_post"
+                ]
+            },
+            "graph": {
+                "nodes": [
+                    {
+                        "id": "__start__",
+                        "name": "__start__",
+                        "type": "__start__",
+                        "subgraph": null,
+                        "metadata": {}
+                    },
+                    {
+                        "id": "prepare",
+                        "name": "prepare",
+                        "type": "node",
+                        "subgraph": null,
+                        "metadata": {}
+                    },
+                    {
+                        "id": "__end__",
+                        "name": "__end__",
+                        "type": "__end__",
+                        "subgraph": null,
+                        "metadata": {}
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "__start__",
+                        "target": "prepare",
+                        "label": null
+                    },
+                    {
+                        "source": "prepare",
+                        "target": "__end__",
+                        "label": null
+                    }
+                ]
+            }
+        }
+    ]
+}

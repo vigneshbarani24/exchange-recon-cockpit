@@ -4,26 +4,20 @@
     "entryPoints": [
         {
             "filePath": "agent",
-            "uniqueId": "56254ed9-e3b1-44d6-96dc-6b9c721ce37c",
+            "uniqueId": "a52808f6-f14c-465b-b430-4fa71ca9f184",
             "type": "agent",
             "input": {
                 "type": "object",
                 "properties": {
                     "purchase_order": {
-                        "description": "The S/4 purchase order number to reconcile, e.g. '4500000021'.",
+                        "description": "The S/4 purchase order number, e.g. '4500000021'.",
                         "title": "Purchase Order",
                         "type": "string"
                     },
                     "supplier_document": {
-                        "description": "The inbound supplier order-confirmation / invoice for this PO (text or JSON): per-line material, quantity, unit price, currency.",
+                        "description": "The inbound supplier order-confirmation / invoice (text or JSON): per-line material/description, quantity, unit price, currency.",
                         "title": "Supplier Document",
                         "type": "string"
-                    },
-                    "tolerance_pct": {
-                        "default": 2.0,
-                        "description": "Per-line price/quantity tolerance in percent; within this a line is treated as matched.",
-                        "title": "Tolerance Pct",
-                        "type": "number"
                     }
                 },
                 "required": [
@@ -38,22 +32,12 @@
                         "title": "Purchase Order",
                         "type": "string"
                     },
-                    "overall_status": {
-                        "description": "within-tolerance | variance-found | error",
-                        "title": "Overall Status",
-                        "type": "string"
-                    },
                     "summary": {
-                        "description": "One-line summary of the reconciliation outcome.",
+                        "description": "One-line summary of the matching result.",
                         "title": "Summary",
                         "type": "string"
                     },
-                    "confidence": {
-                        "description": "0.0\u20131.0 confidence in the reconciliation; lower it when ambiguous.",
-                        "title": "Confidence",
-                        "type": "number"
-                    },
-                    "line_variances": {
+                    "matched_lines": {
                         "items": {
                             "properties": {
                                 "po_item": {
@@ -73,12 +57,12 @@
                                     "title": "Po Quantity",
                                     "type": "string"
                                 },
-                                "supplier_quantity": {
-                                    "title": "Supplier Quantity",
-                                    "type": "string"
-                                },
                                 "po_unit_price": {
                                     "title": "Po Unit Price",
+                                    "type": "string"
+                                },
+                                "supplier_quantity": {
+                                    "title": "Supplier Quantity",
                                     "type": "string"
                                 },
                                 "supplier_unit_price": {
@@ -89,25 +73,15 @@
                                     "title": "Currency",
                                     "type": "string"
                                 },
-                                "variance_category": {
-                                    "description": "One of: price-variance, quantity-variance, uom-mismatch, material-mismatch, currency-mismatch, tax-variance, missing-line, duplicate-line, over-delivery, under-delivery, none.",
-                                    "title": "Variance Category",
+                                "match_basis": {
+                                    "description": "How the supplier line was matched to the PO item (e.g. 'material' or 'description').",
+                                    "title": "Match Basis",
                                     "type": "string"
                                 },
-                                "variance_amount": {
-                                    "description": "The quantified line variance with currency, e.g. '+\u00a3125.00'.",
-                                    "title": "Variance Amount",
-                                    "type": "string"
-                                },
-                                "explanation": {
-                                    "description": "Plain-English reason the line disagrees.",
-                                    "title": "Explanation",
-                                    "type": "string"
-                                },
-                                "proposed_correction": {
-                                    "description": "Recommended PO-item correction for a human buyer to APPROVE before any write \u2014 never a write itself.",
-                                    "title": "Proposed Correction",
-                                    "type": "string"
+                                "match_confidence": {
+                                    "description": "0.0\u20131.0 confidence in this line match.",
+                                    "title": "Match Confidence",
+                                    "type": "number"
                                 }
                             },
                             "required": [
@@ -115,28 +89,42 @@
                                 "material",
                                 "description",
                                 "po_quantity",
-                                "supplier_quantity",
                                 "po_unit_price",
+                                "supplier_quantity",
                                 "supplier_unit_price",
                                 "currency",
-                                "variance_category",
-                                "variance_amount",
-                                "explanation",
-                                "proposed_correction"
+                                "match_basis",
+                                "match_confidence"
                             ],
-                            "title": "LineVariance",
+                            "title": "MatchedLine",
                             "type": "object"
                         },
-                        "title": "Line Variances",
+                        "title": "Matched Lines",
+                        "type": "array"
+                    },
+                    "unmatched_supplier_lines": {
+                        "description": "Supplier lines with no corresponding PO item.",
+                        "items": {
+                            "type": "string"
+                        },
+                        "title": "Unmatched Supplier Lines",
+                        "type": "array"
+                    },
+                    "unmatched_po_items": {
+                        "description": "PO items not referenced by the supplier document.",
+                        "items": {
+                            "type": "string"
+                        },
+                        "title": "Unmatched Po Items",
                         "type": "array"
                     }
                 },
                 "required": [
                     "purchase_order",
-                    "overall_status",
                     "summary",
-                    "confidence",
-                    "line_variances"
+                    "matched_lines",
+                    "unmatched_supplier_lines",
+                    "unmatched_po_items"
                 ]
             },
             "graph": {
@@ -149,8 +137,8 @@
                         "metadata": {}
                     },
                     {
-                        "id": "reconcile",
-                        "name": "reconcile",
+                        "id": "match",
+                        "name": "match",
                         "type": "node",
                         "subgraph": null,
                         "metadata": {}
@@ -166,11 +154,11 @@
                 "edges": [
                     {
                         "source": "__start__",
-                        "target": "reconcile",
+                        "target": "match",
                         "label": null
                     },
                     {
-                        "source": "reconcile",
+                        "source": "match",
                         "target": "__end__",
                         "label": null
                     }

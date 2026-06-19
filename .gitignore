@@ -35,3 +35,10 @@ variance-agent/.env
 **/__uipath/
 matching-agent/out.json
 posting-prep-agent/out.json
+
+# UiPath agent scratch / auth / regenerable scaffolding
+**/.uipath/
+**/.claude/
+**/agent.mermaid
+**/AGENTS.md
+**/CLAUDE.md
