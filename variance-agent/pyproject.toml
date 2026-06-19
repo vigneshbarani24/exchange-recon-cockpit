@@ -1,10 +1,11 @@
 [project]
 name = "variance-agent"
-version = "0.0.2"
+version = "0.0.4"
 description = "variance-agent"
 authors = [{ name = "Vignesh Barani Sivakumar" }]
 dependencies = [
     "uipath-langchain[bedrock,vertex]>=0.10.0, <0.11.0",
+    "langchain-mcp-adapters>=0.1.0",
 ]
 requires-python = ">=3.11"
 

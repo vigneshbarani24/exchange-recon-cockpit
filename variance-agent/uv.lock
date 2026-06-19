@@ -3911,9 +3911,10 @@ wheels = [
 
 [[package]]
 name = "variance-agent"
-version = "0.0.2"
+version = "0.0.4"
 source = { virtual = "." }
 dependencies = [
+    { name = "langchain-mcp-adapters" },
     { name = "uipath-langchain", extra = ["bedrock", "vertex"] },
 ]
 
@@ -3923,7 +3924,10 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "uipath-langchain", extras = ["bedrock", "vertex"], specifier = ">=0.10.0,<0.11.0" }]
+requires-dist = [
+    { name = "langchain-mcp-adapters", specifier = ">=0.1.0" },
+    { name = "uipath-langchain", extras = ["bedrock", "vertex"], specifier = ">=0.10.0,<0.11.0" },
+]
 
 [package.metadata.requires-dev]
 dev = [{ name = "uipath-dev", specifier = ">=0.0.79" }]

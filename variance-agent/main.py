@@ -1,89 +1,132 @@
-from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
 from langgraph.graph import START, StateGraph, END
 from uipath_langchain.chat import UiPathAzureChatOpenAI
 from pydantic import BaseModel, Field
 
+from mcp_client import get_sap_tools
+
+# The S/4 OData service + entity the agent reconciles against (real, via MCP).
+PO_SERVICE = "API_PURCHASEORDER_PROCESS_SRV"
+PO_ITEM_ENTITY = "A_PurchaseOrderItemType"
+
 
 class GraphInput(BaseModel):
-    refiner_statement: str = Field(
-        description="Our own position/exchange report for the contract (text or JSON) — "
-        "generated from the trade/ETRM system."
+    purchase_order: str = Field(
+        description="The S/4 purchase order number to reconcile, e.g. '4500000021'."
     )
-    counterparty_statement: str = Field(
-        description="The counterparty's exchange statement for the same contract period."
+    supplier_document: str = Field(
+        description="The inbound supplier order-confirmation / invoice for this PO (text "
+        "or JSON): per-line material, quantity, unit price, currency."
+    )
+    tolerance_pct: float = Field(
+        default=2.0,
+        description="Per-line price/quantity tolerance in percent; within this a line is "
+        "treated as matched.",
+    )
+
+
+class LineVariance(BaseModel):
+    po_item: str = Field(description="PO item number, e.g. '10'.")
+    material: str
+    description: str
+    po_quantity: str
+    supplier_quantity: str
+    po_unit_price: str
+    supplier_unit_price: str
+    currency: str
+    variance_category: str = Field(
+        description="One of: price-variance, quantity-variance, uom-mismatch, "
+        "material-mismatch, currency-mismatch, tax-variance, missing-line, "
+        "duplicate-line, over-delivery, under-delivery, none."
+    )
+    variance_amount: str = Field(
+        description="The quantified line variance with currency, e.g. '+£125.00'."
+    )
+    explanation: str = Field(description="Plain-English reason the line disagrees.")
+    proposed_correction: str = Field(
+        description="Recommended PO-item correction for a human buyer to APPROVE before "
+        "any write — never a write itself."
     )
 
 
 class GraphOutput(BaseModel):
-    variance: str = Field(
-        description="The quantified variance between the two statements, with units and "
-        "currency, e.g. '-1,420.5 bbl (-$98,236)'."
+    purchase_order: str
+    overall_status: str = Field(
+        description="within-tolerance | variance-found | error"
     )
-    variance_category: str = Field(
-        description="The single best-fit category for the root cause. One of: "
-        "temperature-basis, volume-rounding, grade-differential, delivery-point, "
-        "timing-cutoff, demurrage, pricing-formula, missing-line-item, "
-        "duplicate-line-item, fx-conversion, other."
-    )
+    summary: str = Field(description="One-line summary of the reconciliation outcome.")
     confidence: float = Field(
-        description="Confidence from 0.0 to 1.0 that the explanation and proposed "
-        "correction are right. Lower it when the statements are ambiguous."
+        description="0.0–1.0 confidence in the reconciliation; lower it when ambiguous."
     )
-    explanation: str = Field(
-        description="Plain-English explanation of WHY the two statements disagree."
-    )
-    proposed_correction: str = Field(
-        description="The adjustment that would reconcile the statements, written as a "
-        "recommendation for a human to approve before any posting — never a posting itself."
-    )
+    line_variances: list[LineVariance]
 
 
-SYSTEM_PROMPT = """You are an exchange settlement reconciliation analyst for hydrocarbon
-exchange contracts.
+SYSTEM_PROMPT = f"""You are a procure-to-pay reconciliation analyst. You reconcile an inbound
+supplier order-confirmation / invoice against the buyer's REAL purchase order in SAP S/4HANA.
 
-For an exchange contract, two statements describe the same movements: our own position
-report (from the trade system) and the counterparty's exchange statement. When they
-disagree beyond tolerance, you reconcile them. Your job is judgment, not posting:
+You have SAP OData MCP tools. To read the real PO lines, call `execute-entity-operation` with:
+  serviceId    = "{PO_SERVICE}"
+  entityName   = "{PO_ITEM_ENTITY}"
+  operation    = "read"
+  queryOptions = {{"$filter": "PurchaseOrder eq '<PO>'", "$select": "PurchaseOrder,PurchaseOrderItem,Material,PurchaseOrderItemText,OrderQuantity,PurchaseOrderQuantityUnit,NetPriceAmount,NetPriceQuantity,DocumentCurrency"}}
 
-- Read both statements and identify the variance. Quantify it with units and currency.
-- Classify the most likely root cause. Common categories in exchange reconciliation:
-  * temperature-basis  — volumes quoted at 60F vs observed temperature
-  * volume-rounding     — net-vs-gross or rounding differences
-  * grade-differential  — different crude/product grade or quality-bank adjustment
-  * delivery-point      — different terminal / location / pipeline cycle
-  * timing-cutoff       — a movement booked in a different period / month-end cutoff
-  * demurrage           — a demurrage or detention charge on one side only
-  * pricing-formula      — different price basis, differential, or settlement formula
-  * missing-line-item   — a ticket/movement present on one statement, absent on the other
-  * duplicate-line-item — a movement counted twice
-  * fx-conversion       — currency conversion difference
-- Explain in plain English WHY they disagree.
-- Score your confidence from 0.0 to 1.0.
-- Propose the adjustment that would reconcile them, written for a human reviewer to
-  APPROVE before anything is posted.
+Then, for each PO line, find the matching supplier line (by material / description) and compare
+quantity and unit price (NetPriceAmount per NetPriceQuantity). Classify each line:
+  price-variance, quantity-variance, uom-mismatch, material-mismatch, currency-mismatch,
+  tax-variance, missing-line (present on one side only), duplicate-line, over-delivery,
+  under-delivery. A line within the tolerance percent is category "none".
 
-Hard rule: you NEVER post a correction and you NEVER move money. You only reconcile,
-explain, and recommend. A human approves your proposed correction or escalates it to
-the trading desk; only then does a deterministic step post the adjustment. If the
-statements are too ambiguous to explain with confidence, say so plainly and lower your
-confidence score rather than guessing."""
+Hard rule: you NEVER write to SAP and you NEVER post a correction. You only read, reconcile,
+explain, and recommend a correction for a human buyer to approve. If you cannot read the PO,
+set overall_status to "error" and explain why."""
 
 
-async def explain_variance(state: GraphInput) -> GraphOutput:
-    # Lazy LLM init inside the node (module-level clients break `uip codedagent init`).
-    llm = UiPathAzureChatOpenAI(model="gpt-4o-2024-11-20", temperature=0.2)
+async def reconcile(state: GraphInput) -> GraphOutput:
+    # Lazy init inside the node (module-level clients break `uip codedagent init`).
+    tools = await get_sap_tools()
+    tools_by_name = {t.name: t for t in tools}
+    llm = UiPathAzureChatOpenAI(model="gpt-4o-2024-11-20", temperature=0.1)
+    llm_with_tools = llm.bind_tools(tools)
+
+    messages = [
+        SystemMessage(SYSTEM_PROMPT),
+        HumanMessage(
+            f"Purchase order: {state.purchase_order}\n"
+            f"Tolerance: {state.tolerance_pct}%\n\n"
+            f"Supplier document:\n{state.supplier_document}"
+        ),
+    ]
+
+    # Bounded tool-calling loop: let the agent pull the real PO via MCP, then reason.
+    for _ in range(6):
+        ai = await llm_with_tools.ainvoke(messages)
+        messages.append(ai)
+        if not getattr(ai, "tool_calls", None):
+            break
+        for call in ai.tool_calls:
+            tool = tools_by_name.get(call["name"])
+            try:
+                result = (
+                    await tool.ainvoke(call["args"])
+                    if tool
+                    else f"Unknown tool {call['name']}"
+                )
+            except Exception as exc:  # surface to the model, don't crash the graph
+                result = f"Tool error: {exc}"
+            messages.append(
+                ToolMessage(content=str(result)[:8000], tool_call_id=call["id"])
+            )
+
     structured = llm.with_structured_output(GraphOutput)
-    user = (
-        f"Our position report:\n{state.refiner_statement}\n\n"
-        f"Counterparty statement:\n{state.counterparty_statement}"
+    final = await structured.ainvoke(
+        messages + [HumanMessage("Now produce the structured reconciliation result.")]
     )
-    raw = await structured.ainvoke([SystemMessage(SYSTEM_PROMPT), HumanMessage(user)])
-    return GraphOutput.model_validate(raw)
+    return GraphOutput.model_validate(final)
 
 
 builder = StateGraph(GraphInput, output=GraphOutput)
-builder.add_node("explain_variance", explain_variance)
-builder.add_edge(START, "explain_variance")
-builder.add_edge("explain_variance", END)
+builder.add_node("reconcile", reconcile)
+builder.add_edge(START, "reconcile")
+builder.add_edge("reconcile", END)
 
 graph = builder.compile()
