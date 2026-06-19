@@ -4,18 +4,18 @@
     "entryPoints": [
         {
             "filePath": "agent",
-            "uniqueId": "a5f8b244-0246-4fe1-8ab4-7ad20731e903",
+            "uniqueId": "c7f9de45-4f5d-48c7-be9e-9608cee830e7",
             "type": "agent",
             "input": {
                 "type": "object",
                 "properties": {
                     "refiner_statement": {
-                        "description": "The refiner's settlement statement (text or JSON) for the exchange.",
+                        "description": "Our own position/exchange report for the contract (text or JSON) \u2014 generated from the trade/ETRM system.",
                         "title": "Refiner Statement",
                         "type": "string"
                     },
                     "counterparty_statement": {
-                        "description": "The counterparty's settlement statement for the same exchange.",
+                        "description": "The counterparty's exchange statement for the same contract period.",
                         "title": "Counterparty Statement",
                         "type": "string"
                     }
@@ -33,6 +33,11 @@
                         "title": "Variance",
                         "type": "string"
                     },
+                    "variance_category": {
+                        "description": "The single best-fit category for the root cause. One of: temperature-basis, volume-rounding, grade-differential, delivery-point, timing-cutoff, demurrage, pricing-formula, missing-line-item, duplicate-line-item, fx-conversion, other.",
+                        "title": "Variance Category",
+                        "type": "string"
+                    },
                     "confidence": {
                         "description": "Confidence from 0.0 to 1.0 that the explanation and proposed correction are right. Lower it when the statements are ambiguous.",
                         "title": "Confidence",
@@ -44,13 +49,14 @@
                         "type": "string"
                     },
                     "proposed_correction": {
-                        "description": "The proposed correction that would reconcile the statements. Advice only \u2014 never a posting.",
+                        "description": "The adjustment that would reconcile the statements, written as a recommendation for a human to approve before any posting \u2014 never a posting itself.",
                         "title": "Proposed Correction",
                         "type": "string"
                     }
                 },
                 "required": [
                     "variance",
+                    "variance_category",
                     "confidence",
                     "explanation",
                     "proposed_correction"

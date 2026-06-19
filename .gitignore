@@ -21,3 +21,9 @@ ExchangeReconSolution/CLAUDE.md
 variance-agent/out.json
 variance-agent/eval-results.json
 variance-agent/.env
+
+# Client documents — NEVER commit. Reference/inspiration only, kept out of the public repo.
+*.docx
+*.doc
+*.pdf
+*.xlsx
