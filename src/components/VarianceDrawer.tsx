@@ -72,6 +72,7 @@ export function VarianceDrawer({
   const variance = pick("variance");
   const confidence = pick("confidence");
   const proposal = pick("proposal") ?? pick("correction");
+  const category = fmt(pick("category"));
 
   return (
     <aside className="fixed inset-y-0 right-0 w-[420px] max-w-[92vw] bg-canvas2 border-l border-teal overflow-y-auto z-50 shadow-2xl">
@@ -92,7 +93,14 @@ export function VarianceDrawer({
         </div>
 
         <div className="rounded-lg border border-line p-4">
-          <div className="font-mono text-[0.65rem] uppercase tracking-wide text-muted mb-2">Agent proposal</div>
+          <div className="flex items-center justify-between mb-2">
+            <div className="font-mono text-[0.65rem] uppercase tracking-wide text-muted">Agent proposal</div>
+            {category && (
+              <span className="font-mono text-[0.6rem] uppercase tracking-wide px-2 py-0.5 rounded border border-teal/40 text-tealb">
+                {category}
+              </span>
+            )}
+          </div>
           <div className="text-sm leading-relaxed">{fmt(proposal) || "No proposal field on this instance."}</div>
         </div>
 
