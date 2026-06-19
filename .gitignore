@@ -15,6 +15,7 @@ ExchangeReconSolution/AGENTS.md
 ExchangeReconSolution/CLAUDE.md
 
 # Coded agent (Python) build artifacts — regenerate from pyproject.toml + uv.lock.
+**/*.nupkg
 **/.venv/
 **/__pycache__/
 **/__uipath/
