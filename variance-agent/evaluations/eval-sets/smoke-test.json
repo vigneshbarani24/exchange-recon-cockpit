@@ -5,46 +5,35 @@
   "evaluatorRefs": ["LLMJudgeOutputEvaluator"],
   "evaluations": [
     {
-      "id": "temp-basis",
-      "name": "Temperature-basis variance",
+      "id": "price-and-qty-variance",
+      "name": "Price variance + over-delivery (PO 4500000021)",
       "inputs": {
-        "refiner_statement": "Position report cargo 2207: 412,580.0 bbl at observed temperature, exchange contract EX-118.",
-        "counterparty_statement": "Counterparty statement CP-9931: 414,000.5 bbl at 60F, exchange contract EX-118."
+        "purchase_order": "4500000021",
+        "supplier_document": "Supplier invoice INV-88231, ref PO 4500000021, GBP. Line 1: Material RM27 (Packaging Box) 50 PC at 27.50 per ea. Line 2: Material RM16 6 PC at 2.00 per ea.",
+        "tolerance_pct": 2.0
       },
       "evaluationCriterias": {
         "LLMJudgeOutputEvaluator": {
           "expectedOutput": {
-            "explanation": "The roughly 1,420 bbl variance is a temperature-basis mismatch: one statement is at observed temperature, the other at 60F. It recommends aligning both volumes to a common temperature basis, for human approval before posting."
+            "overall_status": "variance-found",
+            "summary": "Item 10 (RM27) is a price-variance: the supplier billed 27.50 versus the PO 25.00 (+10%). Item 20 (RM16) is a quantity over-delivery: 6 invoiced versus 5 ordered. Both are flagged with a proposed correction for a human to approve before any posting; the agent reads the PO from S/4 and never posts."
           }
         }
       }
     },
     {
-      "id": "demurrage",
-      "name": "Demurrage charge on one side only",
+      "id": "within-tolerance",
+      "name": "Within tolerance (PO 4500000021, matching invoice)",
       "inputs": {
-        "refiner_statement": "Position report EX-204: net settlement $2,310,000 for 300,000 bbl exchanged, no demurrage line.",
-        "counterparty_statement": "Counterparty statement EX-204: net settlement $2,355,000, includes a $45,000 demurrage charge."
+        "purchase_order": "4500000021",
+        "supplier_document": "Supplier invoice INV-90010, ref PO 4500000021, GBP. Line 1: Material RM27 50 PC at 25.00 per ea. Line 2: Material RM16 5 PC at 2.00 per ea.",
+        "tolerance_pct": 2.0
       },
       "evaluationCriterias": {
         "LLMJudgeOutputEvaluator": {
           "expectedOutput": {
-            "explanation": "The $45,000 variance is a demurrage charge present on the counterparty statement but missing from our position report. It recommends reconciling the demurrage line, for human approval before posting."
-          }
-        }
-      }
-    },
-    {
-      "id": "missing-ticket",
-      "name": "Missing movement / line item",
-      "inputs": {
-        "refiner_statement": "Position report EX-311: two deliveries totalling 180,000 bbl at terminal A for the May cycle.",
-        "counterparty_statement": "Counterparty statement EX-311: three deliveries totalling 240,000 bbl at terminal A for the May cycle."
-      },
-      "evaluationCriterias": {
-        "LLMJudgeOutputEvaluator": {
-          "expectedOutput": {
-            "explanation": "The 60,000 bbl variance is a missing line item: the counterparty shows a third delivery our position report does not. It recommends locating the missing ticket and reconciling, for human approval before posting."
+            "overall_status": "within-tolerance",
+            "summary": "Both invoice lines match the PO on quantity and unit price within tolerance; no correction needed."
           }
         }
       }
