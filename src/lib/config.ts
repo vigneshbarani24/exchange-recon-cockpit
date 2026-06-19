@@ -3,7 +3,12 @@
 
 function need(key: string): string {
   const v = import.meta.env[key as keyof ImportMetaEnv] as string | undefined;
-  if (!v) throw new Error(`Missing env var ${key}. Copy .env.example to .env and fill it in.`);
+  if (!v) {
+    // Don't crash at import — the self-contained Reconciliation demo needs no tenant
+    // config. The live-tenant view surfaces the missing value when the operator connects.
+    console.warn(`Missing env var ${key} — set it in .env for the live tenant view.`);
+    return "";
+  }
   return v;
 }
 

@@ -5,10 +5,10 @@ export function Header({ count }: { count: number }) {
         <div>
           <div className="flex items-center gap-2 font-disp font-bold text-[1.05rem]">
             <span className="inline-block h-2.5 w-2.5 rotate-45 rounded-[2px] bg-tealb" />
-            Exchange Recon · Ops Cockpit
+            P2P Reconciliation · Agent Cockpit
           </div>
           <div className="mt-1 font-mono text-[0.7rem] tracking-[0.18em] uppercase text-muted">
-            Maestro · HM Exchange · live instances
+            Maestro · SAP S/4HANA · via MCP
           </div>
         </div>
         <div className="font-mono text-xs text-muted">
