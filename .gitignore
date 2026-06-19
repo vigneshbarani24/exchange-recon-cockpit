@@ -28,3 +28,10 @@ variance-agent/.env
 *.doc
 *.pdf
 *.xlsx
+
+**/.env
+**/.venv/
+**/__pycache__/
+**/__uipath/
+matching-agent/out.json
+posting-prep-agent/out.json
