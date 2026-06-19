@@ -6,3 +6,25 @@ dist
 .DS_Store
 *.tsbuildinfo
 .agent/
+
+# UiPath solution: local cloud-binding state — keeps the tenant SolutionId out of the repo.
+# The portable BPMN source under ExchangeReconSolution/ExchangeReconBpmn/ IS committed.
+ExchangeReconSolution/*.uipx
+ExchangeReconSolution/resources/
+ExchangeReconSolution/AGENTS.md
+ExchangeReconSolution/CLAUDE.md
+
+# Coded agent (Python) build artifacts — regenerate from pyproject.toml + uv.lock.
+**/*.nupkg
+**/.venv/
+**/__pycache__/
+**/__uipath/
+variance-agent/out.json
+variance-agent/eval-results.json
+variance-agent/.env
+
+# Client documents — NEVER commit. Reference/inspiration only, kept out of the public repo.
+*.docx
+*.doc
+*.pdf
+*.xlsx

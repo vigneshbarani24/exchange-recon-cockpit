@@ -1,0 +1,104 @@
+{
+    "$schema": "https://cloud.uipath.com/draft/2024-12/entry-point",
+    "$id": "entry-points.json",
+    "entryPoints": [
+        {
+            "filePath": "agent",
+            "uniqueId": "c7f9de45-4f5d-48c7-be9e-9608cee830e7",
+            "type": "agent",
+            "input": {
+                "type": "object",
+                "properties": {
+                    "refiner_statement": {
+                        "description": "Our own position/exchange report for the contract (text or JSON) \u2014 generated from the trade/ETRM system.",
+                        "title": "Refiner Statement",
+                        "type": "string"
+                    },
+                    "counterparty_statement": {
+                        "description": "The counterparty's exchange statement for the same contract period.",
+                        "title": "Counterparty Statement",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "refiner_statement",
+                    "counterparty_statement"
+                ]
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "variance": {
+                        "description": "The quantified variance between the two statements, with units and currency, e.g. '-1,420.5 bbl (-$98,236)'.",
+                        "title": "Variance",
+                        "type": "string"
+                    },
+                    "variance_category": {
+                        "description": "The single best-fit category for the root cause. One of: temperature-basis, volume-rounding, grade-differential, delivery-point, timing-cutoff, demurrage, pricing-formula, missing-line-item, duplicate-line-item, fx-conversion, other.",
+                        "title": "Variance Category",
+                        "type": "string"
+                    },
+                    "confidence": {
+                        "description": "Confidence from 0.0 to 1.0 that the explanation and proposed correction are right. Lower it when the statements are ambiguous.",
+                        "title": "Confidence",
+                        "type": "number"
+                    },
+                    "explanation": {
+                        "description": "Plain-English explanation of WHY the two statements disagree.",
+                        "title": "Explanation",
+                        "type": "string"
+                    },
+                    "proposed_correction": {
+                        "description": "The adjustment that would reconcile the statements, written as a recommendation for a human to approve before any posting \u2014 never a posting itself.",
+                        "title": "Proposed Correction",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "variance",
+                    "variance_category",
+                    "confidence",
+                    "explanation",
+                    "proposed_correction"
+                ]
+            },
+            "graph": {
+                "nodes": [
+                    {
+                        "id": "__start__",
+                        "name": "__start__",
+                        "type": "__start__",
+                        "subgraph": null,
+                        "metadata": {}
+                    },
+                    {
+                        "id": "explain_variance",
+                        "name": "explain_variance",
+                        "type": "node",
+                        "subgraph": null,
+                        "metadata": {}
+                    },
+                    {
+                        "id": "__end__",
+                        "name": "__end__",
+                        "type": "__end__",
+                        "subgraph": null,
+                        "metadata": {}
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "__start__",
+                        "target": "explain_variance",
+                        "label": null
+                    },
+                    {
+                        "source": "explain_variance",
+                        "target": "__end__",
+                        "label": null
+                    }
+                ]
+            }
+        }
+    ]
+}

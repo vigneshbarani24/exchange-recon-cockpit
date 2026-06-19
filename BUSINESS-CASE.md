@@ -67,6 +67,24 @@ never moves money** — deterministic rules do the math and the ledger write, th
 human authorizes. That governance is what makes it adoptable in a finance
 function: speed *with* control, not speed *instead of* control.
 
+## This mirrors a real enterprise control
+
+Exchange reconciliation is a documented, manual back-office process in hydrocarbon
+trading operations. The control sequence is well established:
+
+1. Generate the position report from the trade system.
+2. Receive the counterparty's exchange statement.
+3. **Reconcile the two and identify variances / adjustments.** ← the agent's judgment
+4. **Identify the correction.** ← the agent's proposal
+5. **A human approves the correction before it is posted.** ← the human gate
+6. Post the approved adjustment to the ledger. ← deterministic, only after approval
+
+Steps 3–4 are exactly what the variance agent does; step 5 — *approval before
+posting* — is a real, mandatory control, not a design nicety. Our governed-agency
+split isn't invented to look responsible; it reproduces how this work is actually
+governed today, which is precisely why it's adoptable: it automates the judgment
+without removing the control.
+
 ## Adoption & scale
 
 - **Scales by adding counterparties / products**, not by adding headcount — the

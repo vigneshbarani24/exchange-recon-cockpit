@@ -53,6 +53,29 @@ point, not a limitation:
 - **Human** (authority): approves the correction or escalates to the trading
   desk. This cockpit is where that decision happens.
 
+## The engine: Maestro BPMN process
+
+The process this cockpit windows into lives in
+[`ExchangeReconSolution/ExchangeReconBpmn/`](./ExchangeReconSolution/ExchangeReconBpmn/) —
+a UiPath Maestro BPMN 2.0 process inside a UiPath solution.
+It implements the flow above as real BPMN element classes: business-rule tasks
+(tolerance check + ledger postings), a service task that runs the variance agent
+(`Orchestrator.StartAgentJob`), and an Action Center user task for the human gate
+— plus resilience paths (an agent-failure error boundary and a 24h gate-timeout)
+that escalate to the desk so work never stalls.
+
+Validate it locally:
+
+```bash
+uip maestro bpmn validate ExchangeReconSolution/ExchangeReconBpmn/ExchangeReconBpmn.bpmn
+```
+
+Build lifecycle: **author** (the `.bpmn`, done and validated) → **enrich** (the CLI
+binds the real agent / business-rule / RPA resources for the tenant) → **pack** →
+**publish** to Automation Cloud → **run**, where each settlement becomes a Maestro
+instance that pauses at the human gate. The instances, variables, and tasks this
+cockpit reads are produced by that process running.
+
 ## UiPath components used
 
 | Component | Used for |

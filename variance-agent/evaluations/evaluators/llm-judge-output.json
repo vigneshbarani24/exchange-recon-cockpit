@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "id": "LLMJudgeOutputEvaluator",
+  "evaluatorTypeId": "uipath-llm-judge-output-semantic-similarity",
+  "evaluatorConfig": {
+    "name": "LLMJudgeOutputEvaluator",
+    "model": "gpt-4o-2024-11-20",
+    "defaultEvaluationCriteria": {
+      "expectedOutput": {
+        "explanation": "A correct, on-topic explanation of why the two settlement statements disagree."
+      }
+    }
+  }
+}

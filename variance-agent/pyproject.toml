@@ -1,0 +1,14 @@
+[project]
+name = "variance-agent"
+version = "0.0.2"
+description = "variance-agent"
+authors = [{ name = "Vignesh Barani Sivakumar" }]
+dependencies = [
+    "uipath-langchain[bedrock,vertex]>=0.10.0, <0.11.0",
+]
+requires-python = ">=3.11"
+
+[dependency-groups]
+dev = [
+    "uipath-dev>=0.0.79",
+]
