@@ -23,19 +23,20 @@ export const demoInstances: InstanceRow[] = [
 
 export const demoVariables: VarRow[] = [
   { name: "variance", value: "-1,420.50 bbl (-$98,236)", source: "deterministic" },
-  { name: "confidence", value: "0.86", source: "agent" },
+  { name: "variance_category", value: "temperature-basis", source: "agent" },
+  { name: "confidence", value: "0.95", source: "agent" },
   {
     name: "proposal",
     value:
-      "Counterparty bills 1,420.5 bbl more than our lifting ticket. The gap matches " +
-      "a temperature-basis mismatch on cargo 2207: their B/L volume is quoted at 60F, " +
-      "ours at observed temperature. Recommend posting a +1,420.5 bbl temperature " +
-      "correction so both statements align; net settlement then resolves to $98,236 " +
-      "in our favour.",
+      "Counterparty bills 1,420.5 bbl more than our position report. The gap is a " +
+      "temperature-basis mismatch on exchange contract EX-118: their B/L volume is " +
+      "quoted at 60F, ours at observed temperature. Recommend aligning both to 60F " +
+      "(a +1,420.5 bbl correction); net settlement then resolves to $98,236 in our " +
+      "favour. Submitted for human approval before posting.",
     source: "agent",
   },
-  { name: "statementRefiner", value: "LT-2207 | 412,580.0 bbl @ observed temp", source: "deterministic" },
-  { name: "statementCounterparty", value: "CP-9931 | 414,000.5 bbl @ 60F", source: "deterministic" },
+  { name: "positionReport", value: "LT-2207 | 412,580.0 bbl @ observed temp", source: "deterministic" },
+  { name: "counterpartyStatement", value: "CP-9931 | 414,000.5 bbl @ 60F", source: "deterministic" },
   { name: "toleranceBbl", value: "250", source: "deterministic" },
 ];
 
