@@ -4,7 +4,7 @@
     "entryPoints": [
         {
             "filePath": "agent",
-            "uniqueId": "56254ed9-e3b1-44d6-96dc-6b9c721ce37c",
+            "uniqueId": "e01536bc-edbb-4e8f-a9c1-2ee064584d77",
             "type": "agent",
             "input": {
                 "type": "object",
@@ -129,6 +129,60 @@
                         },
                         "title": "Line Variances",
                         "type": "array"
+                    },
+                    "prepared_corrections": {
+                        "description": "For each line with a variance, the S/4 update that would correct it \u2014 prepared, never posted. The deterministic step posts only after human approval.",
+                        "items": {
+                            "properties": {
+                                "po_item": {
+                                    "title": "Po Item",
+                                    "type": "string"
+                                },
+                                "entity": {
+                                    "description": "The S/4 OData entity to update (A_PurchaseOrderItem).",
+                                    "title": "Entity",
+                                    "type": "string"
+                                },
+                                "field": {
+                                    "description": "The S/4 field to change: OrderQuantity for a quantity correction, NetPriceAmount for a price correction.",
+                                    "title": "Field",
+                                    "type": "string"
+                                },
+                                "current_value": {
+                                    "description": "The current S/4 value (read from the PO).",
+                                    "title": "Current Value",
+                                    "type": "string"
+                                },
+                                "new_value": {
+                                    "description": "The value that resolves the variance.",
+                                    "title": "New Value",
+                                    "type": "string"
+                                },
+                                "summary": {
+                                    "description": "One line a buyer reads: what changes, from/to.",
+                                    "title": "Summary",
+                                    "type": "string"
+                                },
+                                "ready_to_post": {
+                                    "description": "True if well-formed and safe to hand to the deterministic post step.",
+                                    "title": "Ready To Post",
+                                    "type": "boolean"
+                                }
+                            },
+                            "required": [
+                                "po_item",
+                                "entity",
+                                "field",
+                                "current_value",
+                                "new_value",
+                                "summary",
+                                "ready_to_post"
+                            ],
+                            "title": "PreparedCorrection",
+                            "type": "object"
+                        },
+                        "title": "Prepared Corrections",
+                        "type": "array"
                     }
                 },
                 "required": [
@@ -136,7 +190,8 @@
                     "overall_status",
                     "summary",
                     "confidence",
-                    "line_variances"
+                    "line_variances",
+                    "prepared_corrections"
                 ]
             },
             "graph": {
