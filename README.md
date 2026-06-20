@@ -114,6 +114,15 @@ uv run uipath run agent -f input.json     # pulls the real PO over MCP and recon
 
 `input.json` is a purchase-order number + a supplier document. See each agent's `.env.example`.
 
+## Live on UiPath Orchestrator
+
+The agent is deployed to UiPath Orchestrator and runs as a **live cloud job** against live
+SAP — it reads its SAP connection from Orchestrator **assets** (no secret in code) and
+reconciles a real purchase order over MCP. Within the workspace's single-process license,
+the deployed agent runs the **full pipeline in one job** (pull → match → classify → propose →
+prepare the S/4 correction, held for human approval); the three agents above are separately
+deployable and composed by the Maestro BPMN where Agent runtime capacity allows.
+
 ## Built with a coding agent
 
 The automation was built with **Claude Code** using the official UiPath agent skills:
