@@ -1,6 +1,6 @@
 [project]
 name = "variance-agent"
-version = "0.0.4"
+version = "0.0.5"
 description = "variance-agent"
 authors = [{ name = "Vignesh Barani Sivakumar" }]
 dependencies = [
