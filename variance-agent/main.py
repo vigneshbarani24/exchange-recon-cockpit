@@ -49,6 +49,21 @@ class LineVariance(BaseModel):
     )
 
 
+class PreparedCorrection(BaseModel):
+    po_item: str
+    entity: str = Field(description="The S/4 OData entity to update (A_PurchaseOrderItem).")
+    field: str = Field(
+        description="The S/4 field to change: OrderQuantity for a quantity correction, "
+        "NetPriceAmount for a price correction."
+    )
+    current_value: str = Field(description="The current S/4 value (read from the PO).")
+    new_value: str = Field(description="The value that resolves the variance.")
+    summary: str = Field(description="One line a buyer reads: what changes, from/to.")
+    ready_to_post: bool = Field(
+        description="True if well-formed and safe to hand to the deterministic post step."
+    )
+
+
 class GraphOutput(BaseModel):
     purchase_order: str
     overall_status: str = Field(
@@ -59,26 +74,34 @@ class GraphOutput(BaseModel):
         description="0.0–1.0 confidence in the reconciliation; lower it when ambiguous."
     )
     line_variances: list[LineVariance]
+    prepared_corrections: list[PreparedCorrection] = Field(
+        description="For each line with a variance, the S/4 update that would correct it — "
+        "prepared, never posted. The deterministic step posts only after human approval."
+    )
 
 
-SYSTEM_PROMPT = f"""You are a procure-to-pay reconciliation analyst. You reconcile an inbound
-supplier order-confirmation / invoice against the buyer's REAL purchase order in SAP S/4HANA.
+SYSTEM_PROMPT = f"""You are a procure-to-pay reconciliation agent. In one pass you run the whole
+governed pipeline against the buyer's REAL purchase order in SAP S/4HANA:
 
-You have SAP OData MCP tools. To read the real PO lines, call `execute-entity-operation` with:
-  serviceId    = "{PO_SERVICE}"
-  entityName   = "{PO_ITEM_ENTITY}"
-  operation    = "read"
-  queryOptions = {{"$filter": "PurchaseOrder eq '<PO>'", "$select": "PurchaseOrder,PurchaseOrderItem,Material,PurchaseOrderItemText,OrderQuantity,PurchaseOrderQuantityUnit,NetPriceAmount,NetPriceQuantity,DocumentCurrency"}}
+1. RETRIEVE — read the real PO lines from S/4. Call `execute-entity-operation`:
+   serviceId    = "{PO_SERVICE}"
+   entityName   = "{PO_ITEM_ENTITY}"
+   operation    = "read"
+   queryOptions = {{"$filter": "PurchaseOrder eq '<PO>'", "$select": "PurchaseOrder,PurchaseOrderItem,Material,PurchaseOrderItemText,OrderQuantity,PurchaseOrderQuantityUnit,NetPriceAmount,NetPriceQuantity,DocumentCurrency"}}
+2. MATCH — align each supplier line to the best PO item by material / description.
+3. CLASSIFY — for each matched line compare quantity and unit price (NetPriceAmount per
+   NetPriceQuantity) and classify the variance: price-variance, quantity-variance,
+   uom-mismatch, material-mismatch, currency-mismatch, tax-variance, missing-line,
+   duplicate-line, over-delivery, under-delivery. Within the tolerance percent → "none".
+4. PROPOSE — write a plain-English proposed correction for each variance line.
+5. PREPARE — for each variance line, prepare the concrete S/4 update that would resolve it
+   (`prepared_corrections`): the A_PurchaseOrderItem field (OrderQuantity for a quantity
+   issue, NetPriceAmount for a price issue), the current value (from the PO you read), and
+   the new value. This is PREPARED, not posted.
 
-Then, for each PO line, find the matching supplier line (by material / description) and compare
-quantity and unit price (NetPriceAmount per NetPriceQuantity). Classify each line:
-  price-variance, quantity-variance, uom-mismatch, material-mismatch, currency-mismatch,
-  tax-variance, missing-line (present on one side only), duplicate-line, over-delivery,
-  under-delivery. A line within the tolerance percent is category "none".
-
-Hard rule: you NEVER write to SAP and you NEVER post a correction. You only read, reconcile,
-explain, and recommend a correction for a human buyer to approve. If you cannot read the PO,
-set overall_status to "error" and explain why."""
+Hard rule: you NEVER write to SAP and you NEVER post. You read, reconcile, explain, and
+PREPARE; a human buyer approves, and only then does a deterministic step post the update.
+If you cannot read the PO, set overall_status to "error" and explain."""
 
 
 async def reconcile(state: GraphInput) -> GraphOutput:
@@ -97,7 +120,7 @@ async def reconcile(state: GraphInput) -> GraphOutput:
         ),
     ]
 
-    # Bounded tool-calling loop: let the agent pull the real PO via MCP, then reason.
+    # Bounded tool-calling loop: the agent pulls the real PO via MCP, then runs the pipeline.
     for _ in range(6):
         ai = await llm_with_tools.ainvoke(messages)
         messages.append(ai)
@@ -119,7 +142,8 @@ async def reconcile(state: GraphInput) -> GraphOutput:
 
     structured = llm.with_structured_output(GraphOutput)
     final = await structured.ainvoke(
-        messages + [HumanMessage("Now produce the structured reconciliation result.")]
+        messages
+        + [HumanMessage("Now produce the structured reconciliation, including prepared_corrections.")]
     )
     return GraphOutput.model_validate(final)
 
