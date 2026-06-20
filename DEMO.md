@@ -12,32 +12,45 @@ tolerance check flags it, an agent explains *why* the invoice and the PO disagre
 and proposes a correction, and a human approves or escalates — the agent reads
 S/4HANA but never writes to it.
 
+## The headline proof (lead with this)
+
+The agent is **deployed and running live on UiPath Orchestrator** as a cloud job,
+wired to real SAP S/4HANA Cloud. A real Orchestrator job pulled PO **4500000021**
+over MCP, classified the variances (price-variance, over-delivery), and prepared
+the `A_PurchaseOrderItem` correction payloads — NetPriceAmount 25.00 → 27.50,
+OrderQuantity 5 → 6 — then **held for human approval**. It reads its SAP config
+from Orchestrator assets; no secrets in code. This is not a mock and not a local
+script: it's a cloud job that reached into the system of record.
+
+The tell that it's live: the agent is handed **only the supplier's numbers**, yet
+reports the **PO** side correctly. The only way it knows the PO is to fetch it
+from S/4 at runtime.
+
 ## Pre-flight (before you hit record)
 
 - [ ] `.env` filled in and pointing at the live tenant + the SAP MCP server;
       `npm run dev` is up on `http://localhost:5173`.
-- [ ] One Maestro instance is **parked at the human gate** (paused / pending
-      approval) with the variance agent's proposal already written to its
-      variables. This is your money shot — stage it deliberately.
-- [ ] A second instance visible in a different status (running / completed) so
-      the queue doesn't look like a single hard-coded row.
+- [ ] The variance proposal staged in the cockpit drawer — the agent's output
+      (discrepancy, classification, confidence, proposed `A_PurchaseOrderItem`
+      correction) ready to open. This is your money shot — stage it deliberately.
+- [ ] The Orchestrator job's output (or its trace) reachable in a second tab, so
+      you can show the cloud job that produced the proposal against live S/4.
 - [ ] Browser zoom ~110%, window sized so the drawer and queue both fit.
-- [ ] Action Center open in a second tab (optional) to show the task actually
-      completing on the platform side.
-- [ ] If you want proof it's live: have the real PO (e.g. item 10: 50 PC @ 25.00
-      GBP) ready to point at. The agent was handed only the supplier's numbers and
-      still reported the PO side right — because it fetched it from S/4 at runtime.
+- [ ] If you want proof it's live: have the real PO (PO 4500000021 — e.g. unit
+      price 25.00 GBP, order quantity 5) ready to point at. The agent was handed
+      only the supplier's numbers and still reported the PO side right — because it
+      fetched it from S/4 at runtime.
 
 ## Beat sheet
 
 | Time | On screen | Say (roughly) |
 | --- | --- | --- |
 | 0:00–0:20 | The supplier invoice next to the SAP PO line items | "A supplier just invoiced us. The quantity and price don't match the purchase order in SAP. Someone has to work out why — against the live system of record — before AP pays. Today that's manual." |
-| 0:20–0:40 | The cockpit — live instance queue, `N awaiting review` | "This is the operations cockpit. It reads live Maestro instances. One is paused, waiting on a human." |
-| 0:40–1:25 | Open the **variance drawer** — the discrepancy, agent confidence, agent proposal | "Here's the agent's work. It pulled the real PO from S/4HANA over MCP, aligned the supplier's lines to the PO items by material, found the variance, classified it — price-variance, over-delivery, material-mismatch — scored its own confidence, and proposed a correction. That's judgment, not math." |
-| 1:25–2:00 | Expand **All variables** | "And it's real Maestro state, not a mock — these are the instance variables the agent wrote, and they include the *PO* side it fetched from SAP at runtime. The tolerance check and the write-back are deterministic; the agent only reads and explains." |
-| 2:00–2:35 | Type a note, click **Approve correction** (or **Escalate to buyer**) | "The human decides. Approve clears the Action Center gate; escalate routes it to the buyer. Either way, a person — not the agent — authorizes the correction." |
-| 2:35–3:00 | Queue refreshes on the next poll; (optional) the completed task in Action Center | "The gate clears, the instance resumes, the posting-prep agent builds the precise PO-item update payload, and the deterministic write-back runs — only after approval. One flow, end to end: deterministic check, agent judgment, human authority — kept separate on purpose." |
+| 0:20–0:40 | The cockpit — the variance queue, `N awaiting review` | "This is the operations cockpit. It surfaces the agent's work waiting on a human decision." |
+| 0:40–1:25 | Open the **variance drawer** — the discrepancy, agent confidence, agent proposal | "Here's the agent's work — produced by a job running live on UiPath Orchestrator against real SAP S/4HANA. It pulled the real PO from S/4 over MCP, aligned the supplier's lines to the PO items by material, found the variance, classified it — price-variance, over-delivery, material-mismatch — scored its own confidence, and proposed a correction. That's judgment, not math." |
+| 1:25–2:00 | Expand **All variables** / point at the Orchestrator job output | "And it's live, not a mock — the agent was given only the supplier's numbers, yet it reports the *PO* side: net price 25.00, order quantity 5. It could only have those by fetching the PO from S/4 at runtime. The tolerance check and the write-back are deterministic; the agent only reads and explains." |
+| 2:00–2:35 | Type a note, click **Approve correction** (or **Escalate to buyer**) | "The human decides. Approve authorizes the prepared correction; escalate routes it to the buyer. Either way, a person — not the agent — authorizes the write-back." |
+| 2:35–3:00 | The prepared `A_PurchaseOrderItem` correction payload | "The write-back is prepared and held — NetPriceAmount 25.00 → 27.50, OrderQuantity 5 → 6 — and a deterministic step posts it only after a human approves. Nothing is posted on camera; the agents are read-only by design. One pipeline: deterministic check, agent judgment, human authority — kept separate on purpose." |
 
 ## The line that wins the room
 
@@ -47,18 +60,33 @@ S/4HANA but never writes to it.
 
 ## Platform surface area (name these on camera or in the description)
 
-- **UiPath Maestro** — the BPMN process and its live instances.
+- **UiPath Orchestrator** — the agent is deployed here and runs as a live cloud
+  job against real SAP S/4HANA; SAP config comes from Orchestrator assets, not
+  code.
+- **UiPath Maestro** — the 3-agent procurement BPMN, authored and validated
+  (`uip maestro bpmn validate`). Each agent is separately deployable and composed
+  in the BPMN.
 - **UiPath Coded Agents (LangGraph)** — the three judgment/retrieval agents.
 - **Model Context Protocol (MCP)** — the agents' live, read-only link to SAP
   S/4HANA OData (a SAP BTP-hosted MCP server).
-- **Action Center** — the human approval gate (Tasks API `complete`).
-- **UiPath TypeScript SDK** — the cockpit talks to all of the above.
+- **Action Center** — the human approval gate.
+- **UiPath TypeScript SDK** — the cockpit talks to the platform.
 - **UiPath for Coding Agents** — the automation side was built with Claude Code
   using the official `uip skills` for the platform.
+
+> Honest framing for Q&A: under the workspace's single-process license, the live
+> Orchestrator deployment runs the full pipeline in **one** agent. The three
+> agents are separately deployable and are composed in the validated Maestro BPMN
+> — which is authored and passes `uip maestro bpmn validate`, but was not run as a
+> live multi-agent instance end-to-end for this procurement flow.
 
 ## Don't
 
 - Don't show settlement/trading/claims anything. One flow: invoice vs PO.
 - Don't imply the agent writes to SAP or pays the invoice. It reads and explains;
-  the human authorizes; the deterministic write-back updates the PO item.
+  the write-back is **prepared and held**; a human authorizes; only then would a
+  deterministic step post the PO-item correction.
+- Don't claim the Maestro instance ran end-to-end or "resumed" — the live proof
+  is the Orchestrator job against S/4; the BPMN is authored and validated, not run
+  live for procurement.
 - Don't read variable JSON aloud — point at the proposal, keep the pace.
