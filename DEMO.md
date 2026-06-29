@@ -19,8 +19,8 @@ wired to real SAP S/4HANA Cloud. A real Orchestrator job pulled PO **4500000021*
 over MCP, classified the variances (price-variance, over-delivery), and prepared
 the `A_PurchaseOrderItem` correction payloads — NetPriceAmount 25.00 → 27.50,
 OrderQuantity 5 → 6 — then **held for human approval**. It reads its SAP config
-from Orchestrator assets; no secrets in code. This is not a mock and not a local
-script: it's a cloud job that reached into the system of record.
+from Orchestrator assets; no secrets in code. Not a mock, not a local
+script — a cloud job that reached into the system of record.
 
 The tell that it's live: the agent is handed **only the supplier's numbers**, yet
 reports the **PO** side correctly. The only way it knows the PO is to fetch it
@@ -63,9 +63,10 @@ from S/4 at runtime.
 - **UiPath Orchestrator** — the agent is deployed here and runs as a live cloud
   job against real SAP S/4HANA; SAP config comes from Orchestrator assets, not
   code.
-- **UiPath Maestro** — the 3-agent procurement BPMN, authored and validated
-  (`uip maestro bpmn validate`). Each agent is separately deployable and composed
-  in the BPMN.
+- **UiPath Maestro** — the 3-agent procurement BPMN: built, validated, and
+  deployed live to the tenant, where an instance launches. The full 3-agent run
+  does not complete (no allocated agent runtime). Each agent is separately
+  deployable and composed in the BPMN.
 - **UiPath Coded Agents (LangGraph)** — the three judgment/retrieval agents.
 - **Model Context Protocol (MCP)** — the agents' live, read-only link to SAP
   S/4HANA OData (a SAP BTP-hosted MCP server).
@@ -76,9 +77,10 @@ from S/4 at runtime.
 
 > Honest framing for Q&A: under the workspace's single-process license, the live
 > Orchestrator deployment runs the full pipeline in **one** agent. The three
-> agents are separately deployable and are composed in the validated Maestro BPMN
-> — which is authored and passes `uip maestro bpmn validate`, but was not run as a
-> live multi-agent instance end-to-end for this procurement flow.
+> agents are separately deployable and composed in the Maestro BPMN — built,
+> validated, and deployed live to the tenant, where an instance launches, but not
+> run as a live multi-agent instance end-to-end for this procurement flow (no
+> allocated agent runtime).
 
 ## Don't
 
@@ -87,6 +89,7 @@ from S/4 at runtime.
   the write-back is **prepared and held**; a human authorizes; only then would a
   deterministic step post the PO-item correction.
 - Don't claim the Maestro instance ran end-to-end or "resumed" — the live proof
-  is the Orchestrator job against S/4; the BPMN is authored and validated, not run
-  live for procurement.
+  is the Orchestrator job against S/4; the BPMN is built, validated, and deployed,
+  and an instance launches, but the full 3-agent run never completed for
+  procurement.
 - Don't read variable JSON aloud — point at the proposal, keep the pace.

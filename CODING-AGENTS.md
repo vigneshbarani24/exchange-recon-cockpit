@@ -47,7 +47,7 @@ reporting PO values it could only have fetched from S/4.
 | Evidence | Commit / artifact | Verify by |
 | --- | --- | --- |
 | **Deployed and running live on UiPath Orchestrator** — the agent runs as a cloud job against real SAP S/4HANA Cloud, pulling PO 4500000021 over MCP, classifying variances, and preparing the `A_PurchaseOrderItem` corrections (NetPriceAmount 25.00 → 27.50, OrderQuantity 5 → 6), held for human approval. SAP config from **Orchestrator assets**, not code. | the deployed Orchestrator job + its output / trace | trigger the job; its output reports the real PO side, not the input |
-| **Maestro BPMN (3-agent procurement flow) — authored and validates** — the deterministic tolerance check, the three judgment agents, and the human gate, modelled as a BPMN. Not run as a live multi-agent instance end-to-end for procurement; the live proof is the Orchestrator job above. | the `.bpmn` and Maestro project files | `uip maestro bpmn validate` passes |
+| **Maestro BPMN (3-agent procurement flow) — built, validated, and deployed** — the deterministic tolerance check, the three judgment agents, and the human gate, modelled as a BPMN; packed, published, and deployed live to the tenant, where an instance launches. Not run as a live multi-agent instance end-to-end for procurement (no allocated agent runtime); the live proof is the Orchestrator job above. | the `.bpmn` and Maestro project files | `uip solution pack --dry-run` is Valid; the deployed solution launches an instance |
 | **Three coded agents over MCP → live S/4HANA** — matching, variance, and posting-prep agents (`uipath-langchain`), each wired to a SAP OData MCP server via XSUAA client-credentials, reading `A_PurchaseOrderItem` (material, order quantity, net price, currency). | `matching-agent/`, `variance-agent/`, `posting-prep-agent/` — each with `main.py`, `langgraph.json`, `.env.example` | `cd variance-agent && uv run uipath run agent -f input.json` — it returns the *real* PO line items |
 | **Proof it's live, not mocked** — handed only the supplier's numbers, the agent still reports the PO side (PO 4500000021: net price 25.00 GBP, order quantity 5) because it pulled the PO from S/4 at runtime. | agent run output / trace | re-run against a known PO; the PO-side values match S/4, not the input |
 | **Demo-resilience engineering** — a flag-gated cached fallback (`VITE_DEMO_FALLBACK`) so a live-tenant hiccup can't kill a recording. Real tenant tried first; cached instance only on failure/empty; the gate approval short-circuits. | `src/lib/demoData.ts`, `config.ts`, `exchange.ts` | `git show` the demo-safe-mode commit; `npm run build` on the branch |
@@ -64,13 +64,14 @@ the three agents, the MCP→S/4 connection, the automation, and this cockpit) wi
 **UiPath native orchestration and governance**: the agent is deployed and runs
 live on **Orchestrator** against real S/4HANA, and the **Maestro BPMN** that
 composes the deterministic tolerance check, the three judgment agents, and the
-human gate is authored and passes `uip maestro bpmn validate`. UiPath is the
+human gate is built, validated, and deployed live to the tenant. UiPath is the
 execution and governance layer; the coding agent is how it was built.
 
 One honest note: under the workspace's single-process license, the live
 Orchestrator deployment runs the full pipeline in **one** agent. The three agents
-are separately deployable and are composed in the validated BPMN; the BPMN was not
-run as a live multi-agent instance end-to-end for this procurement flow.
+are separately deployable and composed in the deployed BPMN, where an instance
+launches; it was not run as a live multi-agent instance end-to-end for this
+procurement flow (no allocated agent runtime).
 
 ## See it in the video
 
