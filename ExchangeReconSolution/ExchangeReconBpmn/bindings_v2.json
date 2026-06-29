@@ -1,4 +1,101 @@
 {
   "version": "2.0",
-  "resources": []
+  "resources": [
+    {
+      "id": "Binding_MatchAgentName",
+      "kind": "process",
+      "resource": "process",
+      "resourceSubType": "Agent",
+      "propertyAttribute": "name",
+      "name": "matching-agent",
+      "resourceKey": "matching-agent",
+      "metadata": {
+        "BindingsVersion": "v1",
+        "DisplayLabel": "matching-agent",
+        "SolutionsSupport": "Required",
+        "SubType": "Agent",
+        "PropertyAttribute": "name"
+      }
+    },
+    {
+      "id": "Binding_MatchAgentFolderPath",
+      "kind": "process",
+      "resource": "process",
+      "resourceSubType": "Agent",
+      "propertyAttribute": "folderPath",
+      "name": "matching-agent",
+      "resourceKey": "matching-agent",
+      "metadata": {
+        "BindingsVersion": "v1",
+        "DisplayLabel": "matching-agent",
+        "SolutionsSupport": "Required",
+        "SubType": "Agent",
+        "PropertyAttribute": "folderPath"
+      }
+    },
+    {
+      "id": "Binding_VarianceAgentName",
+      "kind": "process",
+      "resource": "process",
+      "resourceSubType": "Agent",
+      "propertyAttribute": "name",
+      "name": "variance-agent",
+      "resourceKey": "variance-agent",
+      "metadata": {
+        "BindingsVersion": "v1",
+        "DisplayLabel": "variance-agent",
+        "SolutionsSupport": "Required",
+        "SubType": "Agent",
+        "PropertyAttribute": "name"
+      }
+    },
+    {
+      "id": "Binding_VarianceAgentFolderPath",
+      "kind": "process",
+      "resource": "process",
+      "resourceSubType": "Agent",
+      "propertyAttribute": "folderPath",
+      "name": "variance-agent",
+      "resourceKey": "variance-agent",
+      "metadata": {
+        "BindingsVersion": "v1",
+        "DisplayLabel": "variance-agent",
+        "SolutionsSupport": "Required",
+        "SubType": "Agent",
+        "PropertyAttribute": "folderPath"
+      }
+    },
+    {
+      "id": "Binding_PostingPrepAgentName",
+      "kind": "process",
+      "resource": "process",
+      "resourceSubType": "Agent",
+      "propertyAttribute": "name",
+      "name": "posting-prep-agent",
+      "resourceKey": "posting-prep-agent",
+      "metadata": {
+        "BindingsVersion": "v1",
+        "DisplayLabel": "posting-prep-agent",
+        "SolutionsSupport": "Required",
+        "SubType": "Agent",
+        "PropertyAttribute": "name"
+      }
+    },
+    {
+      "id": "Binding_PostingPrepAgentFolderPath",
+      "kind": "process",
+      "resource": "process",
+      "resourceSubType": "Agent",
+      "propertyAttribute": "folderPath",
+      "name": "posting-prep-agent",
+      "resourceKey": "posting-prep-agent",
+      "metadata": {
+        "BindingsVersion": "v1",
+        "DisplayLabel": "posting-prep-agent",
+        "SolutionsSupport": "Required",
+        "SubType": "Agent",
+        "PropertyAttribute": "folderPath"
+      }
+    }
+  ]
 }

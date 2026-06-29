@@ -14,7 +14,14 @@
         <uipath:inputOutput id="Var_PreparedUpdate" name="preparedUpdate" type="string" />
         <uipath:output id="Var_Outcome" name="outcome" type="string" />
       </uipath:variables>
-      <uipath:bindings version="v1" />
+      <uipath:bindings version="v1">
+        <uipath:binding id="Binding_MatchAgentName" name="matching-agent" type="process" elementId="Task_MatchAgent" resource="process" resourceSubType="Agent" resourceKey="matching-agent" propertyAttribute="name" />
+        <uipath:binding id="Binding_MatchAgentFolderPath" name="matching-agent" type="process" elementId="Task_MatchAgent" resource="process" resourceSubType="Agent" resourceKey="matching-agent" propertyAttribute="folderPath" />
+        <uipath:binding id="Binding_VarianceAgentName" name="variance-agent" type="process" elementId="Task_VarianceAgent" resource="process" resourceSubType="Agent" resourceKey="variance-agent" propertyAttribute="name" />
+        <uipath:binding id="Binding_VarianceAgentFolderPath" name="variance-agent" type="process" elementId="Task_VarianceAgent" resource="process" resourceSubType="Agent" resourceKey="variance-agent" propertyAttribute="folderPath" />
+        <uipath:binding id="Binding_PostingPrepAgentName" name="posting-prep-agent" type="process" elementId="Task_PostingPrepAgent" resource="process" resourceSubType="Agent" resourceKey="posting-prep-agent" propertyAttribute="name" />
+        <uipath:binding id="Binding_PostingPrepAgentFolderPath" name="posting-prep-agent" type="process" elementId="Task_PostingPrepAgent" resource="process" resourceSubType="Agent" resourceKey="posting-prep-agent" propertyAttribute="folderPath" />
+      </uipath:bindings>
     </bpmn:extensionElements>
     <bpmn:startEvent id="Event_start" name="Supplier invoice received">
       <bpmn:extensionElements>
@@ -27,10 +34,8 @@
         <uipath:activity version="v1">
           <uipath:type value="Orchestrator.StartAgentJob" version="v1" />
           <uipath:context>
-            <uipath:input name="ReleaseKey" type="string" value="AGENT_PROCESS_KEY_GUID" />
-            <uipath:input name="FolderKey" type="string" value="FOLDER_KEY_GUID" />
-            <uipath:input name="FolderPath" type="string" value="Shared/ExchangeRecon" />
-            <uipath:input name="Name" type="string" value="Matching Agent" />
+            <uipath:input name="name" type="string" value="=bindings.Binding_MatchAgentName" />
+            <uipath:input name="folderPath" type="string" value="=bindings.Binding_MatchAgentFolderPath" />
           </uipath:context>
           <uipath:input name="JobArguments" type="json" target="bodyField"><![CDATA[{"purchase_order":"=vars.Var_PurchaseOrder","supplier_document":"=vars.Var_SupplierDocument"}]]></uipath:input>
           <uipath:output name="Process response" type="Orchestrator.RunJob" var="Var_MatchedLines" />
@@ -105,10 +110,8 @@ return { response: "Within tolerance. Invoice auto-approved and PO matched for p
         <uipath:activity version="v1">
           <uipath:type value="Orchestrator.StartAgentJob" version="v1" />
           <uipath:context>
-            <uipath:input name="ReleaseKey" type="string" value="AGENT_PROCESS_KEY_GUID" />
-            <uipath:input name="FolderKey" type="string" value="FOLDER_KEY_GUID" />
-            <uipath:input name="FolderPath" type="string" value="Shared/ExchangeRecon" />
-            <uipath:input name="Name" type="string" value="Variance Agent" />
+            <uipath:input name="name" type="string" value="=bindings.Binding_VarianceAgentName" />
+            <uipath:input name="folderPath" type="string" value="=bindings.Binding_VarianceAgentFolderPath" />
           </uipath:context>
           <uipath:input name="JobArguments" type="json" target="bodyField"><![CDATA[{"purchase_order":"=vars.Var_PurchaseOrder","matched_lines":"=vars.Var_MatchedLines","variances":"=vars.Var_Variances"}]]></uipath:input>
           <uipath:output name="Process response" type="Orchestrator.RunJob" var="Var_Variances" />
@@ -121,24 +124,21 @@ return { response: "Within tolerance. Invoice auto-approved and PO matched for p
       <bpmn:outgoing>Flow_agent_error</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrDef_AgentError" errorRef="Error_AgentFailed" />
     </bpmn:boundaryEvent>
-    <bpmn:userTask id="Task_HumanGate" name="Human gate: approve or escalate">
+    <bpmn:intermediateCatchEvent id="Task_HumanGate" name="Human gate: wait for approval">
       <bpmn:extensionElements>
-        <uipath:activity version="v1">
-          <uipath:type value="Actions.HITL" version="v1" />
-          <uipath:context />
-          <uipath:input name="HitlTaskArguments" type="json" target="bodyField"><![CDATA[{"purchaseOrder":"=vars.Var_PurchaseOrder","variances":"=vars.Var_Variances","preparedUpdate":"=vars.Var_PreparedUpdate"}]]></uipath:input>
-          <uipath:output name="Process response" type="Actions.HITL" var="Var_Decision" />
-        </uipath:activity>
+        <uipath:event version="v1">
+          <uipath:type value="Maestro.ReceiveMessageEvent" version="v1" />
+          <uipath:context>
+            <uipath:input name="name" type="string" value="ApproveGate" />
+          </uipath:context>
+          <uipath:input name="Reference" type="string" target="bodyField" value="=vars.Var_PurchaseOrder" />
+          <uipath:output name="response" type="Maestro.ReceiveMessageEvent" var="Var_Decision" />
+        </uipath:event>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_agent_gate</bpmn:incoming>
       <bpmn:outgoing>Flow_gate_decision</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:boundaryEvent id="Boundary_GateTimeout" attachedToRef="Task_HumanGate">
-      <bpmn:outgoing>Flow_gate_timeout</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="TimerDef_GateTimeout">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT24H</bpmn:timeDuration>
-      </bpmn:timerEventDefinition>
-    </bpmn:boundaryEvent>
+      <bpmn:messageEventDefinition id="MsgDef_Approve" />
+    </bpmn:intermediateCatchEvent>
     <bpmn:exclusiveGateway id="Gateway_Decision" name="Decision?" default="Flow_escalate">
       <bpmn:incoming>Flow_gate_decision</bpmn:incoming>
       <bpmn:outgoing>Flow_approve</bpmn:outgoing>
@@ -149,10 +149,8 @@ return { response: "Within tolerance. Invoice auto-approved and PO matched for p
         <uipath:activity version="v1">
           <uipath:type value="Orchestrator.StartAgentJob" version="v1" />
           <uipath:context>
-            <uipath:input name="ReleaseKey" type="string" value="AGENT_PROCESS_KEY_GUID" />
-            <uipath:input name="FolderKey" type="string" value="FOLDER_KEY_GUID" />
-            <uipath:input name="FolderPath" type="string" value="Shared/ExchangeRecon" />
-            <uipath:input name="Name" type="string" value="Posting-prep Agent" />
+            <uipath:input name="name" type="string" value="=bindings.Binding_PostingPrepAgentName" />
+            <uipath:input name="folderPath" type="string" value="=bindings.Binding_PostingPrepAgentFolderPath" />
           </uipath:context>
           <uipath:input name="JobArguments" type="json" target="bodyField"><![CDATA[{"purchase_order":"=vars.Var_PurchaseOrder","variances":"=vars.Var_Variances","reviewer_note":"=vars.Var_ReviewerNote"}]]></uipath:input>
           <uipath:output name="Process response" type="Orchestrator.RunJob" var="Var_PreparedUpdate" />
@@ -197,7 +195,6 @@ return { response: "PO item " + (purchaseOrder || "") + " corrected and written 
       <bpmn:incoming>Flow_match_error</bpmn:incoming>
       <bpmn:incoming>Flow_agent_error</bpmn:incoming>
       <bpmn:incoming>Flow_prep_error</bpmn:incoming>
-      <bpmn:incoming>Flow_gate_timeout</bpmn:incoming>
       <bpmn:outgoing>Flow_routebuyer_end</bpmn:outgoing>
       <bpmn:script><![CDATA[
 return { response: "Escalated to the buyer for manual handling." };
@@ -218,7 +215,6 @@ return { response: "Escalated to the buyer for manual handling." };
     <bpmn:sequenceFlow id="Flow_agent_gate" sourceRef="Task_VarianceAgent" targetRef="Task_HumanGate" />
     <bpmn:sequenceFlow id="Flow_agent_error" sourceRef="Boundary_AgentError" targetRef="Task_RouteBuyer" />
     <bpmn:sequenceFlow id="Flow_gate_decision" sourceRef="Task_HumanGate" targetRef="Gateway_Decision" />
-    <bpmn:sequenceFlow id="Flow_gate_timeout" sourceRef="Boundary_GateTimeout" targetRef="Task_RouteBuyer" />
     <bpmn:sequenceFlow id="Flow_approve" name="Approve" sourceRef="Gateway_Decision" targetRef="Task_PostingPrepAgent">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=vars.Var_Decision == &quot;Approve&quot;</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -259,9 +255,6 @@ return { response: "Escalated to the buyer for manual handling." };
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="S_Task_HumanGate" bpmnElement="Task_HumanGate">
         <dc:Bounds x="850" y="300" width="110" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="S_Boundary_GateTimeout" bpmnElement="Boundary_GateTimeout">
-        <dc:Bounds x="882" y="362" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="S_Gateway_Decision" bpmnElement="Gateway_Decision" isMarkerVisible="true">
         <dc:Bounds x="1010" y="315" width="50" height="50" />
@@ -329,11 +322,6 @@ return { response: "Escalated to the buyer for manual handling." };
       <bpmndi:BPMNEdge id="E_Flow_gate_decision" bpmnElement="Flow_gate_decision">
         <di:waypoint x="960" y="340" />
         <di:waypoint x="1010" y="340" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="E_Flow_gate_timeout" bpmnElement="Flow_gate_timeout">
-        <di:waypoint x="900" y="398" />
-        <di:waypoint x="900" y="500" />
-        <di:waypoint x="1120" y="500" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="E_Flow_approve" bpmnElement="Flow_approve">
         <di:waypoint x="1060" y="340" />
