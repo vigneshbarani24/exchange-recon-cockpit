@@ -4,7 +4,16 @@
 
 UiPath AgentHack · Track 2 (UiPath Maestro BPMN)
 
+**▶ Try it live: [exchange-recon-cockpit.vercel.app](https://exchange-recon-cockpit.vercel.app)** — the seeded cockpit, no login, runs in your browser.
+
 ---
+
+## For judges — at a glance
+
+- **What it is / the problem it solves:** a governed, multi-agent **Procure-to-Pay reconciliation** — three coded agents reconcile an inbound supplier invoice against the **live SAP purchase order**, classify the discrepancies, and hand a human the decision instead of a spreadsheet. It removes the manual, error-prone work of matching invoices to the PO of record, while never letting a model write to SAP. (Detail in [The problem](#the-problem) and [What it does](#what-it-does).)
+- **Agent type — Coded Agents.** Three **Python LangGraph** coded agents (`uipath-langchain`) — **not** low-code. The Maestro BPMN composes them with a deterministic Business Rule and a human gate, so the overall solution is a **combination**: *coded agents + UiPath-native orchestration & governance*.
+- **UiPath components used:** **Maestro BPMN** (Track 2) · **Coded Agents** (LangGraph) · **MCP** (Model Context Protocol) · **Orchestrator** (Serverless agent runtime) · **Action Center** / Maestro message human-gate · **LLM Gateway** (Azure OpenAI `gpt-4o`) · **`@uipath/uipath-typescript` SDK** · built with **UiPath for Coding Agents** (Claude Code). Full mapping in [How it's built](#how-its-built).
+- **Run it in 30 seconds:** open the live demo → **[exchange-recon-cockpit.vercel.app](https://exchange-recon-cockpit.vercel.app)** (no setup, no login). Full steps in [Setup & run for judging](#setup--run-for-judging).
 
 ## The problem
 
@@ -69,9 +78,11 @@ MCP connection (XSUAA client-credentials, OData `execute-entity-operation`):
 | Cockpit | **@uipath/uipath-typescript** SDK, Vite + React + TypeScript | `src/lib/sdk.ts`, `src/lib/exchange.ts` |
 | Built with | **Claude Code via UiPath for Coding Agents** | [CODING-AGENTS.md](./CODING-AGENTS.md) |
 
-## Quickstart
+## Setup & run for judging
 
-**The cockpit (offline, zero config):**
+**Option A — zero setup (recommended for a quick look):** open **[exchange-recon-cockpit.vercel.app](https://exchange-recon-cockpit.vercel.app)** — the seeded Reconciliation cockpit, no login, runs in your browser.
+
+**Option B — the cockpit locally (offline, zero config):**
 
 ```bash
 npm install
