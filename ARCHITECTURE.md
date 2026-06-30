@@ -105,8 +105,8 @@ tenant. Spine elements:
 
 ### 1.4 UiPath Orchestrator / Serverless agent runtime — **LIVE (agents) / capacity-blocked (Maestro e2e)**
 
-The three agents are deployed Orchestrator Agent processes with real release keys; the
-variance-agent has run as a real Serverless agent job (§4). Maestro starts each via
+The three agents are deployed Orchestrator Agent processes with real release keys; all three
+have each run as a separate real Serverless agent job against live SAP (§4). Maestro starts each via
 `Orchestrator.StartAgentJob`. The full 3-agent Maestro instance launches but does not complete — see
 §5 (capacity).
 
@@ -169,7 +169,7 @@ Golden path for PO `4500000021` with supplier invoice `INV-88231`:
 | Three coded LangGraph agents (matching/variance/posting-prep) | **LIVE** | `variance-agent/main.py:107-156`, `matching-agent/main.py:69-113`, `posting-prep-agent/main.py:73-118` |
 | LLM via UiPath LLM Gateway (Azure OpenAI gpt-4o-2024-11-20) | **LIVE** | `variance-agent/main.py:3,111` |
 | SAP read over MCP (`execute-entity-operation`, XSUAA) | **LIVE** | `variance-agent/mcp_client.py:35-76`, `variance-agent/main.py:86-90` |
-| variance-agent as a real Serverless Orchestrator job vs live PO | **LIVE (proven)** | Job `dbedd8aa-…` (§4); `variance-agent/entry-points.json` |
+| All three agents as separate real Serverless Orchestrator jobs vs live PO | **LIVE (proven)** | matching job `750a5c3e-…` (52s), variance job `c51ac7fa-…` (126s; also `dbedd8aa-…`, §4), posting-prep job `d7b8891e-…` (52s) — all Successful, co-located in Shared/ExchangeReconDemo (folder 3093256); `variance-agent/entry-points.json` |
 | Maestro BPMN spine (3 StartAgentJob, tolerance, gateways, gate, errors) | **BUILT + VALIDATED + DEPLOYED** | `ExchangeReconSolution/ExchangeReconBpmn/ExchangeReconBpmn.bpmn`; `--dry-run` Valid |
 | Maestro bound to the 3 deployed agents (release keys) | **DEPLOYED** | `...bpmn:17-24,39,117,158` |
 | Deterministic tolerance check (2% / 1-unit) | **LIVE (in BPMN)** | `...bpmn:65-85` |
@@ -204,8 +204,10 @@ Code path: `variance-agent/main.py:107-156` (graph), `variance-agent/mcp_client.
 
 ## 5. What runs today vs what is capacity-blocked
 
-**Tier 1 — PROVEN (the WOW).** The variance-agent runs as a real Serverless job and reads live PO
-`4500000021` over MCP, returning the held corrections. Reliable, repeatable, real SAP. (§4)
+**Tier 1 — PROVEN (the WOW).** All three agents run as separate real Serverless jobs and each reads
+live PO `4500000021` over MCP — matching aligns supplier lines to PO items, variance returns the held
+corrections, posting-prep prepares the precise `OrderQuantity 5→6` update. Reliable, repeatable, real
+SAP. (§4)
 
 **Tier 2 — DEPLOYED.** The committed 3-agent Maestro BPMN is genuinely bound to the three deployed
 agents (process bindings + release keys), passes `uip solution pack . --dry-run` (Valid), and was

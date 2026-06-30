@@ -14,13 +14,19 @@ S/4HANA but never writes to it.
 
 ## The headline proof (lead with this)
 
-The agent is **deployed and running live on UiPath Orchestrator** as a cloud job,
-wired to real SAP S/4HANA Cloud. A real Orchestrator job pulled PO **4500000021**
-over MCP, classified the variances (price-variance, over-delivery), and prepared
-the `A_PurchaseOrderItem` correction payloads — NetPriceAmount 25.00 → 27.50,
-OrderQuantity 5 → 6 — then **held for human approval**. It reads its SAP config
-from Orchestrator assets; no secrets in code. Not a mock, not a local
-script — a cloud job that reached into the system of record.
+All three coded agents are **deployed and ran live on UiPath Orchestrator** as
+**three separate cloud jobs**, each wired to real SAP S/4HANA Cloud and each
+reading PO **4500000021** over MCP. The **matching agent** (job 750a5c3e) aligned
+the supplier lines to the PO items by material off the live PO prices and
+quantities at confidence 1.0. The **variance agent** (job c51ac7fa) classified
+the variances (price-variance +10%, over-delivery +20%) and prepared the
+`A_PurchaseOrderItem` correction payloads — NetPriceAmount 25.00 → 27.50,
+OrderQuantity 5 → 6. The **posting-prep agent** (job d7b8891e) read the current
+S/4 OrderQuantity (5) and staged the precise OrderQuantity 5 → 6 update,
+ready_to_post — then all **held for human approval**. They read SAP config from
+Orchestrator assets; no secrets in code. Not mocks, not local scripts — three
+cloud jobs that reached into the system of record. They ran as three separate
+jobs, not composed within a single Maestro instance end-to-end.
 
 The tell that it's live: the agent is handed **only the supplier's numbers**, yet
 reports the **PO** side correctly. The only way it knows the PO is to fetch it
@@ -60,9 +66,9 @@ from S/4 at runtime.
 
 ## Platform surface area (name these on camera or in the description)
 
-- **UiPath Orchestrator** — the agent is deployed here and runs as a live cloud
-  job against real SAP S/4HANA; SAP config comes from Orchestrator assets, not
-  code.
+- **UiPath Orchestrator** — all three agents are deployed here and each ran as a
+  **separate** live cloud job against real SAP S/4HANA; SAP config comes from
+  Orchestrator assets, not code.
 - **UiPath Maestro** — the 3-agent procurement BPMN: built, validated, and
   deployed live to the tenant, where an instance launches. The full 3-agent run
   does not complete (no allocated agent runtime). Each agent is separately
@@ -75,12 +81,13 @@ from S/4 at runtime.
 - **UiPath for Coding Agents** — the automation side was built with Claude Code
   using the official `uip skills` for the platform.
 
-> Honest framing for Q&A: under the workspace's single-process license, the live
-> Orchestrator deployment runs the full pipeline in **one** agent. The three
-> agents are separately deployable and composed in the Maestro BPMN — built,
-> validated, and deployed live to the tenant, where an instance launches, but not
-> run as a live multi-agent instance end-to-end for this procurement flow (no
-> allocated agent runtime).
+> Honest framing for Q&A: all three agents ran live on Orchestrator as **three
+> separate jobs**, each reading real SAP S/4HANA — matching (750a5c3e), variance
+> (c51ac7fa), posting-prep (d7b8891e). What did **not** run end-to-end is the
+> three composed **within a single Maestro instance**: the BPMN is built,
+> validated, and deployed live to the tenant, where an instance launches, but the
+> full 3-agent run never completed for this procurement flow (no allocated agent
+> runtime). The agents prepare corrections and hold; nothing posts.
 
 ## Don't
 

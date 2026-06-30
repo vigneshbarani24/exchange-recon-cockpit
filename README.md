@@ -106,6 +106,11 @@ What a judge can trigger today:
 3. **ORCHESTRATION:** `uip solution pack . --dry-run` validates the 3-agent Maestro (Status:
    Valid); it is deployed on the tenant and an instance launches.
 
+All three coded agents have run live as separate Orchestrator jobs against the same PO `4500000021`
+on S/4 over MCP (matching `750a5c3e`, variance `c51ac7fa`, posting-prep `d7b8891e`) — each read real
+SAP, held its corrections, posted nothing. Running all three *within one Maestro instance* end-to-end
+is still capacity-blocked (see [Known limits](#known-limits)).
+
 Full run-of-show in [DEMO.md](./DEMO.md).
 
 ## Live vs deployed vs held
@@ -113,7 +118,7 @@ Full run-of-show in [DEMO.md](./DEMO.md).
 | Capability | Status | Where |
 | --- | --- | --- |
 | variance-agent reads live PO from S/4 over MCP, returns held corrections | **LIVE — proven** (Job `dbedd8aa…`, 64s) | `variance-agent/main.py`, `mcp_client.py` |
-| matching / variance / posting-prep coded agents | **LIVE** — deployed Orchestrator processes, real release keys | `*/main.py`, `bindings_v2.json` |
+| matching / variance / posting-prep coded agents | **LIVE — all three proven** — each ran as a real Orchestrator job reading live PO `4500000021` from S/4 over MCP (matching `750a5c3e`, variance `c51ac7fa`, posting-prep `d7b8891e`), corrections held | `*/main.py`, `bindings_v2.json` |
 | 3-agent Maestro BPMN (rule + agents + human gate) | **BUILT + validated + DEPLOYED**; instance launches; full e2e capacity-blocked | `ExchangeReconBpmn.bpmn` |
 | Deterministic tolerance check (2% price / 1-unit qty) | **BUILT** (BPMN script) | `ExchangeReconBpmn.bpmn` |
 | Human approval gate (message event) | **BUILT** | `ExchangeReconBpmn.bpmn` |
