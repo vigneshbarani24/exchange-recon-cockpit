@@ -1,0 +1,56 @@
+{
+  "version": "1.0",
+  "id": "posting-suite",
+  "name": "Posting-prep suite — approved corrections vs live PO 4500000021",
+  "evaluatorRefs": ["LLMJudgeOutputEvaluator"],
+  "evaluations": [
+    {
+      "id": "qty-correction",
+      "name": "Approved over-delivery -> update OrderQuantity 5 to 6",
+      "inputs": {
+        "purchase_order": "4500000021",
+        "po_item": "20",
+        "approved_action": "Accept the over-delivery; update the PO order quantity to 6."
+      },
+      "evaluationCriterias": {
+        "LLMJudgeOutputEvaluator": {
+          "expectedOutput": {
+            "human_summary": "A well-formed S/4 update for PO 4500000021 item 20: field OrderQuantity from its current value 5 to 6, ready to post."
+          }
+        }
+      }
+    },
+    {
+      "id": "price-correction",
+      "name": "Approved price -> update NetPriceAmount 25.00 to 27.50",
+      "inputs": {
+        "purchase_order": "4500000021",
+        "po_item": "10",
+        "approved_action": "Accept the supplier's price; update the PO net price to 27.50."
+      },
+      "evaluationCriterias": {
+        "LLMJudgeOutputEvaluator": {
+          "expectedOutput": {
+            "human_summary": "A well-formed S/4 update for PO 4500000021 item 10: field NetPriceAmount from its current value 25.00 to 27.50, ready to post."
+          }
+        }
+      }
+    },
+    {
+      "id": "ambiguous-action",
+      "name": "Ambiguous instruction -> not ready to post",
+      "inputs": {
+        "purchase_order": "4500000021",
+        "po_item": "20",
+        "approved_action": "Sort it out."
+      },
+      "evaluationCriterias": {
+        "LLMJudgeOutputEvaluator": {
+          "expectedOutput": {
+            "human_summary": "The approved action is ambiguous — the field and target value cannot be resolved — so no update is prepared and ready_to_post is false."
+          }
+        }
+      }
+    }
+  ]
+}

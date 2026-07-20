@@ -7,7 +7,7 @@
     "model": "gpt-4o-2024-11-20",
     "defaultEvaluationCriteria": {
       "expectedOutput": {
-        "explanation": "A correct, on-topic explanation of why the supplier invoice and the purchase order disagree (or that they match within tolerance)."
+        "summary": "A correct alignment of the supplier invoice lines to the PO items, carrying both sides' quantity and unit price, with any unmatched lines called out."
       }
     }
   }

@@ -1,0 +1,110 @@
+{
+  "version": "1.0",
+  "id": "recon-suite",
+  "name": "Reconciliation suite — 6 scenarios vs live PO 4500000021",
+  "evaluatorRefs": ["LLMJudgeOutputEvaluator"],
+  "evaluations": [
+    {
+      "id": "clean-match",
+      "name": "Clean match — supplier equals the PO",
+      "inputs": {
+        "purchase_order": "4500000021",
+        "supplier_document": "Supplier invoice INV-90010, ref PO 4500000021, GBP. Line 1: Material RM27 (Packaging Box) 50 PC at 25.00 per ea. Line 2: Material RM16 5 PC at 2.00 per ea.",
+        "tolerance_pct": 2.0
+      },
+      "evaluationCriterias": {
+        "LLMJudgeOutputEvaluator": {
+          "expectedOutput": {
+            "overall_status": "within-tolerance",
+            "summary": "Both invoice lines match the PO on quantity and unit price within tolerance; no correction needed."
+          }
+        }
+      }
+    },
+    {
+      "id": "price-variance-only",
+      "name": "Price variance only — item 10 priced 10% high",
+      "inputs": {
+        "purchase_order": "4500000021",
+        "supplier_document": "Supplier invoice INV-90011, ref PO 4500000021, GBP. Line 1: Material RM27 (Packaging Box) 50 PC at 27.50 per ea. Line 2: Material RM16 5 PC at 2.00 per ea.",
+        "tolerance_pct": 2.0
+      },
+      "evaluationCriterias": {
+        "LLMJudgeOutputEvaluator": {
+          "expectedOutput": {
+            "overall_status": "variance-found",
+            "summary": "Item 10 (RM27) is a price-variance: supplier billed 27.50 versus the PO 25.00 (+10%), outside the 2% tolerance. Item 20 matches. A correction is proposed for a human to approve; the agent reads the PO from S/4 and never posts."
+          }
+        }
+      }
+    },
+    {
+      "id": "over-delivery-only",
+      "name": "Over-delivery only — item 20 quantity 5 -> 6",
+      "inputs": {
+        "purchase_order": "4500000021",
+        "supplier_document": "Supplier invoice INV-90012, ref PO 4500000021, GBP. Line 1: Material RM27 (Packaging Box) 50 PC at 25.00 per ea. Line 2: Material RM16 6 PC at 2.00 per ea.",
+        "tolerance_pct": 2.0
+      },
+      "evaluationCriterias": {
+        "LLMJudgeOutputEvaluator": {
+          "expectedOutput": {
+            "overall_status": "variance-found",
+            "summary": "Item 20 (RM16) is a quantity over-delivery: 6 invoiced versus 5 ordered. Item 10 matches. The proposed correction updates OrderQuantity 5 -> 6, held for human approval; nothing is posted."
+          }
+        }
+      }
+    },
+    {
+      "id": "under-delivery",
+      "name": "Under-delivery — item 20 quantity 5 -> 4",
+      "inputs": {
+        "purchase_order": "4500000021",
+        "supplier_document": "Supplier invoice INV-90013, ref PO 4500000021, GBP. Line 1: Material RM27 (Packaging Box) 50 PC at 25.00 per ea. Line 2: Material RM16 4 PC at 2.00 per ea.",
+        "tolerance_pct": 2.0
+      },
+      "evaluationCriterias": {
+        "LLMJudgeOutputEvaluator": {
+          "expectedOutput": {
+            "overall_status": "variance-found",
+            "summary": "Item 20 (RM16) is a quantity variance (under-delivery): 4 invoiced versus 5 ordered. Item 10 matches. A correction is prepared for human review; the agent never posts."
+          }
+        }
+      }
+    },
+    {
+      "id": "price-and-qty-variance",
+      "name": "Both variances — item 10 price + item 20 over-delivery (the demo case)",
+      "inputs": {
+        "purchase_order": "4500000021",
+        "supplier_document": "Supplier invoice INV-88231, ref PO 4500000021, GBP. Line 1: Material RM27 (Packaging Box) 50 PC at 27.50 per ea. Line 2: Material RM16 6 PC at 2.00 per ea.",
+        "tolerance_pct": 2.0
+      },
+      "evaluationCriterias": {
+        "LLMJudgeOutputEvaluator": {
+          "expectedOutput": {
+            "overall_status": "variance-found",
+            "summary": "Item 10 (RM27) is a price-variance (25.00 -> 27.50, +10%) and item 20 (RM16) is a quantity over-delivery (5 -> 6). Both are flagged with a proposed correction for a human to approve before any posting; the agent reads the PO from S/4 and never posts."
+          }
+        }
+      }
+    },
+    {
+      "id": "within-tolerance-boundary",
+      "name": "Tolerance boundary — item 10 priced 1.6% high (inside 2%)",
+      "inputs": {
+        "purchase_order": "4500000021",
+        "supplier_document": "Supplier invoice INV-90014, ref PO 4500000021, GBP. Line 1: Material RM27 (Packaging Box) 50 PC at 25.40 per ea. Line 2: Material RM16 5 PC at 2.00 per ea.",
+        "tolerance_pct": 2.0
+      },
+      "evaluationCriterias": {
+        "LLMJudgeOutputEvaluator": {
+          "expectedOutput": {
+            "overall_status": "within-tolerance",
+            "summary": "Item 10's 1.6% price difference (25.00 -> 25.40) is inside the 2% tolerance, and item 20 matches; the reconciliation clears with no correction needed."
+          }
+        }
+      }
+    }
+  ]
+}

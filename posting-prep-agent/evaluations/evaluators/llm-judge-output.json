@@ -7,7 +7,7 @@
     "model": "gpt-4o-2024-11-20",
     "defaultEvaluationCriteria": {
       "expectedOutput": {
-        "explanation": "A correct, on-topic explanation of why the supplier invoice and the purchase order disagree (or that they match within tolerance)."
+        "human_summary": "A correct, well-formed S/4 update payload for the approved correction (right field, current and new value), or a clear reason it cannot be prepared."
       }
     }
   }

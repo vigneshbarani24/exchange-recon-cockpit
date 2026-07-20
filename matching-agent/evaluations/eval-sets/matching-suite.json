@@ -1,0 +1,53 @@
+{
+  "version": "1.0",
+  "id": "matching-suite",
+  "name": "Matching suite — line alignment vs live PO 4500000021",
+  "evaluatorRefs": ["LLMJudgeOutputEvaluator"],
+  "evaluations": [
+    {
+      "id": "clean-two-lines",
+      "name": "Two supplier lines, both match",
+      "inputs": {
+        "purchase_order": "4500000021",
+        "supplier_document": "Supplier invoice INV-90010, ref PO 4500000021, GBP. Line 1: Material RM27 (Packaging Box) 50 PC at 25.00 per ea. Line 2: Material RM16 5 PC at 2.00 per ea."
+      },
+      "evaluationCriterias": {
+        "LLMJudgeOutputEvaluator": {
+          "expectedOutput": {
+            "summary": "Both supplier lines are aligned to PO items 10 (RM27) and 20 (RM16) by material at high confidence, carrying both the PO and supplier quantity and unit price; there are no unmatched supplier lines and no unmatched PO items."
+          }
+        }
+      }
+    },
+    {
+      "id": "extra-supplier-line",
+      "name": "Supplier has an extra line not on the PO",
+      "inputs": {
+        "purchase_order": "4500000021",
+        "supplier_document": "Supplier invoice INV-90021, ref PO 4500000021, GBP. Line 1: Material RM27 50 PC at 25.00 per ea. Line 2: Material RM16 5 PC at 2.00 per ea. Line 3: Material RM99 10 PC at 4.00 per ea."
+      },
+      "evaluationCriterias": {
+        "LLMJudgeOutputEvaluator": {
+          "expectedOutput": {
+            "summary": "RM27 and RM16 align to PO items 10 and 20; the extra RM99 supplier line has no corresponding PO item and is reported as an unmatched supplier line."
+          }
+        }
+      }
+    },
+    {
+      "id": "partial-reference",
+      "name": "Supplier references only one of the two PO items",
+      "inputs": {
+        "purchase_order": "4500000021",
+        "supplier_document": "Supplier invoice INV-90022, ref PO 4500000021, GBP. Line 1: Material RM27 50 PC at 25.00 per ea."
+      },
+      "evaluationCriterias": {
+        "LLMJudgeOutputEvaluator": {
+          "expectedOutput": {
+            "summary": "The single supplier line aligns to PO item 10 (RM27); PO item 20 (RM16) is not referenced by the supplier document and is reported as an unmatched PO item."
+          }
+        }
+      }
+    }
+  ]
+}
