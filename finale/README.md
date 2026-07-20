@@ -12,6 +12,9 @@ Grounded prep for the UiPath AgentHack 2026 live finale. Everything here is writ
 | `AgentHack-2026-Workforce-to-Workflow.pptx` | **The finale deck** — filled into the official Cinder template, 7 slides, branded. Present from this. |
 | `QA-BANK.md` | The 3-minute jury Q&A — answer-first responses for both judges + the honesty/trap answers. |
 | `RUBRIC-MATCH.md` | How each of the 5 finale criteria (+ coding bonus) is won — per-criterion evidence, the exact moment, score, and the remaining moves. |
+| `RUN-LIVE.md` | Step-by-step to run the agents + cockpit live yourself (validated commands, the per-folder token gotcha). |
+| `BACKUPS.md` | Backups-to-backups — layered fallback so the demo cannot fail, plus a capture checklist. |
+| `ROADMAP.md` | Where it goes — adoption anchor (anonymized customer), IXP invoice ingestion, two-layer governance (Warden + UiPath). |
 | `receipts/` | Live-run proof — all three agents' fresh output against real SAP (2026-07-20). |
 
 ## The one-line status

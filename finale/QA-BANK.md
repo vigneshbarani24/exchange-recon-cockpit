@@ -15,8 +15,11 @@
 **"Why does the agent sit inside a Maestro workflow instead of orchestrating itself?"**
 > Because non-determinism is a liability in a financial control. The workflow is the governance layer — authority lives there, not in the prompt. Maestro gives me the deterministic tolerance gate, the human approval gate, boundary-error escalation, and the audit trail. It's the same reason you don't let a clerk approve their own high-value exceptions — you constrain the actor inside a process.
 
+**"How does this governance generalize — across platforms, not just this one UiPath workflow?"**
+> Governed agency is two layers here, on purpose. UiPath is the *execution* governance — Maestro holds the authority, Action Center is the human gate, everything's audited; that's live and proven today. Above it sits a *policy* layer — our cross-platform decide-gate, Warden — where every agent action is checked against policy before it runs: same agents, any platform, one governance contract. UiPath answers "how does it execute and who approves"; the policy gate answers "may it act at all." In this demo the live governance is UiPath-native; the policy layer is how it generalizes across the estate.
+
 **"How is the SAP access governed and identity-scoped?"**
-> The agent authenticates to the SAP MCP server with XSUAA client-credentials, pulled from Orchestrator assets — no secrets in the repo. Today it's a service identity scoped to read the PO OData entity. The honest gap: it's one shared service principal, not per-user on-behalf-of attribution — that's what I'd add so every read is individually attributable.
+> The agent authenticates to the SAP MCP server with XSUAA client-credentials, pulled from Orchestrator assets — no secrets in the repo. Today it's a service identity scoped to read the PO OData entity. Two honest gaps: it's one shared service principal, not per-user on-behalf-of attribution; and it's an MCP endpoint with the secret governed in an Orchestrator asset, not a first-class Integration Service connection. I chose MCP deliberately — it's the modern, typed, discoverable tool surface a coded agent should reason against — but the productionization step is a governed Integration Service connection with per-user OBO.
 
 **"What exactly is in the audit trail?"**
 > Every prepared correction carries the current value, the proposed new value, the classification, the confidence, and the human's decision and note — with the deterministic check, the agent's judgment, and the human's authority as separate logged steps. What isn't yet a queryable persisted ledger is exactly that — it's the job trace plus the prepared-correction record — so a durable decision log is on the list.
@@ -45,6 +48,16 @@
 
 ---
 
+## Business impact & adoption (either judge may ask)
+
+**"Is anyone actually going to use this — or is it a hackathon toy?"**
+> It's real — there's a live customer POC for exactly this. A UK travel-sector enterprise gets about 200 supplier invoices a month landing in SAP automatically, and attaching each one to its matching purchase order is still fully manual. That's precisely the workflow this agent governs. So the business case isn't illustrative — it's a funded engagement, which is the strongest adoption signal I can give you.
+
+**"What's the roadmap — how does this become a product?"**
+> Three moves. One: ingest the real invoice PDF with UiPath IXP / Document Understanding, so it starts from the document, not structured text — that's what the customer needs next. Two: extend the same governed pattern to the rest of the repeatable back office — goods-receipt matching, dispute triage, dunning — one control model, many agents. Three: the two-layer governance makes it portable across the estate. This reconciliation is agent #1.
+
+---
+
 ## Honesty / trap questions (rehearse these hardest)
 
 **"Did the three agents run end-to-end inside one Maestro instance?"**
@@ -54,7 +67,7 @@
 > The agent reading SAP is live — real S/4HANA over MCP. The tell is that it's handed only the supplier's numbers yet returns the PO side. The cockpit's default view renders captured output from that live run so it always displays — and I label it as captured. The write-back is prepared and held, not executed.
 
 **"Why don't you write the correction back to SAP?"**
-> Two reasons, one principled and one practical. Principled: a governed agent shouldn't post to the system of record — a human authorizes and a deterministic step writes. Practical: the write path is coded but currently 404s on an upstream MCP-server bug that returns empty key properties. So it's armed and held, honestly.
+> Two reasons, one principled and one practical. Principled: a governed agent shouldn't post to the system of record — a human authorizes and a deterministic step writes. Practical: the write path is coded but currently 404s on an upstream MCP-server bug that returns empty key properties. And a deliberate third: I chose not to stake a governance demo on a live mutation of a shared system-of-record object that could fail on camera — "armed and held" is the honest, safer story, and it's one server-side fix away from landing.
 
 **"How much of this did Claude Code build?"**
 > Substantially. The coded agents, the Maestro BPMN, and the cockpit were scaffolded and hardened with Claude Code through UiPath for Coding Agents, using the official `uip` skills — then hand-reviewed. It's documented with the commit trail in `CODING-AGENTS.md`. Deliberately blended — that's where the platform is going.
