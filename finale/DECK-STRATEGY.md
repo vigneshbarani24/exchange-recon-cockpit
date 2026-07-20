@@ -20,7 +20,7 @@ Rule: **thesis for the frame, the real build for the proof.** Use Workforce-to-W
 - *Solution:* a **governed agent** takes the repeatable 75% — reads the live PO from S/4, reconciles, classifies, proposes — while a human keeps the 25% judgment and **all** the authority. Innovation angle: *it reasons over the real system of record, not synthetic data, and it is architecturally forbidden to write.*
 
 **4 — Benefits + Technologies** (quantify here — this slide currently loses you the most points).
-- *Benefits:* the **measured** number first — a full reconciliation verdict in **64 seconds vs a ~35-minute manual baseline ≈ 97% faster on an exception** (measured job runtime; baseline illustrative). Then one modeled figure, labeled: "~1.5 FTE / ~$187k/yr on our illustrative model."
+- *Benefits:* the **measured** number first — a full reconciliation verdict in **64 seconds** (measured job runtime), the judgment step that anchored a ~35-minute manual task; **~86% faster end-to-end** on the illustrative model (5-min assisted vs 35-min, `BUSINESS-CASE.md:37`). Don't headline "97%" — that's compute-only and invites the "human still takes 5 min?" question. Then one modeled figure, labeled: "~1.5 FTE / ~$187k/yr on our illustrative model."
 - *End-user:* AP / finance ops. *Department:* Accounts Payable / Procurement. *Industry:* any SAP-run enterprise (demoed in a hydrocarbon P2P context).
 - *UiPath products:* Maestro BPMN, Coded Agents (LangGraph), LLM Gateway, Orchestrator, Action Center, TypeScript SDK, **UiPath for Coding Agents (Claude Code)** — name the last one explicitly for the bonus.
 - *Other:* SAP S/4HANA over MCP (XSUAA), SAP BTP-hosted OData→MCP server.
@@ -29,7 +29,7 @@ Rule: **thesis for the frame, the real build for the proof.** Use Workforce-to-W
 
 **6 — The governance spine ("Three Laws")** — your differentiator, one slide. (1) every agent action is authorized before it happens; (2) every exception reaches a human with evidence; (3) every decision is reconstructable. Ties directly to what Jaffri rewards.
 
-**7 — Demo handoff / Impact.** One line to cue the live demo, then the close: the 97% number + "every decision governed, a human at the gate." This is your peak-end anchor — the last thing they read.
+**7 — Demo handoff / Impact.** One line to cue the live demo, then the close: the 64-second verdict / ~86% end-to-end number + "every decision governed, a human at the gate." This is your peak-end anchor — the last thing they read.
 
 **8 — Closing / Thank you.** Contact + the Devpost/repo link (for People's Choice votes).
 
