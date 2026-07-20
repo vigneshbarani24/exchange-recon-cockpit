@@ -5,6 +5,7 @@ import { Header } from "./components/Header";
 import { ExceptionQueue } from "./components/ExceptionQueue";
 import { VarianceDrawer } from "./components/VarianceDrawer";
 import { ReconciliationView } from "./components/ReconciliationView";
+import { OperatingSurface } from "./components/OperatingSurface";
 import type { InstanceRow } from "./lib/exchange";
 
 // The live tenant cockpit — reads running Maestro instances + the Action Center gate.
@@ -33,11 +34,16 @@ function LiveCockpit({ onCount }: { onCount: (n: number) => void }) {
   );
 }
 
+type Mode = "surface" | "demo" | "live";
+
 export default function App() {
-  const [mode, setMode] = useState<"demo" | "live">("demo");
+  const [mode, setMode] = useState<Mode>("surface");
   const [count, setCount] = useState(0);
 
-  const tab = (m: "demo" | "live", label: string) => (
+  // The Operating Surface is a full-bleed, self-contained view (its own light header).
+  if (mode === "surface") return <OperatingSurface onExit={() => setMode("demo")} />;
+
+  const tab = (m: Mode, label: string) => (
     <button
       onClick={() => setMode(m)}
       className={`px-3 py-1.5 rounded border font-mono text-xs ${
@@ -52,6 +58,7 @@ export default function App() {
     <div className="min-h-screen">
       <Header count={mode === "live" ? count : 0} />
       <div className="mx-auto max-w-[1100px] px-6 pt-4 flex gap-2">
+        {tab("surface", "Operating surface")}
         {tab("demo", "Reconciliation")}
         {tab("live", "Live tenant")}
       </div>
