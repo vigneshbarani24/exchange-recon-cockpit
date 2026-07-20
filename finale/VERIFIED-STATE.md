@@ -8,6 +8,7 @@ The honesty spine. Every finale claim must trace here. Sourced from four read-on
 - **Governed agency in code:** every agent's system prompt is read-only ("NEVER write to SAP"); structured Pydantic output; bounded 6-turn tool loop; the only write path is a *separate* deterministic CLI the agents cannot call. Ref: `variance-agent/main.py:102-148`, `post_correction.py`.
 - **Deliberate platform surface:** Maestro BPMN spine (3 `StartAgentJob` service tasks, JS tolerance gate, message-event HITL, boundary-error escalation) + coded LangGraph agents (uipath-langchain, LLM Gateway gpt-4o) + MCP→S/4 (XSUAA client-credentials, config from Orchestrator assets) + Action Center + TS SDK v1.4.1 (`package.json:15`) + built with `uip` coding-agents (Claude Code). Ref: `ExchangeReconBpmn.bpmn`, `bindings_v2.json`, `src/lib/sdk.ts`, `CODING-AGENTS.md`.
 - **One measured performance number:** variance verdict in **64 seconds** (job `dbedd8aa`). Ref: `ARCHITECTURE.md:191`.
+- **All three agents re-confirmed live 2026-07-20:** fresh local `uv run uipath run` invokes against live S/4 — **matching** (both lines matched by material, confidence 1.0), **variance** (price-variance + over-delivery classified, corrections prepared, confidence 0.95), **posting-prep** (read current qty 5, prepared the 5→6 update, `ready_to_post`). Each returned the PO side it could only read from S/4. Receipts in `finale/receipts/`. This upgrades the earlier "only variance had local run evidence" — the full 3-agent pipeline now runs as three live jobs. (Token note: each agent authenticates from its own `.env`; only variance's was fresh, so matching/posting-prep failed until their `.env` was refreshed — a per-folder token, not a code problem.)
 
 ## BUILT-NOT-RUN (say "built, validated, deployed" — never "ran end-to-end")
 - **The 3-agent Maestro BPMN as a single composed instance.** It is built, passes `uip solution pack --dry-run` (Valid), is deployed and bound to the three agents by release key, and an instance launches — but it **never completes** as one instance (no allocated agent runtime / capacity). Ref: `DEMO.md:84-101`, `CODING-AGENTS.md:74-79`, `ARCHITECTURE.md:110`.
@@ -24,10 +25,10 @@ The honesty spine. Every finale claim must trace here. Sourced from four read-on
 - Committed UiPath tokens are **expired staging JWTs**; the SAP XSUAA secret was shared in chat and **needs rotation** (`SECURITY-CLOSEOUT.md`). Any live read needs re-auth first; the token lives ~1 hour.
 
 ## FALSIFIABLE ARTIFACTS TO FIX BEFORE A JUDGE OPENS THE REPO
-1. `variance-agent/out.json` is **stale legacy oil-settlement output** ("60,000 bbl", "terminal A") — inconsistent with the P2P story. Remove or regenerate.
+1. `variance-agent/out.json` — **regenerated 2026-07-20** by a fresh live run; now the real P2P reconciliation for PO 4500000021 (no longer the stale oil-settlement output). A copy is committed at `finale/receipts/`.
 2. `CODING-AGENTS.md` cites `src/lib/demoData.ts` and a `VITE_DEMO_FALLBACK` flag that **do not exist** in the code. Correct or delete that evidence row.
 3. The variance job ID is inconsistent across docs (`dbedd8aa` in `README.md:53` vs `c51ac7fa` in `CODING-AGENTS.md:28`). Pick one and reconcile.
-4. **No job-output receipts are committed** — the four job IDs live only in prose. Commit one job's output JSON / screenshot so the "it ran live" claim is self-verifying in the repo.
+4. **Job receipt — captured 2026-07-20.** A fresh live-run output (local `uv run` invoke against live SAP) is committed at `finale/receipts/variance-agent-PO4500000021.json`, so the read path is self-verifying in the repo. For *cloud-job* proof, a screenshot of an Orchestrator job in folder 3093256 is still a nice-to-have.
 
 ## SCORECARD (honest, today → after fixes)
 | Criterion (equal weight, 1-5) | Today | After the fixes |

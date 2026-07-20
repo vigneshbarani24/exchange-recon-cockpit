@@ -1,0 +1,1 @@
+{"purchase_order": "4500000021", "po_item": "20", "update_entity": "A_PurchaseOrderItemType", "field_updates": [{"field": "OrderQuantity", "current_value": "5", "new_value": "6"}], "human_summary": "The order quantity for Purchase Order 4500000021, Item 20, will be updated from 5 to 6.", "ready_to_post": true}

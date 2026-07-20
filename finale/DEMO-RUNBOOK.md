@@ -14,7 +14,7 @@ Everything here obeys `VERIFIED-STATE.md`. The demo shows the **one thing that g
 
 ## Pre-flight (T-minus 60 min — do in this order)
 1. **Rotate the SAP XSUAA secret** and confirm the MCP server answers (`SECURITY-CLOSEOUT.md` flags it as shared/needs-rotation). A rotated-but-unupdated secret = dead demo.
-2. **Re-auth UiPath** (`uv run uipath auth --staging`). Token lives ~1 hr — do this inside the hour before you go on.
+2. **Re-auth UiPath in EVERY agent folder** (`uv run uipath auth`). The token is **per-folder** — authing in one agent does NOT refresh the others. This bit us on 2026-07-20: matching + posting-prep failed on a stale token while variance worked. Fix: copy the fresh `.env` to all three agents (or `uipath auth` in each). Token lives ~1 hr — do it inside the hour before you present.
 3. **Warm the MCP session:** run one `variance-agent` invoke against PO `4500000021` now. Confirm it returns the PO side. **Screenshot / save that job output** — it becomes the fallback for beat 2.
 4. **Record the fallback video** (if not already): a clean screen-capture of the exact spine above, cued to the demo start, subtitled. Put it on a **second device or a separate browser tab**, already open.
 5. Browser zoom ~110%, notifications off, one clean window, cursor visible, mic tested (wired if possible).
