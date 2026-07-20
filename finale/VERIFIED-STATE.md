@@ -35,7 +35,7 @@ The honesty spine. Every finale claim must trace here. Sourced from four read-on
 |---|---|---|
 | Platform Usage | 4.5 | 4.5 |
 | Creativity & Innovation | 4 | 4–4.5 |
-| Technical Execution | 3–4 | 4 |
+| Technical Execution | 4 | 4 |
 | Business Impact & Adoption | 2.5 | 4 |
 | Presentation | 3 | 4 |
 | Coding-agent bonus (0–2) | +1 | +2 |

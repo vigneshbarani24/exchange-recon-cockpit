@@ -11,6 +11,8 @@ Grounded prep for the UiPath AgentHack 2026 live finale. Everything here is writ
 | `DECK-CONTENT.md` | The 8-slide deck content, paste-ready — the source for the built deck below. |
 | `AgentHack-2026-Workforce-to-Workflow.pptx` | **The finale deck** — filled into the official Cinder template, 7 slides, branded. Present from this. |
 | `QA-BANK.md` | The 3-minute jury Q&A — answer-first responses for both judges + the honesty/trap answers. |
+| `RUBRIC-MATCH.md` | How each of the 5 finale criteria (+ coding bonus) is won — per-criterion evidence, the exact moment, score, and the remaining moves. |
+| `receipts/` | Live-run proof — all three agents' fresh output against real SAP (2026-07-20). |
 
 ## The one-line status
 A genuine contender on **Platform Usage (4.5/5)**, **Creativity (4/5)**, and a governance story unusually aligned with the two product-VP judges — currently held back by **no quantified close, no finale deck, and two Q&A gaps**. All three are fixable in the days before July 23 without writing a line of product code.

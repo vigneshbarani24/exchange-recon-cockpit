@@ -12,7 +12,8 @@
 Five **equally weighted** criteria, judged on the **live presentation + Q&A** [Devpost rules]: Business Impact & Adoption · Platform Usage · Technical Execution/Feasibility/Versatility · Creativity & Innovation · Presentation. Plus **up to 2 bonus points** for evidenced coding-agent use (Claude Code) inside Platform Usage. Max base 25, max 27.
 
 Mapping the honest scorecard (`VERIFIED-STATE.md`) onto 25:
-- **Today, as-is (Phase-1 assets, no finale deck):** ≈ 3+4.5+3.5+4+3 = **18/25 (+1) = 19/27**. Above field-median on Platform & Creativity; dragged by an unquantified business case and the absence of a live-presentation deck.
+- **Baseline (Phase-1 assets, before this session):** ≈ 3+4.5+3.5+4+3 = **18/25 (+1) = 19/27**. Dragged by an unquantified business case and no live-presentation deck.
+- **Now (this session banked):** the Cinder deck is built, **all three agents are proven live with committed receipts** (Technical Execution → 4), and the quantified close is written — so realistic current standing is already near **~22–23/27**. Remaining lift is execution: rehearsal, the backup video, and landing the close live.
 - **After the fixes:** ≈ 4+4.5+4+4.25+4 = **20.75/25 (+2) = 22.75/27**. That moves you from "solid finalist" into "podium-contention" range.
 
 ## 3. Judge fit (cited stances)

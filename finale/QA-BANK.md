@@ -48,7 +48,7 @@
 ## Honesty / trap questions (rehearse these hardest)
 
 **"Did the three agents run end-to-end inside one Maestro instance?"**
-> No — and let me be precise. All three ran live as separate Successful Orchestrator jobs against real SAP, and the full reconciliation pipeline has run end-to-end in a single agent job. What has *not* run is the three composed inside one Maestro instance — that's built, validated, deployed, and bound, but the composed run is capacity-blocked. I won't claim the instance completed.
+> No — and let me be precise. All three ran live as separate jobs against real SAP — I re-ran them this week on the real PO: matching aligns the supplier lines at full confidence, variance classifies the price and quantity variances and prepares the corrections, posting-prep prepares the exact S/4 update. Three live jobs, real system of record, receipts in the repo. What has *not* run is the three composed inside one Maestro instance — built, validated, deployed, and bound, but capacity-blocked. I won't claim the instance completed.
 
 **"Is the demo live, or a mock?"**
 > The agent reading SAP is live — real S/4HANA over MCP. The tell is that it's handed only the supplier's numbers yet returns the PO side. The cockpit's default view renders captured output from that live run so it always displays — and I label it as captured. The write-back is prepared and held, not executed.
