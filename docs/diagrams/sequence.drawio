@@ -1,1 +1,328 @@
-<mxfile host="app.diagrams.net"><diagram name="Demo-path Sequence" id="seq1"><mxGraphModel dx="900" dy="640" grid="0" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0"><root><mxCell id="0"/><mxCell id="1" parent="0"/><mxCell id="title" value="Demo-path Sequence — supplier invoice → held PO correction" style="text;html=1;align=center;verticalAlign=middle;fontStyle=1;fontSize=14;" vertex="1" parent="1"><mxGeometry x="320" y="20" width="460" height="30" as="geometry"/></mxCell><mxCell id="n1" value="Supplier invoice + PO number&#10;INV-88231 / PO 4500000021&#10;(supplier numbers only)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="20" y="280" width="130" height="120" as="geometry"/></mxCell><mxCell id="n2" value="matching-agent&#10;reads S/4 PO line items&#10;LIVE (read-only)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="175" y="280" width="130" height="120" as="geometry"/></mxCell><mxCell id="n3" value="tolerance check&#10;deterministic JS&#10;2% price / 1-unit qty" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="330" y="280" width="130" height="120" as="geometry"/></mxCell><mxCell id="n4" value="variance-agent&#10;classify + propose&#10;LIVE (proven, job Successful)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="485" y="280" width="130" height="120" as="geometry"/></mxCell><mxCell id="n5" value="human gate&#10;Maestro message-event&#10;approve / escalate" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="640" y="280" width="130" height="120" as="geometry"/></mxCell><mxCell id="n6" value="posting-prep-agent&#10;build PO update payload&#10;LIVE (read-only)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="795" y="280" width="130" height="120" as="geometry"/></mxCell><mxCell id="n7" value="Update PO in S/4&#10;PATCH A_PurchaseOrderItem&#10;HELD — never posted&#10;(upstream MCP keyProperties bug)" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=#f5f5f5;strokeColor=#999999;" vertex="1" parent="1"><mxGeometry x="950" y="280" width="130" height="120" as="geometry"/></mxCell><mxCell id="e1" value="PO number" style="endArrow=block;html=1;" edge="1" parent="1" source="n1" target="n2"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="e2" value="matched lines + PO side" style="endArrow=block;html=1;" edge="1" parent="1" source="n2" target="n3"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="e3" value="out-of-tolerance" style="endArrow=block;html=1;" edge="1" parent="1" source="n3" target="n4"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="e4" value="proposed corrections (held)" style="endArrow=block;html=1;" edge="1" parent="1" source="n4" target="n5"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="e5" value="approved" style="endArrow=block;html=1;" edge="1" parent="1" source="n5" target="n6"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="e6" value="PATCH (HELD)" style="endArrow=block;html=1;dashed=1;strokeColor=#999999;" edge="1" parent="1" source="n6" target="n7"><mxGeometry relative="1" as="geometry"/></mxCell><mxCell id="legend" value="LEGEND&#10;Solid blue = LIVE (real, proven path)&#10;Dashed grey = MOCKED / HELD / aspirational&#10;The S/4 write is armed, not fired (post_correction.py is a blocked STUB)" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#ffffff;strokeColor=#666666;fontSize=11;" vertex="1" parent="1"><mxGeometry x="20" y="480" width="430" height="120" as="geometry"/></mxCell></root></mxGraphModel></diagram></mxfile>
+<mxfile host="app.diagrams.net" pages="4">
+  <diagram name="Demo-path Sequence" id="seq1">
+    <mxGraphModel dx="3329" dy="904" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontStyle=1;fontSize=14;" value="Demo-path Sequence — supplier invoice → held PO correction" vertex="1">
+          <mxGeometry height="30" width="460" x="320" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="n1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Supplier invoice + PO number&#xa;INV-88231 / PO 4500000021&#xa;(supplier numbers only)" vertex="1">
+          <mxGeometry height="120" width="130" x="-849" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="n2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="matching-agent&#xa;reads S/4 PO line items&#xa;LIVE (read-only)" vertex="1">
+          <mxGeometry height="120" width="130" x="-620" y="285" as="geometry" />
+        </mxCell>
+        <mxCell id="n3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="tolerance check&#xa;deterministic JS&#xa;2% price / 1-unit qty" vertex="1">
+          <mxGeometry height="120" width="130" x="-347" y="285" as="geometry" />
+        </mxCell>
+        <mxCell id="n4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="variance-agent&#xa;classify + propose&#xa;LIVE (proven, job Successful)" vertex="1">
+          <mxGeometry height="120" width="130" x="-106" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="n5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="human gate&#xa;Maestro message-event&#xa;approve / escalate" vertex="1">
+          <mxGeometry height="120" width="130" x="190" y="283" as="geometry" />
+        </mxCell>
+        <mxCell id="n6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="posting-prep-agent&#xa;build PO update payload&#xa;LIVE (read-only)" vertex="1">
+          <mxGeometry height="120" width="130" x="439" y="285" as="geometry" />
+        </mxCell>
+        <mxCell id="n7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=#f5f5f5;strokeColor=#999999;" value="Update PO in S/4&#xa;PATCH A_PurchaseOrderItem&#xa;HELD — never posted&#xa;(upstream MCP keyProperties bug)" vertex="1">
+          <mxGeometry height="120" width="130" x="678" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="n1" style="endArrow=block;html=1;" target="n2" value="PO number">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="n2" style="endArrow=block;html=1;" target="n3" value="matched lines + PO side">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="n3" style="endArrow=block;html=1;" target="n4" value="out-of-tolerance">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="n4" style="endArrow=block;html=1;" target="n5" value="proposed corrections (held)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="n5" style="endArrow=block;html=1;" target="n6" value="approved">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="n6" style="endArrow=block;html=1;dashed=1;strokeColor=#999999;" target="n7" value="PATCH (HELD)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=#ffffff;strokeColor=#666666;fontSize=11;" value="LEGEND&#xa;Solid blue = LIVE (real, proven path)&#xa;Dashed grey = MOCKED / HELD / aspirational&#xa;The S/4 write is armed, not fired (post_correction.py is a blocked STUB)" vertex="1">
+          <mxGeometry height="120" width="430" x="20" y="480" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="2EvoZ3Sn2Vn7t-AOC5bm" name="agents">
+    <mxGraphModel dx="1254" dy="509" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" value="Supplier invoice received (INV-88231)" vertex="1">
+          <mxGeometry height="70" width="100" x="302" y="485.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="Matching agent&#xa;StartAgentJob | tool: MCP read" vertex="1">
+          <mxGeometry height="70" width="170" x="432" y="485.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-3" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;" value="Within tolerance?&#xa;(2% price / 1 unit qty)" vertex="1">
+          <mxGeometry height="80" width="130" x="632" y="480.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="Variance agent&#xa;StartAgentJob | tool: MCP read&#xa;PO 4500000021" vertex="1">
+          <mxGeometry height="80" width="180" x="792" y="480.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="Human approval gate&#xa;(Maestro message event)" vertex="1">
+          <mxGeometry height="70" width="170" x="1002" y="485.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-6" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;" value="Approve or escalate?" vertex="1">
+          <mxGeometry height="80" width="130" x="1202" y="480.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="Auto-approve - within tolerance&#xa;(no correction needed)" vertex="1">
+          <mxGeometry height="60" width="200" x="622" y="325.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-8" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" value="End: reconciled, no action" vertex="1">
+          <mxGeometry height="70" width="110" x="862" y="325.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="Posting-prep agent&#xa;StartAgentJob | tool: MCP read" vertex="1">
+          <mxGeometry height="70" width="190" x="1162" y="655.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#666666;fontSize=11;" value="Update PO item in S/4&#xa;(HELD | script stub; real PATCH blocked)" vertex="1">
+          <mxGeometry height="80" width="210" x="1152" y="805.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" value="Route to buyer (escalation)" vertex="1">
+          <mxGeometry height="60" width="180" x="872" y="655.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-12" parent="1" style="ellipse;whiteSpace=wrap;html=1;dashed=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#666666;fontSize=10;" value="Error / escalation boundary" vertex="1">
+          <mxGeometry height="60" width="160" x="662" y="710.0033435058593" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="SAP S/4 read via MCP&#xa;(execute-entity-operation)" vertex="1">
+          <mxGeometry height="70" width="250" x="402" y="805.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-14" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;align=left;verticalAlign=top;fontSize=11;spacingLeft=8;spacingTop=6;" value="LEGEND&#xa;Solid green = LIVE / proven    Dashed grey = held / STUB / mocked&#xa;Diamonds = exclusive gateways    Ellipses = events&#xa;Agents run as Orchestrator StartAgentJob; shared tool = SAP S/4 read via MCP" vertex="1">
+          <mxGeometry height="80" width="430" x="692" y="805.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-15" edge="1" parent="1" source="6Y5TPnqDTcRtjqWiDPDH-1" style="endArrow=block;html=1;" target="6Y5TPnqDTcRtjqWiDPDH-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-16" edge="1" parent="1" source="6Y5TPnqDTcRtjqWiDPDH-2" style="endArrow=block;html=1;" target="6Y5TPnqDTcRtjqWiDPDH-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-17" edge="1" parent="1" source="6Y5TPnqDTcRtjqWiDPDH-3" style="endArrow=block;html=1;fontSize=10;" target="6Y5TPnqDTcRtjqWiDPDH-7" value="within tolerance">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-18" edge="1" parent="1" source="6Y5TPnqDTcRtjqWiDPDH-7" style="endArrow=block;html=1;" target="6Y5TPnqDTcRtjqWiDPDH-8" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-19" edge="1" parent="1" source="6Y5TPnqDTcRtjqWiDPDH-3" style="endArrow=block;html=1;fontSize=10;" target="6Y5TPnqDTcRtjqWiDPDH-4" value="variance">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-20" edge="1" parent="1" source="6Y5TPnqDTcRtjqWiDPDH-4" style="endArrow=block;html=1;" target="6Y5TPnqDTcRtjqWiDPDH-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-21" edge="1" parent="1" source="6Y5TPnqDTcRtjqWiDPDH-5" style="endArrow=block;html=1;" target="6Y5TPnqDTcRtjqWiDPDH-6" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-22" edge="1" parent="1" source="6Y5TPnqDTcRtjqWiDPDH-6" style="endArrow=block;html=1;fontSize=10;" target="6Y5TPnqDTcRtjqWiDPDH-9" value="approve">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-23" edge="1" parent="1" source="6Y5TPnqDTcRtjqWiDPDH-9" style="endArrow=block;html=1;dashed=1;strokeColor=#999999;fontColor=#999999;fontSize=10;" target="6Y5TPnqDTcRtjqWiDPDH-10" value="prepared correction (held)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-24" edge="1" parent="1" source="6Y5TPnqDTcRtjqWiDPDH-6" style="endArrow=block;html=1;fontSize=10;" target="6Y5TPnqDTcRtjqWiDPDH-11" value="escalate">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-25" edge="1" parent="1" source="6Y5TPnqDTcRtjqWiDPDH-4" style="endArrow=block;html=1;dashed=1;strokeColor=#999999;fontColor=#999999;fontSize=10;" target="6Y5TPnqDTcRtjqWiDPDH-12" value="error / timeout">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-26" edge="1" parent="1" source="6Y5TPnqDTcRtjqWiDPDH-12" style="endArrow=block;html=1;dashed=1;strokeColor=#999999;fontColor=#999999;fontSize=10;" target="6Y5TPnqDTcRtjqWiDPDH-11" value="escalate">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-27" edge="1" parent="1" source="6Y5TPnqDTcRtjqWiDPDH-2" style="endArrow=block;html=1;fontSize=10;" target="6Y5TPnqDTcRtjqWiDPDH-13" value="MCP read">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-28" edge="1" parent="1" source="6Y5TPnqDTcRtjqWiDPDH-4" style="endArrow=block;html=1;fontSize=10;" target="6Y5TPnqDTcRtjqWiDPDH-13" value="MCP read">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6Y5TPnqDTcRtjqWiDPDH-29" edge="1" parent="1" source="6Y5TPnqDTcRtjqWiDPDH-9" style="endArrow=block;html=1;fontSize=10;" target="6Y5TPnqDTcRtjqWiDPDH-13" value="MCP read">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="XAN4_lM3Cah8TMYssIFA" name="Components">
+    <mxGraphModel dx="2006" dy="814" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="dabbRJPcOZR7-if9YZKe-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b3b3b3;verticalAlign=top;align=left;fontStyle=1;fontSize=12;spacingLeft=8;spacingTop=4;" value="CLIENT | Vite/React cockpit (src/)" vertex="1">
+          <mxGeometry height="120" width="1020" x="357" y="237.33334350585938" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b3b3b3;verticalAlign=top;align=left;fontStyle=1;fontSize=12;spacingLeft=8;spacingTop=4;" value="ORCHESTRATION | UiPath Maestro BPMN + Orchestrator" vertex="1">
+          <mxGeometry height="120" width="1020" x="357" y="377.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b3b3b3;verticalAlign=top;align=left;fontStyle=1;fontSize=12;spacingLeft=8;spacingTop=4;" value="AGENTS | Coded LangGraph agents (single-node graphs, READ-ONLY on SAP)" vertex="1">
+          <mxGeometry height="140" width="1020" x="357" y="537.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b3b3b3;verticalAlign=top;align=left;fontStyle=1;fontSize=12;spacingLeft=8;spacingTop=4;" value="INTEGRATIONS" vertex="1">
+          <mxGeometry height="120" width="1020" x="357" y="697.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b3b3b3;verticalAlign=top;align=left;fontStyle=1;fontSize=12;spacingLeft=8;spacingTop=4;" value="DATA" vertex="1">
+          <mxGeometry height="120" width="1020" x="357" y="857.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#666666;" value="Reconciliation tab - SEEDED demo (offline, reliable)&#xa;src/lib/reconDemo.ts" vertex="1">
+          <mxGeometry height="60" width="320" x="407" y="277.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Live tenant tab - @uipath/uipath-typescript SDK&#xa;src/lib/sdk.ts, src/lib/exchange.ts (needs operator config)" vertex="1">
+          <mxGeometry height="60" width="360" x="797" y="277.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Maestro BPMN spine + Orchestrator StartAgentJob&#xa;ExchangeReconSolution/ExchangeReconBpmn/ExchangeReconBpmn.bpmn" vertex="1">
+          <mxGeometry height="60" width="420" x="737" y="412.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="matching-agent (LangGraph)&#xa;matching-agent/main.py" vertex="1">
+          <mxGeometry height="70" width="270" x="407" y="572.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="variance-agent (LangGraph)&#xa;variance-agent/main.py:107-156" vertex="1">
+          <mxGeometry height="70" width="270" x="737" y="572.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="posting-prep-agent (LangGraph)&#xa;posting-prep-agent/main.py" vertex="1">
+          <mxGeometry height="70" width="270" x="1077" y="572.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="UiPath LLM Gateway - Azure OpenAI gpt-4o-2024-11-20&#xa;(UiPathAzureChatOpenAI)" vertex="1">
+          <mxGeometry height="60" width="320" x="437" y="732.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="SAP OData-MCP server (BTP, XSUAA)&#xa;variance-agent/mcp_client.py:35-76" vertex="1">
+          <mxGeometry height="60" width="360" x="937" y="732.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="SAP S/4HANA Cloud&#xa;API_PURCHASEORDER_PROCESS_SRV / A_PurchaseOrderItem" vertex="1">
+          <mxGeometry height="60" width="360" x="937" y="892.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-15" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;align=left;verticalAlign=top;fontSize=11;spacingLeft=8;spacingTop=6;" value="LEGEND&#xa;Solid green = LIVE / proven    Dashed grey = MOCKED / STUB / held&#xa;Edges labelled with protocol / call. Seeded tab has no backend edge (offline by design)." vertex="1">
+          <mxGeometry height="70" width="480" x="407" y="892.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-16" edge="1" parent="1" source="dabbRJPcOZR7-if9YZKe-7" style="endArrow=block;html=1;fontSize=10;" target="dabbRJPcOZR7-if9YZKe-8" value="OAuth PKCE (SDK)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-17" edge="1" parent="1" source="dabbRJPcOZR7-if9YZKe-8" style="endArrow=block;html=1;fontSize=10;" target="dabbRJPcOZR7-if9YZKe-9" value="StartAgentJob">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-18" edge="1" parent="1" source="dabbRJPcOZR7-if9YZKe-8" style="endArrow=block;html=1;fontSize=10;" target="dabbRJPcOZR7-if9YZKe-10" value="StartAgentJob">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-19" edge="1" parent="1" source="dabbRJPcOZR7-if9YZKe-8" style="endArrow=block;html=1;fontSize=10;" target="dabbRJPcOZR7-if9YZKe-11" value="StartAgentJob">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-20" edge="1" parent="1" source="dabbRJPcOZR7-if9YZKe-9" style="endArrow=block;html=1;fontSize=10;" target="dabbRJPcOZR7-if9YZKe-12" value="LLM call">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-21" edge="1" parent="1" source="dabbRJPcOZR7-if9YZKe-10" style="endArrow=block;html=1;fontSize=10;" target="dabbRJPcOZR7-if9YZKe-12" value="LLM call">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-22" edge="1" parent="1" source="dabbRJPcOZR7-if9YZKe-11" style="endArrow=block;html=1;fontSize=10;" target="dabbRJPcOZR7-if9YZKe-12" value="LLM call">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-23" edge="1" parent="1" source="dabbRJPcOZR7-if9YZKe-9" style="endArrow=block;html=1;fontSize=10;" target="dabbRJPcOZR7-if9YZKe-13" value="MCP execute-entity-operation (read)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-24" edge="1" parent="1" source="dabbRJPcOZR7-if9YZKe-10" style="endArrow=block;html=1;fontSize=10;" target="dabbRJPcOZR7-if9YZKe-13" value="MCP execute-entity-operation (read)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-25" edge="1" parent="1" source="dabbRJPcOZR7-if9YZKe-11" style="endArrow=block;html=1;fontSize=10;" target="dabbRJPcOZR7-if9YZKe-13" value="MCP execute-entity-operation (read)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-26" edge="1" parent="1" source="dabbRJPcOZR7-if9YZKe-13" style="endArrow=block;html=1;fontSize=10;" target="dabbRJPcOZR7-if9YZKe-14" value="OData read (LIVE)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-27" edge="1" parent="1" source="dabbRJPcOZR7-if9YZKe-10" style="endArrow=block;html=1;dashed=1;strokeColor=#999999;fontColor=#999999;fontSize=10;" target="dabbRJPcOZR7-if9YZKe-13" value="PATCH write - HELD (post_correction.py)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dabbRJPcOZR7-if9YZKe-28" edge="1" parent="1" source="dabbRJPcOZR7-if9YZKe-13" style="endArrow=block;html=1;dashed=1;strokeColor=#999999;fontColor=#999999;fontSize=10;" target="dabbRJPcOZR7-if9YZKe-14" value="OData write - HELD (404, upstream MCP bug)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="1EcZVfa8F5UDo4mEbWi8" name="Deployment">
+    <mxGraphModel dx="872" dy="354" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="rp9T3h84ip0U33ETj465-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#9673a6;verticalAlign=top;align=left;fontStyle=1;fontSize=12;spacingLeft=8;spacingTop=4;" value="TRUST BOUNDARY - UiPath Cloud" vertex="1">
+          <mxGeometry height="440" width="640" x="457" y="300.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#9673a6;verticalAlign=top;align=left;fontStyle=1;fontSize=12;spacingLeft=8;spacingTop=4;" value="TRUST BOUNDARY - SAP BTP" vertex="1">
+          <mxGeometry height="300" width="340" x="1137" y="300.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#9673a6;verticalAlign=top;align=left;fontStyle=1;fontSize=12;spacingLeft=8;spacingTop=4;" value="TRUST BOUNDARY - SAP S/4HANA Cloud" vertex="1">
+          <mxGeometry height="210" width="340" x="1137" y="810.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#9673a6;verticalAlign=top;align=left;fontStyle=1;fontSize=12;spacingLeft=8;spacingTop=4;" value="TRUST BOUNDARY - Local / Dev workstation" vertex="1">
+          <mxGeometry height="210" width="480" x="457" y="810.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;verticalAlign=top;align=left;fontStyle=1;fontSize=11;spacingLeft=8;spacingTop=4;" value="UiPath Orchestrator - Serverless agent runtime" vertex="1">
+          <mxGeometry height="250" width="600" x="477" y="360.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="Maestro process (ExchangeReconBpmn) - DEPLOYED (release key)" vertex="1">
+          <mxGeometry height="60" width="300" x="497" y="400.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="matching-agent process - DEPLOYED" vertex="1">
+          <mxGeometry height="60" width="170" x="497" y="490.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="variance-agent process - DEPLOYED" vertex="1">
+          <mxGeometry height="60" width="170" x="687" y="490.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="posting-prep-agent process - DEPLOYED" vertex="1">
+          <mxGeometry height="60" width="170" x="877" y="490.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="UiPath LLM Gateway (Azure OpenAI gpt-4o-2024-11-20)" vertex="1">
+          <mxGeometry height="70" width="320" x="477" y="650.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="SAP OData-MCP server&#xa;mcp_client.py | execute-entity-operation" vertex="1">
+          <mxGeometry height="80" width="300" x="1157" y="360.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="XSUAA - client-credentials auth" vertex="1">
+          <mxGeometry height="70" width="300" x="1157" y="480.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="API_PURCHASEORDER_PROCESS_SRV&#xa;A_PurchaseOrderItem (PO 4500000021)" vertex="1">
+          <mxGeometry height="110" width="300" x="1157" y="870.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="Vite/React cockpit (npm run dev)&#xa;Reconciliation tab = seeded/offline | Live tenant tab = SDK" vertex="1">
+          <mxGeometry height="110" width="420" x="487" y="870.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-15" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#666666;align=left;verticalAlign=top;fontSize=11;spacingLeft=8;spacingTop=6;" value="CAPACITY CONSTRAINT: ProcessOrchestration / Agent runtime NOT allocated (license matrix all-zeros). Maestro instance launches but hangs Pending - full 3-agent e2e not completed." vertex="1">
+          <mxGeometry height="50" width="600" x="477" y="750.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-16" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;align=left;verticalAlign=top;fontSize=11;spacingLeft=8;spacingTop=6;" value="LEGEND&#xa;Solid green = LIVE / deployed / proven&#xa;Dashed grey = held / STUB / mocked&#xa;Purple outline = trust boundary&#xa;Blue box = Orchestrator runtime&#xa;Edges labelled with protocol / call" vertex="1">
+          <mxGeometry height="150" width="340" x="1137" y="630.3333435058594" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-18" edge="1" parent="1" source="rp9T3h84ip0U33ETj465-6" style="endArrow=block;html=1;fontSize=10;" target="rp9T3h84ip0U33ETj465-7" value="StartAgentJob">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-19" edge="1" parent="1" source="rp9T3h84ip0U33ETj465-6" style="endArrow=block;html=1;fontSize=10;" target="rp9T3h84ip0U33ETj465-8" value="StartAgentJob">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-20" edge="1" parent="1" source="rp9T3h84ip0U33ETj465-6" style="endArrow=block;html=1;fontSize=10;" target="rp9T3h84ip0U33ETj465-9" value="StartAgentJob">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-21" edge="1" parent="1" source="rp9T3h84ip0U33ETj465-7" style="endArrow=block;html=1;fontSize=10;" target="rp9T3h84ip0U33ETj465-10" value="LLM call">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-22" edge="1" parent="1" source="rp9T3h84ip0U33ETj465-8" style="endArrow=block;html=1;fontSize=10;" target="rp9T3h84ip0U33ETj465-10" value="LLM call">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-23" edge="1" parent="1" source="rp9T3h84ip0U33ETj465-9" style="endArrow=block;html=1;fontSize=10;" target="rp9T3h84ip0U33ETj465-10" value="LLM call">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-24" edge="1" parent="1" source="rp9T3h84ip0U33ETj465-8" style="endArrow=block;html=1;fontSize=10;" target="rp9T3h84ip0U33ETj465-11" value="MCP execute-entity-operation (read, LIVE) - all 3 agents">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-25" edge="1" parent="1" source="rp9T3h84ip0U33ETj465-11" style="endArrow=block;html=1;fontSize=10;" target="rp9T3h84ip0U33ETj465-12" value="client-credentials token">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-26" edge="1" parent="1" source="rp9T3h84ip0U33ETj465-11" style="endArrow=block;html=1;fontSize=10;" target="rp9T3h84ip0U33ETj465-13" value="OData read (LIVE)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rp9T3h84ip0U33ETj465-27" edge="1" parent="1" source="rp9T3h84ip0U33ETj465-11" style="endArrow=block;html=1;dashed=1;strokeColor=#999999;fontColor=#999999;fontSize=10;" target="rp9T3h84ip0U33ETj465-13" value="OData write - HELD (404, post_correction.py)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
