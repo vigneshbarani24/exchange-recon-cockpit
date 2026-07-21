@@ -1,0 +1,32 @@
+{
+  "docVersion": "1.0.0",
+  "resource": {
+    "name": "variance-agent",
+    "kind": "package",
+    "apiVersion": "orchestrator.uipath.com/v1",
+    "isOverridable": true,
+    "dependencies": [],
+    "runtimeDependencies": [],
+    "folders": [
+      {
+        "fullyQualifiedName": "solution_folder"
+      }
+    ],
+    "spec": {
+      "fileName": "variance-agent.0.0.6.nupkg",
+      "fileReference": "variance-agent_0.0.6",
+      "name": "variance-agent"
+    },
+    "locks": [],
+    "key": "variance-agent:0.0.6",
+    "files": [
+      {
+        "name": "variance-agent.0.0.6.nupkg",
+        "kind": "Package",
+        "version": "0.0.6",
+        "url": "https://staging.uipath.com/32eb7f85-2f79-477a-9700-a3f8f55a24f9/6607a069-79dd-4c68-a6b3-728651e2d064/orchestrator_/odata/Processes/UiPath.Server.Configuration.OData.DownloadPackage(key='variance-agent:0.0.6')?feedId=537d8278-e3b2-4312-8d52-d4c747159e50",
+        "key": "variance-agent_0.0.6"
+      }
+    ]
+  }
+}

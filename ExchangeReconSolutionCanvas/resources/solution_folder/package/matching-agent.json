@@ -1,0 +1,32 @@
+{
+  "docVersion": "1.0.0",
+  "resource": {
+    "name": "matching-agent",
+    "kind": "package",
+    "apiVersion": "orchestrator.uipath.com/v1",
+    "isOverridable": true,
+    "dependencies": [],
+    "runtimeDependencies": [],
+    "folders": [
+      {
+        "fullyQualifiedName": "solution_folder"
+      }
+    ],
+    "spec": {
+      "fileName": "matching-agent.0.0.4.nupkg",
+      "fileReference": "matching-agent_0.0.4",
+      "name": "matching-agent"
+    },
+    "locks": [],
+    "key": "matching-agent:0.0.4",
+    "files": [
+      {
+        "name": "matching-agent.0.0.4.nupkg",
+        "kind": "Package",
+        "version": "0.0.4",
+        "url": "https://staging.uipath.com/32eb7f85-2f79-477a-9700-a3f8f55a24f9/6607a069-79dd-4c68-a6b3-728651e2d064/orchestrator_/odata/Processes/UiPath.Server.Configuration.OData.DownloadPackage(key='matching-agent:0.0.4')?feedId=537d8278-e3b2-4312-8d52-d4c747159e50",
+        "key": "matching-agent_0.0.4"
+      }
+    ]
+  }
+}

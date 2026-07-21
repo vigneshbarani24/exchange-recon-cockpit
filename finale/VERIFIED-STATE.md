@@ -10,9 +10,21 @@ The honesty spine. Every finale claim must trace here. Sourced from four read-on
 - **One measured performance number:** variance verdict in **64 seconds** (job `dbedd8aa`). Ref: `ARCHITECTURE.md:191`.
 - **All three agents re-confirmed live 2026-07-20:** fresh local `uv run uipath run` invokes against live S/4 — **matching** (both lines matched by material, confidence 1.0), **variance** (price-variance + over-delivery classified, corrections prepared, confidence 0.95), **posting-prep** (read current qty 5, prepared the 5→6 update, `ready_to_post`). Each returned the PO side it could only read from S/4. Receipts in `finale/receipts/`. This upgrades the earlier "only variance had local run evidence" — the full 3-agent pipeline now runs as three live jobs. (Token note: each agent authenticates from its own `.env`; only variance's was fresh, so matching/posting-prep failed until their `.env` was refreshed — a per-folder token, not a code problem.)
 
-## BUILT-NOT-RUN (say "built, validated, deployed" — never "ran end-to-end")
-- **The 3-agent Maestro BPMN as a single composed instance.** It is built, passes `uip solution pack --dry-run` (Valid), is deployed and bound to the three agents by release key, and an instance launches — but it **never completes** as one instance (no allocated agent runtime / capacity). Ref: `DEMO.md:84-101`, `CODING-AGENTS.md:74-79`, `ARCHITECTURE.md:110`.
-- **Hard rule:** never say "the Maestro instance resumed," "the gate cleared," or "all three ran end-to-end inside Maestro." They ran as **three separate jobs**, not one composed instance.
+## LIVE-PROVEN (new, 2026-07-21): the composed Maestro instance ran end-to-end
+- **A composed Maestro instance completed with real agents inside it.** Instance
+  `f823f696-aa32-466b-99fc-72a84cd74ea7` (package `ExchangeReconSolutionCanvas.Agentic.ExchangeReconBpmn:1.0.2`,
+  folder `Shared/ExchangeReconCanvas`) ran start → **matching-agent as a real StartAgentJob**
+  (job `875fc4d3…`, 53s) → deterministic tolerance gate → **variance-agent as a real StartAgentJob**
+  (job `7631a1d9…`, 62s) → **message-based human gate paused ~6 min and was cleared by a governed
+  `ApproveGate` message** → completed (escalation path on run 1). Evidence: `finale/maestro/`.
+- **Precision for Q&A:** run 1's decision routing defaulted to the governed *escalate* ending
+  (message-envelope shape); the Approve → posting-prep → Corrected path is wired in v1.0.3 —
+  only claim the three-agents-in-one-instance version if a completed run shows `Task_PostingPrepAgent`
+  with a job key. The gate correlates message name+reference; it does not verify approver *role*
+  (Action Center task = roadmap). The old hard rule ("never say the gate cleared") is retired —
+  superseded by this run.
+- Historical refs (pre-2026-07-21 state): `DEMO.md:84-101`, `CODING-AGENTS.md:74-79`, `ARCHITECTURE.md:110`.
+- **Portal process 2206307 (`sol.Agentic.ExchangeReconBpmn@1.0.2`) is the LEGACY STUB BPMN — do NOT demo it as the real 3-agent flow.** Confirmed from a live trace of instance `255785a6-1b72-4059-b079-5613f2eb7c55` (2026-07-20, trace + instance JSON): the "Variance agent: explain variance" step is `elementType: ScriptTask` (elementId `Task_Agent`, a single stub — not `StartAgentJob`), `orchestratorJobLink` is empty on every step, all five steps completed in ~3 s total, and the start event is the legacy "Settlement pair ready." So **zero real agent jobs launched**; this instance proves only that the Maestro shell + tolerance gate + message-based human gate run e2e as personal automation. It does **not** prove the composed 3-agent run. The real P2P StartAgentJob BPMN is a later package version and remains BUILT-NOT-RUN. Ref: `trace-1784543789525.json`, `Instance_255785a6…json`.
 
 ## HELD (never show landing on camera)
 - **SAP write-back.** `post_correction.py` is the only write path and currently **404s** — the external MCP server (`lemaiwo/btp-sap-odata-to-mcp-server`) returns empty `keyProperties` (a JSDOM bug), so no keyed PATCH can be built. Inside the BPMN, `Task_UpdatePO` is a JS **string stub**, not a real write. Ref: `post_correction.py:11-13`, `writeback-plan.md`. Framing: "prepared and held — armed, not fired."

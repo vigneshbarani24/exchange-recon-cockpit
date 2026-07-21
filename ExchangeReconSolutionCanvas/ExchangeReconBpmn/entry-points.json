@@ -1,0 +1,39 @@
+{
+  "$schema": "https://cloud.uipath.com/draft/2024-12/entry-point",
+  "$id": "entry-points.json",
+  "entryPoints": [
+    {
+      "filePath": "/content/ExchangeReconBpmn.bpmn#Event_start",
+      "uniqueId": "ec7053b7-6bb1-4617-a077-dc837ddc5e99",
+      "type": "ProcessOrchestration",
+      "input": {
+        "type": "object",
+        "properties": {
+          "purchaseOrder": {
+            "type": "string",
+            "title": "purchaseOrder"
+          },
+          "supplierDocument": {
+            "type": "string",
+            "title": "supplierDocument"
+          }
+        },
+        "required": [
+          "purchaseOrder",
+          "supplierDocument"
+        ]
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "outcome": {
+            "type": "string",
+            "title": "outcome"
+          }
+        },
+        "required": []
+      },
+      "displayName": "Supplier invoice received"
+    }
+  ]
+}

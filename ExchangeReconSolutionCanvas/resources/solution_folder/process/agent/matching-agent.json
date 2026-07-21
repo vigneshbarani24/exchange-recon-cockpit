@@ -1,0 +1,52 @@
+{
+  "docVersion": "1.0.0",
+  "resource": {
+    "name": "matching-agent",
+    "kind": "process",
+    "type": "agent",
+    "apiVersion": "orchestrator.uipath.com/v1",
+    "isOverridable": true,
+    "dependencies": [
+      {
+        "name": "matching-agent",
+        "kind": "Package"
+      }
+    ],
+    "runtimeDependencies": [],
+    "folders": [
+      {
+        "fullyQualifiedName": "solution_folder"
+      }
+    ],
+    "spec": {
+      "type": "Agent",
+      "targetRuntime": "python",
+      "environmentVariables": "",
+      "isConversational": false,
+      "name": "matching-agent",
+      "package": {
+        "name": "matching-agent",
+        "key": "matching-agent:0.0.4"
+      },
+      "packageName": "matching-agent",
+      "packageVersion": "0.0.4",
+      "entryPointUniqueId": "d0ed7868-3f60-4c73-a975-1f21bef49182",
+      "entryPointName": "agent",
+      "inputArgumentsSchemaV2": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"purchase_order\": {\n      \"description\": \"The S/4 purchase order number, e.g. '4500000021'.\",\n      \"title\": \"Purchase Order\",\n      \"type\": \"string\"\n    },\n    \"supplier_document\": {\n      \"description\": \"The inbound supplier order-confirmation / invoice (text or JSON): per-line material/description, quantity, unit price, currency.\",\n      \"title\": \"Supplier Document\",\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"purchase_order\",\n    \"supplier_document\"\n  ]\n}",
+      "outputArgumentsSchemaV2": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"purchase_order\": {\n      \"title\": \"Purchase Order\",\n      \"type\": \"string\"\n    },\n    \"summary\": {\n      \"description\": \"One-line summary of the matching result.\",\n      \"title\": \"Summary\",\n      \"type\": \"string\"\n    },\n    \"matched_lines\": {\n      \"items\": {\n        \"properties\": {\n          \"po_item\": {\n            \"description\": \"PO item number, e.g. '10'.\",\n            \"title\": \"Po Item\",\n            \"type\": \"string\"\n          },\n          \"material\": {\n            \"title\": \"Material\",\n            \"type\": \"string\"\n          },\n          \"description\": {\n            \"title\": \"Description\",\n            \"type\": \"string\"\n          },\n          \"po_quantity\": {\n            \"title\": \"Po Quantity\",\n            \"type\": \"string\"\n          },\n          \"po_unit_price\": {\n            \"title\": \"Po Unit Price\",\n            \"type\": \"string\"\n          },\n          \"supplier_quantity\": {\n            \"title\": \"Supplier Quantity\",\n            \"type\": \"string\"\n          },\n          \"supplier_unit_price\": {\n            \"title\": \"Supplier Unit Price\",\n            \"type\": \"string\"\n          },\n          \"currency\": {\n            \"title\": \"Currency\",\n            \"type\": \"string\"\n          },\n          \"match_basis\": {\n            \"description\": \"How the supplier line was matched to the PO item (e.g. 'material' or 'description').\",\n            \"title\": \"Match Basis\",\n            \"type\": \"string\"\n          },\n          \"match_confidence\": {\n            \"description\": \"0.0–1.0 confidence in this line match.\",\n            \"title\": \"Match Confidence\",\n            \"type\": \"number\"\n          }\n        },\n        \"required\": [\n          \"po_item\",\n          \"material\",\n          \"description\",\n          \"po_quantity\",\n          \"po_unit_price\",\n          \"supplier_quantity\",\n          \"supplier_unit_price\",\n          \"currency\",\n          \"match_basis\",\n          \"match_confidence\"\n        ],\n        \"title\": \"MatchedLine\",\n        \"type\": \"object\"\n      },\n      \"title\": \"Matched Lines\",\n      \"type\": \"array\"\n    },\n    \"unmatched_supplier_lines\": {\n      \"description\": \"Supplier lines with no corresponding PO item.\",\n      \"items\": {\n        \"type\": \"string\"\n      },\n      \"title\": \"Unmatched Supplier Lines\",\n      \"type\": \"array\"\n    },\n    \"unmatched_po_items\": {\n      \"description\": \"PO items not referenced by the supplier document.\",\n      \"items\": {\n        \"type\": \"string\"\n      },\n      \"title\": \"Unmatched Po Items\",\n      \"type\": \"array\"\n    }\n  },\n  \"required\": [\n    \"purchase_order\",\n    \"summary\",\n    \"matched_lines\",\n    \"unmatched_supplier_lines\",\n    \"unmatched_po_items\"\n  ]\n}",
+      "hiddenForAttendedUser": false,
+      "alwaysRunning": false,
+      "autoStartProcess": false,
+      "targetFrameworkValue": "Portable",
+      "retentionAction": "Delete",
+      "retentionPeriod": 30,
+      "staleRetentionAction": "Delete",
+      "staleRetentionPeriod": 180,
+      "entryPoints": "[{\"UniqueId\":\"d0ed7868-3f60-4c73-a975-1f21bef49182\",\"Path\":\"agent\",\"DisplayName\":null,\"InputArguments\":\"{\\n  \\\"type\\\": \\\"object\\\",\\n  \\\"properties\\\": {\\n    \\\"purchase_order\\\": {\\n      \\\"description\\\": \\\"The S/4 purchase order number, e.g. '4500000021'.\\\",\\n      \\\"title\\\": \\\"Purchase Order\\\",\\n      \\\"type\\\": \\\"string\\\"\\n    },\\n    \\\"supplier_document\\\": {\\n      \\\"description\\\": \\\"The inbound supplier order-confirmation / invoice (text or JSON): per-line material/description, quantity, unit price, currency.\\\",\\n      \\\"title\\\": \\\"Supplier Document\\\",\\n      \\\"type\\\": \\\"string\\\"\\n    }\\n  },\\n  \\\"required\\\": [\\n    \\\"purchase_order\\\",\\n    \\\"supplier_document\\\"\\n  ]\\n}\",\"OutputArguments\":\"{\\n  \\\"type\\\": \\\"object\\\",\\n  \\\"properties\\\": {\\n    \\\"purchase_order\\\": {\\n      \\\"title\\\": \\\"Purchase Order\\\",\\n      \\\"type\\\": \\\"string\\\"\\n    },\\n    \\\"summary\\\": {\\n      \\\"description\\\": \\\"One-line summary of the matching result.\\\",\\n      \\\"title\\\": \\\"Summary\\\",\\n      \\\"type\\\": \\\"string\\\"\\n    },\\n    \\\"matched_lines\\\": {\\n      \\\"items\\\": {\\n        \\\"properties\\\": {\\n          \\\"po_item\\\": {\\n            \\\"description\\\": \\\"PO item number, e.g. '10'.\\\",\\n            \\\"title\\\": \\\"Po Item\\\",\\n            \\\"type\\\": \\\"string\\\"\\n          },\\n          \\\"material\\\": {\\n            \\\"title\\\": \\\"Material\\\",\\n            \\\"type\\\": \\\"string\\\"\\n          },\\n          \\\"description\\\": {\\n            \\\"title\\\": \\\"Description\\\",\\n            \\\"type\\\": \\\"string\\\"\\n          },\\n          \\\"po_quantity\\\": {\\n            \\\"title\\\": \\\"Po Quantity\\\",\\n            \\\"type\\\": \\\"string\\\"\\n          },\\n          \\\"po_unit_price\\\": {\\n            \\\"title\\\": \\\"Po Unit Price\\\",\\n            \\\"type\\\": \\\"string\\\"\\n          },\\n          \\\"supplier_quantity\\\": {\\n            \\\"title\\\": \\\"Supplier Quantity\\\",\\n            \\\"type\\\": \\\"string\\\"\\n          },\\n          \\\"supplier_unit_price\\\": {\\n            \\\"title\\\": \\\"Supplier Unit Price\\\",\\n            \\\"type\\\": \\\"string\\\"\\n          },\\n          \\\"currency\\\": {\\n            \\\"title\\\": \\\"Currency\\\",\\n            \\\"type\\\": \\\"string\\\"\\n          },\\n          \\\"match_basis\\\": {\\n            \\\"description\\\": \\\"How the supplier line was matched to the PO item (e.g. 'material' or 'description').\\\",\\n            \\\"title\\\": \\\"Match Basis\\\",\\n            \\\"type\\\": \\\"string\\\"\\n          },\\n          \\\"match_confidence\\\": {\\n            \\\"description\\\": \\\"0.0–1.0 confidence in this line match.\\\",\\n            \\\"title\\\": \\\"Match Confidence\\\",\\n            \\\"type\\\": \\\"number\\\"\\n          }\\n        },\\n        \\\"required\\\": [\\n          \\\"po_item\\\",\\n          \\\"material\\\",\\n          \\\"description\\\",\\n          \\\"po_quantity\\\",\\n          \\\"po_unit_price\\\",\\n          \\\"supplier_quantity\\\",\\n          \\\"supplier_unit_price\\\",\\n          \\\"currency\\\",\\n          \\\"match_basis\\\",\\n          \\\"match_confidence\\\"\\n        ],\\n        \\\"title\\\": \\\"MatchedLine\\\",\\n        \\\"type\\\": \\\"object\\\"\\n      },\\n      \\\"title\\\": \\\"Matched Lines\\\",\\n      \\\"type\\\": \\\"array\\\"\\n    },\\n    \\\"unmatched_supplier_lines\\\": {\\n      \\\"description\\\": \\\"Supplier lines with no corresponding PO item.\\\",\\n      \\\"items\\\": {\\n        \\\"type\\\": \\\"string\\\"\\n      },\\n      \\\"title\\\": \\\"Unmatched Supplier Lines\\\",\\n      \\\"type\\\": \\\"array\\\"\\n    },\\n    \\\"unmatched_po_items\\\": {\\n      \\\"description\\\": \\\"PO items not referenced by the supplier document.\\\",\\n      \\\"items\\\": {\\n        \\\"type\\\": \\\"string\\\"\\n      },\\n      \\\"title\\\": \\\"Unmatched Po Items\\\",\\n      \\\"type\\\": \\\"array\\\"\\n    }\\n  },\\n  \\\"required\\\": [\\n    \\\"purchase_order\\\",\\n    \\\"summary\\\",\\n    \\\"matched_lines\\\",\\n    \\\"unmatched_supplier_lines\\\",\\n    \\\"unmatched_po_items\\\"\\n  ]\\n}\",\"Type\":4,\"TargetRuntime\":null,\"ContentRoot\":null,\"DataVariation\":null,\"Id\":14160736}]",
+      "tags": []
+    },
+    "locks": [],
+    "key": "531c73eb-7b26-44a3-8608-143f8cdf5746",
+    "files": []
+  }
+}

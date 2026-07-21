@@ -1,0 +1,44 @@
+{
+  "version": "2.0",
+  "resources": [
+    {
+      "resource": "process",
+      "key": "531c73eb-7b26-44a3-8608-143f8cdf5746",
+      "id": "process531c73eb-7b26-44a3-8608-143f8cdf5746",
+      "value": {},
+      "metadata": {
+        "ActivityName": "Matching agent: align supplier lines to PO",
+        "BindingsVersion": "2.2",
+        "DisplayLabel": "matching-agent",
+        "SolutionsSupport": "true",
+        "subType": "Agent"
+      }
+    },
+    {
+      "resource": "process",
+      "key": "3963cb83-fb46-4b0f-9913-7503af04d7e6",
+      "id": "process3963cb83-fb46-4b0f-9913-7503af04d7e6",
+      "value": {},
+      "metadata": {
+        "ActivityName": "Variance agent: classify and propose correction",
+        "BindingsVersion": "2.2",
+        "DisplayLabel": "variance-agent",
+        "SolutionsSupport": "true",
+        "subType": "Agent"
+      }
+    },
+    {
+      "resource": "process",
+      "key": "13818f2e-f7f3-4de4-9448-095c56ad5441",
+      "id": "process13818f2e-f7f3-4de4-9448-095c56ad5441",
+      "value": {},
+      "metadata": {
+        "ActivityName": "Posting-prep agent: build PO item update",
+        "BindingsVersion": "2.2",
+        "DisplayLabel": "posting-prep-agent",
+        "SolutionsSupport": "true",
+        "subType": "Agent"
+      }
+    }
+  ]
+}

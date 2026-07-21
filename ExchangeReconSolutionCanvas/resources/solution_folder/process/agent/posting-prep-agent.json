@@ -1,0 +1,52 @@
+{
+  "docVersion": "1.0.0",
+  "resource": {
+    "name": "posting-prep-agent",
+    "kind": "process",
+    "type": "agent",
+    "apiVersion": "orchestrator.uipath.com/v1",
+    "isOverridable": true,
+    "dependencies": [
+      {
+        "name": "posting-prep-agent",
+        "kind": "Package"
+      }
+    ],
+    "runtimeDependencies": [],
+    "folders": [
+      {
+        "fullyQualifiedName": "solution_folder"
+      }
+    ],
+    "spec": {
+      "type": "Agent",
+      "targetRuntime": "python",
+      "environmentVariables": "",
+      "isConversational": false,
+      "name": "posting-prep-agent",
+      "package": {
+        "name": "posting-prep-agent",
+        "key": "posting-prep-agent:0.0.4"
+      },
+      "packageName": "posting-prep-agent",
+      "packageVersion": "0.0.4",
+      "entryPointUniqueId": "023cb225-4bd8-4f03-8d5e-bceaee5026c7",
+      "entryPointName": "agent",
+      "inputArgumentsSchemaV2": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"purchase_order\": {\n      \"description\": \"The S/4 purchase order number, e.g. '4500000021'.\",\n      \"title\": \"Purchase Order\",\n      \"type\": \"string\"\n    },\n    \"po_item\": {\n      \"description\": \"The PO item number to correct, e.g. '20'.\",\n      \"title\": \"Po Item\",\n      \"type\": \"string\"\n    },\n    \"approved_action\": {\n      \"description\": \"The human-APPROVED correction in plain English, e.g. 'Accept the over-delivery; update the PO order quantity to 6'.\",\n      \"title\": \"Approved Action\",\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"purchase_order\",\n    \"po_item\",\n    \"approved_action\"\n  ]\n}",
+      "outputArgumentsSchemaV2": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"purchase_order\": {\n      \"title\": \"Purchase Order\",\n      \"type\": \"string\"\n    },\n    \"po_item\": {\n      \"title\": \"Po Item\",\n      \"type\": \"string\"\n    },\n    \"update_entity\": {\n      \"description\": \"The S/4 OData entity to update (A_PurchaseOrderItemType).\",\n      \"title\": \"Update Entity\",\n      \"type\": \"string\"\n    },\n    \"field_updates\": {\n      \"description\": \"The field(s) to change, each with its current and new value. The row keys are PurchaseOrder=purchase_order and PurchaseOrderItem=po_item.\",\n      \"items\": {\n        \"properties\": {\n          \"field\": {\n            \"description\": \"S/4 field name, e.g. 'OrderQuantity' or 'NetPriceAmount'.\",\n            \"title\": \"Field\",\n            \"type\": \"string\"\n          },\n          \"current_value\": {\n            \"description\": \"Current S/4 value (read via MCP), for the audit trail.\",\n            \"title\": \"Current Value\",\n            \"type\": \"string\"\n          },\n          \"new_value\": {\n            \"description\": \"The new value to write.\",\n            \"title\": \"New Value\",\n            \"type\": \"string\"\n          }\n        },\n        \"required\": [\n          \"field\",\n          \"current_value\",\n          \"new_value\"\n        ],\n        \"title\": \"FieldUpdate\",\n        \"type\": \"object\"\n      },\n      \"title\": \"Field Updates\",\n      \"type\": \"array\"\n    },\n    \"human_summary\": {\n      \"description\": \"One line a buyer can read: what will change, from what to what.\",\n      \"title\": \"Human Summary\",\n      \"type\": \"string\"\n    },\n    \"ready_to_post\": {\n      \"description\": \"True only if the update is well-formed and safe to hand to the deterministic post step.\",\n      \"title\": \"Ready To Post\",\n      \"type\": \"boolean\"\n    }\n  },\n  \"required\": [\n    \"purchase_order\",\n    \"po_item\",\n    \"update_entity\",\n    \"field_updates\",\n    \"human_summary\",\n    \"ready_to_post\"\n  ]\n}",
+      "hiddenForAttendedUser": false,
+      "alwaysRunning": false,
+      "autoStartProcess": false,
+      "targetFrameworkValue": "Portable",
+      "retentionAction": "Delete",
+      "retentionPeriod": 30,
+      "staleRetentionAction": "Delete",
+      "staleRetentionPeriod": 180,
+      "entryPoints": "[{\"UniqueId\":\"023cb225-4bd8-4f03-8d5e-bceaee5026c7\",\"Path\":\"agent\",\"DisplayName\":null,\"InputArguments\":\"{\\n  \\\"type\\\": \\\"object\\\",\\n  \\\"properties\\\": {\\n    \\\"purchase_order\\\": {\\n      \\\"description\\\": \\\"The S/4 purchase order number, e.g. '4500000021'.\\\",\\n      \\\"title\\\": \\\"Purchase Order\\\",\\n      \\\"type\\\": \\\"string\\\"\\n    },\\n    \\\"po_item\\\": {\\n      \\\"description\\\": \\\"The PO item number to correct, e.g. '20'.\\\",\\n      \\\"title\\\": \\\"Po Item\\\",\\n      \\\"type\\\": \\\"string\\\"\\n    },\\n    \\\"approved_action\\\": {\\n      \\\"description\\\": \\\"The human-APPROVED correction in plain English, e.g. 'Accept the over-delivery; update the PO order quantity to 6'.\\\",\\n      \\\"title\\\": \\\"Approved Action\\\",\\n      \\\"type\\\": \\\"string\\\"\\n    }\\n  },\\n  \\\"required\\\": [\\n    \\\"purchase_order\\\",\\n    \\\"po_item\\\",\\n    \\\"approved_action\\\"\\n  ]\\n}\",\"OutputArguments\":\"{\\n  \\\"type\\\": \\\"object\\\",\\n  \\\"properties\\\": {\\n    \\\"purchase_order\\\": {\\n      \\\"title\\\": \\\"Purchase Order\\\",\\n      \\\"type\\\": \\\"string\\\"\\n    },\\n    \\\"po_item\\\": {\\n      \\\"title\\\": \\\"Po Item\\\",\\n      \\\"type\\\": \\\"string\\\"\\n    },\\n    \\\"update_entity\\\": {\\n      \\\"description\\\": \\\"The S/4 OData entity to update (A_PurchaseOrderItemType).\\\",\\n      \\\"title\\\": \\\"Update Entity\\\",\\n      \\\"type\\\": \\\"string\\\"\\n    },\\n    \\\"field_updates\\\": {\\n      \\\"description\\\": \\\"The field(s) to change, each with its current and new value. The row keys are PurchaseOrder=purchase_order and PurchaseOrderItem=po_item.\\\",\\n      \\\"items\\\": {\\n        \\\"properties\\\": {\\n          \\\"field\\\": {\\n            \\\"description\\\": \\\"S/4 field name, e.g. 'OrderQuantity' or 'NetPriceAmount'.\\\",\\n            \\\"title\\\": \\\"Field\\\",\\n            \\\"type\\\": \\\"string\\\"\\n          },\\n          \\\"current_value\\\": {\\n            \\\"description\\\": \\\"Current S/4 value (read via MCP), for the audit trail.\\\",\\n            \\\"title\\\": \\\"Current Value\\\",\\n            \\\"type\\\": \\\"string\\\"\\n          },\\n          \\\"new_value\\\": {\\n            \\\"description\\\": \\\"The new value to write.\\\",\\n            \\\"title\\\": \\\"New Value\\\",\\n            \\\"type\\\": \\\"string\\\"\\n          }\\n        },\\n        \\\"required\\\": [\\n          \\\"field\\\",\\n          \\\"current_value\\\",\\n          \\\"new_value\\\"\\n        ],\\n        \\\"title\\\": \\\"FieldUpdate\\\",\\n        \\\"type\\\": \\\"object\\\"\\n      },\\n      \\\"title\\\": \\\"Field Updates\\\",\\n      \\\"type\\\": \\\"array\\\"\\n    },\\n    \\\"human_summary\\\": {\\n      \\\"description\\\": \\\"One line a buyer can read: what will change, from what to what.\\\",\\n      \\\"title\\\": \\\"Human Summary\\\",\\n      \\\"type\\\": \\\"string\\\"\\n    },\\n    \\\"ready_to_post\\\": {\\n      \\\"description\\\": \\\"True only if the update is well-formed and safe to hand to the deterministic post step.\\\",\\n      \\\"title\\\": \\\"Ready To Post\\\",\\n      \\\"type\\\": \\\"boolean\\\"\\n    }\\n  },\\n  \\\"required\\\": [\\n    \\\"purchase_order\\\",\\n    \\\"po_item\\\",\\n    \\\"update_entity\\\",\\n    \\\"field_updates\\\",\\n    \\\"human_summary\\\",\\n    \\\"ready_to_post\\\"\\n  ]\\n}\",\"Type\":4,\"TargetRuntime\":null,\"ContentRoot\":null,\"DataVariation\":null,\"Id\":14160737}]",
+      "tags": []
+    },
+    "locks": [],
+    "key": "13818f2e-f7f3-4de4-9448-095c56ad5441",
+    "files": []
+  }
+}

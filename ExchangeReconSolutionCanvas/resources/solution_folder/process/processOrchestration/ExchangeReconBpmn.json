@@ -1,0 +1,82 @@
+{
+  "docVersion": "1.0.0",
+  "resource": {
+    "name": "ExchangeReconBpmn",
+    "kind": "process",
+    "type": "processOrchestration",
+    "apiVersion": "orchestrator.uipath.com/v1",
+    "projectKey": "c0590423-bb99-46c5-aa7d-fbd17cad5e6a",
+    "isOverridable": true,
+    "dependencies": [
+      {
+        "name": "ExchangeReconBpmn",
+        "kind": "package"
+      }
+    ],
+    "runtimeDependencies": [
+      {
+        "bindingType": "process",
+        "bindingKey": "531c73eb-7b26-44a3-8608-143f8cdf5746",
+        "bindingValues": {},
+        "bindingMetadata": {
+          "activityName": "Matching agent: align supplier lines to PO",
+          "bindingsVersion": "2.2",
+          "solutionsSupport": "true"
+        },
+        "resourceKind": "Process",
+        "resourceKey": "531c73eb-7b26-44a3-8608-143f8cdf5746",
+        "resourceName": "matching-agent",
+        "folderKey": "8d5ba9dc-b211-40b4-8ccc-09429def9a83"
+      },
+      {
+        "bindingType": "process",
+        "bindingKey": "3963cb83-fb46-4b0f-9913-7503af04d7e6",
+        "bindingValues": {},
+        "bindingMetadata": {
+          "activityName": "Variance agent: classify and propose correction",
+          "bindingsVersion": "2.2",
+          "solutionsSupport": "true"
+        },
+        "resourceKind": "Process",
+        "resourceKey": "3963cb83-fb46-4b0f-9913-7503af04d7e6",
+        "resourceName": "variance-agent",
+        "folderKey": "8d5ba9dc-b211-40b4-8ccc-09429def9a83"
+      },
+      {
+        "bindingType": "process",
+        "bindingKey": "13818f2e-f7f3-4de4-9448-095c56ad5441",
+        "bindingValues": {},
+        "bindingMetadata": {
+          "activityName": "Posting-prep agent: build PO item update",
+          "bindingsVersion": "2.2",
+          "solutionsSupport": "true"
+        },
+        "resourceKind": "Process",
+        "resourceKey": "13818f2e-f7f3-4de4-9448-095c56ad5441",
+        "resourceName": "posting-prep-agent",
+        "folderKey": "8d5ba9dc-b211-40b4-8ccc-09429def9a83"
+      }
+    ],
+    "folders": [
+      {
+        "fullyQualifiedName": "solution_folder"
+      }
+    ],
+    "spec": {
+      "type": "ProcessOrchestration",
+      "name": "ExchangeReconBpmn",
+      "package": {
+        "key": "9c18043a-17b3-47dc-b952-ee69f4342902"
+      },
+      "inputArguments": "{}",
+      "targetFrameworkValue": "Portable",
+      "retentionAction": "Delete",
+      "retentionPeriod": 30,
+      "staleRetentionAction": "Delete",
+      "staleRetentionPeriod": 180
+    },
+    "locks": [],
+    "key": "91df36c0-dace-4af3-a5a0-8e265d9f44a0",
+    "files": []
+  }
+}

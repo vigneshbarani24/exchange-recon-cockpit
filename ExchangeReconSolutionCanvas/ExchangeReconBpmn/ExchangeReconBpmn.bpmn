@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:uipath="http://uipath.org/schema/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" exporter="UiPath Studio Web (https://uipath.com)" exporterVersion="654925d2">
+  <bpmn:error id="Error_AgentFailed" name="Agent failed" errorCode="AGENT_FAILED" />
+  <bpmn:process id="ExchangeSettlementReconciliation" name="ExchangeReconBpmn">
+    <bpmn:extensionElements>
+      <uipath:variables version="v1">
+        <uipath:inputOutput id="Var_PurchaseOrder" name="purchaseOrder" type="string" elementId="Event_start" />
+        <uipath:inputOutput id="Var_SupplierDocument" name="supplierDocument" type="string" elementId="Event_start" />
+        <uipath:inputOutput id="Var_MatchedLines" name="matchedLines" type="string" />
+        <uipath:inputOutput id="Var_WithinTolerance" name="withinTolerance" type="boolean" />
+        <uipath:inputOutput id="Var_Variances" name="variances" type="string" />
+        <uipath:inputOutput id="Var_Decision" name="decision" type="string" />
+        <uipath:inputOutput id="Var_ReviewerNote" name="reviewerNote" type="string" />
+        <uipath:inputOutput id="Var_PreparedUpdate" name="preparedUpdate" type="string" />
+        <uipath:inputOutput id="purchaseOrder" name="purchase_order" type="string" elementId="Task_MatchAgent" />
+        <uipath:inputOutput id="summary" name="summary" type="string" elementId="Task_MatchAgent" />
+        <uipath:inputOutput id="matchedLines" name="matched_lines" type="jsonSchema" subType="object" elementId="Task_MatchAgent"><![CDATA[{"items":{"properties":{"po_item":{"description":"PO item number, e.g. '10'.","title":"Po Item","type":"string"},"material":{"title":"Material","type":"string"},"description":{"title":"Description","type":"string"},"po_quantity":{"title":"Po Quantity","type":"string"},"po_unit_price":{"title":"Po Unit Price","type":"string"},"supplier_quantity":{"title":"Supplier Quantity","type":"string"},"supplier_unit_price":{"title":"Supplier Unit Price","type":"string"},"currency":{"title":"Currency","type":"string"},"match_basis":{"description":"How the supplier line was matched to the PO item (e.g. 'material' or 'description').","title":"Match Basis","type":"string"},"match_confidence":{"description":"0.0–1.0 confidence in this line match.","title":"Match Confidence","type":"number"}},"title":"MatchedLine","type":"object"},"title":"Matched Lines","type":"array","$schema":"http://json-schema.org/draft-07/schema#"}]]></uipath:inputOutput>
+        <uipath:inputOutput id="unmatchedSupplierLines" name="unmatched_supplier_lines" type="jsonSchema" subType="string" elementId="Task_MatchAgent"><![CDATA[{"description":"Supplier lines with no corresponding PO item.","items":{"type":"string"},"title":"Unmatched Supplier Lines","type":"array","$schema":"http://json-schema.org/draft-07/schema#"}]]></uipath:inputOutput>
+        <uipath:inputOutput id="unmatchedPoItems" name="unmatched_po_items" type="jsonSchema" subType="string" elementId="Task_MatchAgent"><![CDATA[{"description":"PO items not referenced by the supplier document.","items":{"type":"string"},"title":"Unmatched Po Items","type":"array","$schema":"http://json-schema.org/draft-07/schema#"}]]></uipath:inputOutput>
+        <uipath:inputOutput id="error" name="Error" type="jsonSchema" elementId="Task_MatchAgent"><![CDATA[{"type":"object","properties":{"code":{"type":"string"},"message":{"type":"string"},"detail":{"type":"string"},"category":{"type":"string"},"status":{"type":"number"},"element":{"type":"string"}}}]]></uipath:inputOutput>
+        <uipath:inputOutput id="scriptResponse" name="scriptResponse" type="jsonSchema" elementId="Task_Tolerance" />
+        <uipath:inputOutput id="error2" name="Error" type="jsonSchema" elementId="Task_Tolerance"><![CDATA[{"type":"object","properties":{"code":{"type":"string"},"message":{"type":"string"},"detail":{"type":"string"},"category":{"type":"string"},"status":{"type":"number"},"element":{"type":"string"}}}]]></uipath:inputOutput>
+        <uipath:inputOutput id="response" name="response" type="Maestro.ReceiveMessageEvent" elementId="Task_HumanGate" />
+        <uipath:inputOutput id="purchaseOrder2" name="purchase_order" type="string" elementId="Task_VarianceAgent" />
+        <uipath:inputOutput id="overallStatus" name="overall_status" type="string" elementId="Task_VarianceAgent" />
+        <uipath:inputOutput id="summary2" name="summary" type="string" elementId="Task_VarianceAgent" />
+        <uipath:inputOutput id="confidence" name="confidence" type="number" elementId="Task_VarianceAgent" />
+        <uipath:inputOutput id="lineVariances" name="line_variances" type="jsonSchema" subType="object" elementId="Task_VarianceAgent"><![CDATA[{"items":{"properties":{"po_item":{"description":"PO item number, e.g. '10'.","title":"Po Item","type":"string"},"material":{"title":"Material","type":"string"},"description":{"title":"Description","type":"string"},"po_quantity":{"title":"Po Quantity","type":"string"},"supplier_quantity":{"title":"Supplier Quantity","type":"string"},"po_unit_price":{"title":"Po Unit Price","type":"string"},"supplier_unit_price":{"title":"Supplier Unit Price","type":"string"},"currency":{"title":"Currency","type":"string"},"variance_category":{"description":"One of: price-variance, quantity-variance, uom-mismatch, material-mismatch, currency-mismatch, tax-variance, missing-line, duplicate-line, over-delivery, under-delivery, none.","title":"Variance Category","type":"string"},"variance_amount":{"description":"The quantified line variance with currency, e.g. '+£125.00'.","title":"Variance Amount","type":"string"},"explanation":{"description":"Plain-English reason the line disagrees.","title":"Explanation","type":"string"},"proposed_correction":{"description":"Recommended PO-item correction for a human buyer to APPROVE before any write — never a write itself.","title":"Proposed Correction","type":"string"}},"title":"LineVariance","type":"object"},"title":"Line Variances","type":"array","$schema":"http://json-schema.org/draft-07/schema#"}]]></uipath:inputOutput>
+        <uipath:inputOutput id="preparedCorrections" name="prepared_corrections" type="jsonSchema" subType="object" elementId="Task_VarianceAgent"><![CDATA[{"description":"For each line with a variance, the S/4 update that would correct it — prepared, never posted. The deterministic step posts only after human approval.","items":{"properties":{"po_item":{"title":"Po Item","type":"string"},"entity":{"description":"The S/4 OData entity to update (A_PurchaseOrderItem).","title":"Entity","type":"string"},"field":{"description":"The S/4 field to change: OrderQuantity for a quantity correction, NetPriceAmount for a price correction.","title":"Field","type":"string"},"current_value":{"description":"The current S/4 value (read from the PO).","title":"Current Value","type":"string"},"new_value":{"description":"The value that resolves the variance.","title":"New Value","type":"string"},"summary":{"description":"One line a buyer reads: what changes, from/to.","title":"Summary","type":"string"},"ready_to_post":{"description":"True if well-formed and safe to hand to the deterministic post step.","title":"Ready To Post","type":"boolean"}},"title":"PreparedCorrection","type":"object"},"title":"Prepared Corrections","type":"array","$schema":"http://json-schema.org/draft-07/schema#"}]]></uipath:inputOutput>
+        <uipath:inputOutput id="error3" name="Error" type="jsonSchema" elementId="Task_VarianceAgent"><![CDATA[{"type":"object","properties":{"code":{"type":"string"},"message":{"type":"string"},"detail":{"type":"string"},"category":{"type":"string"},"status":{"type":"number"},"element":{"type":"string"}}}]]></uipath:inputOutput>
+        <uipath:inputOutput id="purchaseOrder3" name="purchase_order" type="string" elementId="Task_PostingPrepAgent" />
+        <uipath:inputOutput id="poItem" name="po_item" type="string" elementId="Task_PostingPrepAgent" />
+        <uipath:inputOutput id="updateEntity" name="update_entity" type="string" elementId="Task_PostingPrepAgent" />
+        <uipath:inputOutput id="fieldUpdates" name="field_updates" type="jsonSchema" subType="object" elementId="Task_PostingPrepAgent"><![CDATA[{"description":"The field(s) to change, each with its current and new value. The row keys are PurchaseOrder=purchase_order and PurchaseOrderItem=po_item.","items":{"properties":{"field":{"description":"S/4 field name, e.g. 'OrderQuantity' or 'NetPriceAmount'.","title":"Field","type":"string"},"current_value":{"description":"Current S/4 value (read via MCP), for the audit trail.","title":"Current Value","type":"string"},"new_value":{"description":"The new value to write.","title":"New Value","type":"string"}},"title":"FieldUpdate","type":"object"},"title":"Field Updates","type":"array","$schema":"http://json-schema.org/draft-07/schema#"}]]></uipath:inputOutput>
+        <uipath:inputOutput id="humanSummary" name="human_summary" type="string" elementId="Task_PostingPrepAgent" />
+        <uipath:inputOutput id="readyToPost" name="ready_to_post" type="boolean" elementId="Task_PostingPrepAgent" />
+        <uipath:inputOutput id="error4" name="Error" type="jsonSchema" elementId="Task_PostingPrepAgent"><![CDATA[{"type":"object","properties":{"code":{"type":"string"},"message":{"type":"string"},"detail":{"type":"string"},"category":{"type":"string"},"status":{"type":"number"},"element":{"type":"string"}}}]]></uipath:inputOutput>
+        <uipath:inputOutput id="scriptResponse2" name="scriptResponse" type="jsonSchema" elementId="Task_AutoApprove" />
+        <uipath:inputOutput id="error5" name="Error" type="jsonSchema" elementId="Task_AutoApprove"><![CDATA[{"type":"object","properties":{"code":{"type":"string"},"message":{"type":"string"},"detail":{"type":"string"},"category":{"type":"string"},"status":{"type":"number"},"element":{"type":"string"}}}]]></uipath:inputOutput>
+        <uipath:output id="Var_Outcome" name="outcome" type="string" />
+      </uipath:variables>
+      <uipath:bindings version="v1">
+        <uipath:binding id="Binding_MatchAgentName" name="matching-agent" type="process" elementId="Task_MatchAgent" resource="process" resourceSubType="Agent" resourceKey="531c73eb-7b26-44a3-8608-143f8cdf5746" propertyAttribute="name" />
+        <uipath:binding id="Binding_MatchAgentFolderPath" name="matching-agent" type="process" elementId="Task_MatchAgent" resource="process" resourceSubType="Agent" resourceKey="531c73eb-7b26-44a3-8608-143f8cdf5746" propertyAttribute="folderPath" />
+        <uipath:binding id="Binding_VarianceAgentName" name="variance-agent" type="process" elementId="Task_VarianceAgent" resource="process" resourceSubType="Agent" resourceKey="3963cb83-fb46-4b0f-9913-7503af04d7e6" propertyAttribute="name" />
+        <uipath:binding id="Binding_VarianceAgentFolderPath" name="variance-agent" type="process" elementId="Task_VarianceAgent" resource="process" resourceSubType="Agent" resourceKey="3963cb83-fb46-4b0f-9913-7503af04d7e6" propertyAttribute="folderPath" />
+        <uipath:binding id="Binding_PostingPrepAgentName" name="posting-prep-agent" type="process" elementId="Task_PostingPrepAgent" resource="process" resourceSubType="Agent" resourceKey="13818f2e-f7f3-4de4-9448-095c56ad5441" propertyAttribute="name" />
+        <uipath:binding id="Binding_PostingPrepAgentFolderPath" name="posting-prep-agent" type="process" elementId="Task_PostingPrepAgent" resource="process" resourceSubType="Agent" resourceKey="13818f2e-f7f3-4de4-9448-095c56ad5441" propertyAttribute="folderPath" />
+        <uipath:binding id="bdFH7NMKq" name="releaseKey" type="string" default="531C73EB-7B26-44A3-8608-143F8CDF5746" resource="process" resourceKey="531C73EB-7B26-44A3-8608-143F8CDF5746" propertyAttribute="Key" />
+        <uipath:binding id="bXvluh6D5" name="folderPath" type="string" resource="process" resourceSubType="Agent" resourceKey="matching-agent" propertyAttribute="folderPath" />
+        <uipath:binding id="bAUw4b7LT" name="name" type="string" default="matching-agent" resource="process" resourceSubType="Agent" resourceKey="matching-agent" propertyAttribute="name" />
+        <uipath:binding id="bolqfu8y9" name="releaseKey" type="string" default="3963CB83-FB46-4B0F-9913-7503AF04D7E6" resource="process" resourceKey="3963CB83-FB46-4B0F-9913-7503AF04D7E6" propertyAttribute="Key" />
+        <uipath:binding id="bhvgx4mbZ" name="folderPath" type="string" resource="process" resourceSubType="Agent" resourceKey="variance-agent" propertyAttribute="folderPath" />
+        <uipath:binding id="bcY1xCOU4" name="name" type="string" default="variance-agent" resource="process" resourceSubType="Agent" resourceKey="variance-agent" propertyAttribute="name" />
+        <uipath:binding id="bdbvAIua2" name="releaseKey" type="string" default="13818F2E-F7F3-4DE4-9448-095C56AD5441" resource="process" resourceKey="13818F2E-F7F3-4DE4-9448-095C56AD5441" propertyAttribute="Key" />
+        <uipath:binding id="bCCHGCrmu" name="folderPath" type="string" resource="process" resourceSubType="Agent" resourceKey="posting-prep-agent" propertyAttribute="folderPath" />
+        <uipath:binding id="bUM3ae8T8" name="name" type="string" default="posting-prep-agent" resource="process" resourceSubType="Agent" resourceKey="posting-prep-agent" propertyAttribute="name" />
+      </uipath:bindings>
+      <uipath:migrationVersion version="16" />
+    </bpmn:extensionElements>
+    <bpmn:startEvent id="Event_start" name="Supplier invoice received">
+      <bpmn:extensionElements>
+        <uipath:entryPointId value="ec7053b7-6bb1-4617-a077-dc837ddc5e99" />
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_start_match</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Task_MatchAgent" name="Matching agent: align supplier lines to PO">
+      <bpmn:extensionElements>
+        <uipath:tags>
+          <uipath:tag key="caseTaskType">agent</uipath:tag>
+        </uipath:tags>
+        <uipath:activity version="v1">
+          <uipath:type value="Orchestrator.StartAgentJob" version="v2" />
+          <uipath:context>
+            <uipath:input name="name" type="string" value="=bindings.bAUw4b7LT" />
+            <uipath:input name="folderPath" type="string" value="=bindings.bXvluh6D5" />
+            <uipath:input name="_label" type="string" value="matching-agent" />
+            <uipath:inputSchema type="jsonSchema"><![CDATA[{"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"purchase_order":{"type":"string"},"supplier_document":{"type":"string"}},"required":["purchase_order","supplier_document"]}]]></uipath:inputSchema>
+          </uipath:context>
+          <uipath:input name="JobArguments" type="json" target="bodyField"><![CDATA[{"purchase_order":"=vars.Var_PurchaseOrder","supplier_document":"=vars.Var_SupplierDocument"}]]></uipath:input>
+          <uipath:output name="Error" type="jsonSchema" source="=Error" var="error" />
+          <uipath:output name="purchase_order" type="string" source="=purchase_order" var="purchaseOrder" />
+          <uipath:output name="summary" type="string" description="One-line summary of the matching result." source="=summary" var="summary" />
+          <uipath:output name="matched_lines" type="jsonSchema" subType="object" source="=matched_lines" var="matchedLines" />
+          <uipath:output name="unmatched_supplier_lines" type="jsonSchema" subType="string" source="=unmatched_supplier_lines" var="unmatchedSupplierLines" />
+          <uipath:output name="unmatched_po_items" type="jsonSchema" subType="string" source="=unmatched_po_items" var="unmatchedPoItems" />
+        </uipath:activity>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_start_match</bpmn:incoming>
+      <bpmn:outgoing>Flow_match_tolerance</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:boundaryEvent id="Boundary_MatchError" attachedToRef="Task_MatchAgent">
+      <bpmn:outgoing>Flow_match_error</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrDef_MatchError" errorRef="Error_AgentFailed" />
+    </bpmn:boundaryEvent>
+    <bpmn:scriptTask id="Task_Tolerance" name="Tolerance check" scriptFormat="JavaScript">
+      <bpmn:extensionElements>
+        <uipath:mapping version="v1">
+          <uipath:type value="BPMN.Variables" version="v1" />
+          <uipath:context>
+            <uipath:inputSchema type="jsonSchema"><![CDATA[{"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"args":{"type":"object"}},"required":[]}]]></uipath:inputSchema>
+          </uipath:context>
+          <uipath:input name="args" type="json" target="bodyField"><![CDATA[{"args":{"matchedLines":"=vars.matchedLines"}}]]></uipath:input>
+          <uipath:output name="scriptResponse" type="jsonSchema" source="=result.response" var="scriptResponse" />
+          <uipath:output name="Error" type="jsonSchema" source="=Error" var="error2" />
+        </uipath:mapping>
+        <uipath:scriptVersion value="v3" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_match_tolerance</bpmn:incoming>
+      <bpmn:outgoing>Flow_tolerance_gateway</bpmn:outgoing>
+      <bpmn:script><![CDATA[
+var priceTolerancePct = 2.0;
+var qtyTolerance = 1.0;
+var lines = args.matchedLines;
+if (typeof lines === "string") { try { lines = JSON.parse(lines); } catch (e) { lines = []; } }
+if (!Array.isArray(lines)) { lines = (lines && lines.lines) || []; }
+var offending = [];
+for (var i = 0; i < lines.length; i++) {
+  var line = lines[i];
+  var poPrice = Number(line.po_unit_price);
+  var invoicePrice = Number(line.supplier_unit_price);
+  var poQty = Number(line.po_quantity);
+  var invoiceQty = Number(line.supplier_quantity);
+  var priceDelta = poPrice === 0 ? 0 : Math.abs((invoicePrice - poPrice) / poPrice) * 100;
+  var qtyDelta = Math.abs(invoiceQty - poQty);
+  if (priceDelta > priceTolerancePct || qtyDelta > qtyTolerance) {
+    offending.push("Item " + (line.po_item || (i + 1)) + ": price " + priceDelta.toFixed(1) + "% / qty " + qtyDelta.toFixed(1));
+  }
+}
+var withinTolerance = offending.length === 0;
+return { response: { withinTolerance: withinTolerance, variances: offending.length ? offending.join("; ") : "none" } };
+]]></bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:exclusiveGateway id="Gateway_Tolerance" name="Within tolerance?" default="Flow_variance">
+      <bpmn:incoming>Flow_tolerance_gateway</bpmn:incoming>
+      <bpmn:outgoing>Flow_within_tolerance</bpmn:outgoing>
+      <bpmn:outgoing>Flow_variance</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:scriptTask id="Task_AutoApprove" name="Post / auto-approve" scriptFormat="JavaScript">
+      <bpmn:extensionElements>
+        <uipath:mapping version="v1">
+          <uipath:type value="BPMN.Variables" version="v1" />
+          <uipath:context>
+            <uipath:inputSchema type="jsonSchema"><![CDATA[{"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"args":{"type":"object"}},"required":[]}]]></uipath:inputSchema>
+          </uipath:context>
+          <uipath:input name="args" type="json" target="bodyField"><![CDATA[{"args":{"variances":"=vars.scriptResponse.variances"}}]]></uipath:input>
+          <uipath:output name="scriptResponse" type="jsonSchema" source="=result.response" var="scriptResponse2" />
+          <uipath:output name="Error" type="jsonSchema" source="=Error" var="error5" />
+        </uipath:mapping>
+        <uipath:scriptVersion value="v3" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_within_tolerance</bpmn:incoming>
+      <bpmn:outgoing>Flow_autoapprove_end</bpmn:outgoing>
+      <bpmn:script><![CDATA[
+return { response: "Within tolerance. Invoice auto-approved and PO matched for posting." };
+]]></bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="End_AutoApproved" name="Auto-approved">
+      <bpmn:incoming>Flow_autoapprove_end</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Task_VarianceAgent" name="Variance agent: classify and propose correction">
+      <bpmn:extensionElements>
+        <uipath:tags>
+          <uipath:tag key="caseTaskType">agent</uipath:tag>
+        </uipath:tags>
+        <uipath:activity version="v1">
+          <uipath:type value="Orchestrator.StartAgentJob" version="v2" />
+          <uipath:context>
+            <uipath:input name="name" type="string" value="=bindings.bcY1xCOU4" />
+            <uipath:input name="folderPath" type="string" value="=bindings.bhvgx4mbZ" />
+            <uipath:input name="_label" type="string" value="variance-agent" />
+            <uipath:inputSchema type="jsonSchema"><![CDATA[{"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"purchase_order":{"type":"string"},"supplier_document":{"type":"string"},"tolerance_pct":{"type":"number"}},"required":["purchase_order","supplier_document"]}]]></uipath:inputSchema>
+          </uipath:context>
+          <uipath:input name="JobArguments" type="json" target="bodyField"><![CDATA[{"purchase_order":"=vars.Var_PurchaseOrder","supplier_document":"=vars.Var_SupplierDocument","tolerance_pct":2}]]></uipath:input>
+          <uipath:output name="Error" type="jsonSchema" source="=Error" var="error3" />
+          <uipath:output name="purchase_order" type="string" source="=purchase_order" var="purchaseOrder2" />
+          <uipath:output name="overall_status" type="string" description="within-tolerance | variance-found | error" source="=overall_status" var="overallStatus" />
+          <uipath:output name="summary" type="string" description="One-line summary of the reconciliation outcome." source="=summary" var="summary2" />
+          <uipath:output name="confidence" type="number" description="0.0–1.0 confidence in the reconciliation; lower it when ambiguous." source="=confidence" var="confidence" />
+          <uipath:output name="line_variances" type="jsonSchema" subType="object" source="=line_variances" var="lineVariances" />
+          <uipath:output name="prepared_corrections" type="jsonSchema" subType="object" source="=prepared_corrections" var="preparedCorrections" />
+        </uipath:activity>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_variance</bpmn:incoming>
+      <bpmn:outgoing>Flow_agent_gate</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:boundaryEvent id="Boundary_AgentError" attachedToRef="Task_VarianceAgent">
+      <bpmn:outgoing>Flow_agent_error</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrDef_AgentError" errorRef="Error_AgentFailed" />
+    </bpmn:boundaryEvent>
+    <bpmn:intermediateCatchEvent id="Task_HumanGate" name="Human gate: wait for approval">
+      <bpmn:extensionElements>
+        <uipath:event version="v1">
+          <uipath:type value="Maestro.ReceiveMessageEvent" version="v1" />
+          <uipath:context>
+            <uipath:input name="name" type="string" value="ApproveGate" />
+          </uipath:context>
+          <uipath:input name="Reference" displayName="Reference" type="string" value="=vars.Var_PurchaseOrder" target="bodyField" required="true" />
+          <uipath:output name="response" type="Maestro.ReceiveMessageEvent" var="response" />
+        </uipath:event>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_agent_gate</bpmn:incoming>
+      <bpmn:outgoing>Flow_gate_decision</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MsgDef_Approve" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:exclusiveGateway id="Gateway_Decision" name="Decision?" default="Flow_escalate">
+      <bpmn:incoming>Flow_gate_decision</bpmn:incoming>
+      <bpmn:outgoing>Flow_approve</bpmn:outgoing>
+      <bpmn:outgoing>Flow_escalate</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_PostingPrepAgent" name="Posting-prep agent: build PO item update">
+      <bpmn:extensionElements>
+        <uipath:tags>
+          <uipath:tag key="caseTaskType">agent</uipath:tag>
+        </uipath:tags>
+        <uipath:activity version="v1">
+          <uipath:type value="Orchestrator.StartAgentJob" version="v2" />
+          <uipath:context>
+            <uipath:input name="name" type="string" value="=bindings.bUM3ae8T8" />
+            <uipath:input name="folderPath" type="string" value="=bindings.bCCHGCrmu" />
+            <uipath:input name="_label" type="string" value="posting-prep-agent" />
+            <uipath:inputSchema type="jsonSchema"><![CDATA[{"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"purchase_order":{"type":"string"},"po_item":{"type":"string"},"approved_action":{"type":"string"}},"required":["purchase_order","po_item","approved_action"]}]]></uipath:inputSchema>
+          </uipath:context>
+          <uipath:input name="JobArguments" type="json" target="bodyField"><![CDATA[{"purchase_order":"=vars.Var_PurchaseOrder","po_item":"=vars.matchedLines[0].po_item","approved_action":"=js: ((vars.response||{}).itemData||(vars.response||{}).ItemData||vars.response||{}).note || 'Accept the over-delivery; update the PO order quantity to 6.'"}]]></uipath:input>
+          <uipath:output name="Error" type="jsonSchema" source="=Error" var="error4" />
+          <uipath:output name="purchase_order" type="string" source="=purchase_order" var="purchaseOrder3" />
+          <uipath:output name="po_item" type="string" source="=po_item" var="poItem" />
+          <uipath:output name="update_entity" type="string" description="The S/4 OData entity to update (A_PurchaseOrderItemType)." source="=update_entity" var="updateEntity" />
+          <uipath:output name="field_updates" type="jsonSchema" subType="object" source="=field_updates" var="fieldUpdates" />
+          <uipath:output name="human_summary" type="string" description="One line a buyer can read: what will change, from what to what." source="=human_summary" var="humanSummary" />
+          <uipath:output name="ready_to_post" type="boolean" description="True only if the update is well-formed and safe to hand to the deterministic post step." source="=ready_to_post" var="readyToPost" />
+        </uipath:activity>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_approve</bpmn:incoming>
+      <bpmn:outgoing>Flow_prep_update</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:boundaryEvent id="Boundary_PrepError" attachedToRef="Task_PostingPrepAgent">
+      <bpmn:outgoing>Flow_prep_error</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrDef_PrepError" errorRef="Error_AgentFailed" />
+    </bpmn:boundaryEvent>
+    <bpmn:scriptTask id="Task_UpdatePO" name="Update PO item in S/4" scriptFormat="JavaScript">
+      <bpmn:extensionElements>
+        <uipath:mapping version="v1">
+          <uipath:type value="BPMN.Variables" version="v1" />
+          <uipath:context>
+            <uipath:inputSchema type="jsonSchema"><![CDATA[{"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"args":{"type":"object"}},"required":[]}]]></uipath:inputSchema>
+          </uipath:context>
+          <uipath:input name="args" type="json" target="bodyField"><![CDATA[{"args":{"purchaseOrder":"=vars.Var_PurchaseOrder","preparedUpdate":"=vars.humanSummary","reviewerNote":"=js: ((vars.response||{}).itemData||(vars.response||{}).ItemData||vars.response||{}).note || ''"}}]]></uipath:input>
+          <uipath:output name="outcome" type="string" source="=result.response" var="Var_Outcome" />
+        </uipath:mapping>
+        <uipath:scriptVersion value="v3" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_prep_update</bpmn:incoming>
+      <bpmn:outgoing>Flow_update_end</bpmn:outgoing>
+      <bpmn:script><![CDATA[
+var note = args.reviewerNote ? " Reviewer note: " + args.reviewerNote : "";
+return { response: "PO item " + (args.purchaseOrder || "") + " correction prepared for S/4 (write-back held)." + note };
+]]></bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="End_Corrected" name="Corrected &#38; closed">
+      <bpmn:incoming>Flow_update_end</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:scriptTask id="Task_RouteBuyer" name="Route to buyer" scriptFormat="JavaScript">
+      <bpmn:extensionElements>
+        <uipath:mapping version="v1">
+          <uipath:type value="BPMN.Variables" version="v1" />
+          <uipath:context>
+            <uipath:inputSchema type="jsonSchema"><![CDATA[{"$schema":"http://json-schema.org/draft-07/schema#","type":"object","properties":{"args":{"type":"object"}},"required":[]}]]></uipath:inputSchema>
+          </uipath:context>
+          <uipath:input name="args" type="json" target="bodyField"><![CDATA[{"args":{}}]]></uipath:input>
+          <uipath:output name="outcome" type="string" source="=result.response" var="Var_Outcome" />
+        </uipath:mapping>
+        <uipath:scriptVersion value="v3" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_match_error</bpmn:incoming>
+      <bpmn:incoming>Flow_agent_error</bpmn:incoming>
+      <bpmn:incoming>Flow_prep_error</bpmn:incoming>
+      <bpmn:incoming>Flow_escalate</bpmn:incoming>
+      <bpmn:outgoing>Flow_routebuyer_end</bpmn:outgoing>
+      <bpmn:script><![CDATA[
+return { response: "Escalated to the buyer for manual handling." };
+]]></bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="End_Escalated" name="Escalated">
+      <bpmn:incoming>Flow_routebuyer_end</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_start_match" sourceRef="Event_start" targetRef="Task_MatchAgent" />
+    <bpmn:sequenceFlow id="Flow_match_tolerance" sourceRef="Task_MatchAgent" targetRef="Task_Tolerance" />
+    <bpmn:sequenceFlow id="Flow_match_error" sourceRef="Boundary_MatchError" targetRef="Task_RouteBuyer" />
+    <bpmn:sequenceFlow id="Flow_tolerance_gateway" sourceRef="Task_Tolerance" targetRef="Gateway_Tolerance" />
+    <bpmn:sequenceFlow id="Flow_within_tolerance" name="Within tolerance" sourceRef="Gateway_Tolerance" targetRef="Task_AutoApprove">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=vars.scriptResponse.withinTolerance == true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_variance" name="Variance" sourceRef="Gateway_Tolerance" targetRef="Task_VarianceAgent" />
+    <bpmn:sequenceFlow id="Flow_autoapprove_end" sourceRef="Task_AutoApprove" targetRef="End_AutoApproved" />
+    <bpmn:sequenceFlow id="Flow_agent_gate" sourceRef="Task_VarianceAgent" targetRef="Task_HumanGate" />
+    <bpmn:sequenceFlow id="Flow_agent_error" sourceRef="Boundary_AgentError" targetRef="Task_RouteBuyer" />
+    <bpmn:sequenceFlow id="Flow_gate_decision" sourceRef="Task_HumanGate" targetRef="Gateway_Decision" />
+    <bpmn:sequenceFlow id="Flow_approve" name="Approve" sourceRef="Gateway_Decision" targetRef="Task_PostingPrepAgent">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=js: JSON.stringify(vars.response || '').indexOf('Approve') !== -1</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_prep_update" sourceRef="Task_PostingPrepAgent" targetRef="Task_UpdatePO" />
+    <bpmn:sequenceFlow id="Flow_prep_error" sourceRef="Boundary_PrepError" targetRef="Task_RouteBuyer" />
+    <bpmn:sequenceFlow id="Flow_update_end" sourceRef="Task_UpdatePO" targetRef="End_Corrected" />
+    <bpmn:sequenceFlow id="Flow_escalate" name="Escalate" sourceRef="Gateway_Decision" targetRef="Task_RouteBuyer" />
+    <bpmn:sequenceFlow id="Flow_routebuyer_end" sourceRef="Task_RouteBuyer" targetRef="End_Escalated" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_1">
+    <bpmndi:BPMNPlane id="Plane_1" bpmnElement="ExchangeSettlementReconciliation">
+      <bpmndi:BPMNShape id="S_Event_start" bpmnElement="Event_start">
+        <dc:Bounds x="160" y="200" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="160" y="241" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_MatchAgent" bpmnElement="Task_MatchAgent">
+        <dc:Bounds x="250" y="178" width="110" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="250" y="263" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Boundary_MatchError" bpmnElement="Boundary_MatchError">
+        <dc:Bounds x="282" y="240" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="282" y="281" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_Tolerance" bpmnElement="Task_Tolerance">
+        <dc:Bounds x="410" y="178" width="110" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="410" y="263" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Gateway_Tolerance" bpmnElement="Gateway_Tolerance">
+        <dc:Bounds x="570" y="193" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="570" y="248" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_AutoApprove" bpmnElement="Task_AutoApprove">
+        <dc:Bounds x="680" y="80" width="110" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="680" y="165" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_End_AutoApproved" bpmnElement="End_AutoApproved">
+        <dc:Bounds x="860" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="860" y="143" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_VarianceAgent" bpmnElement="Task_VarianceAgent">
+        <dc:Bounds x="649" y="296" width="110" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="649" y="381" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Boundary_AgentError" bpmnElement="Boundary_AgentError">
+        <dc:Bounds x="681" y="358" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="681" y="399" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_HumanGate" bpmnElement="Task_HumanGate">
+        <dc:Bounds x="850" y="300" width="110" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="850" y="385" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Gateway_Decision" bpmnElement="Gateway_Decision">
+        <dc:Bounds x="1010" y="315" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1010" y="370" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_PostingPrepAgent" bpmnElement="Task_PostingPrepAgent">
+        <dc:Bounds x="1120" y="300" width="110" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1120" y="385" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Boundary_PrepError" bpmnElement="Boundary_PrepError">
+        <dc:Bounds x="1152" y="362" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1152" y="403" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_UpdatePO" bpmnElement="Task_UpdatePO">
+        <dc:Bounds x="1290" y="300" width="110" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1290" y="385" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_End_Corrected" bpmnElement="End_Corrected">
+        <dc:Bounds x="1460" y="322" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1460" y="363" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Task_RouteBuyer" bpmnElement="Task_RouteBuyer">
+        <dc:Bounds x="1120" y="460" width="110" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1120" y="545" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_End_Escalated" bpmnElement="End_Escalated">
+        <dc:Bounds x="1460" y="482" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1460" y="523" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_start_match" bpmnElement="Flow_start_match">
+        <di:waypoint x="196" y="218" />
+        <di:waypoint x="250" y="218" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_match_tolerance" bpmnElement="Flow_match_tolerance">
+        <di:waypoint x="360" y="218" />
+        <di:waypoint x="410" y="218" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_match_error" bpmnElement="Flow_match_error">
+        <di:waypoint x="300" y="276" />
+        <di:waypoint x="300" y="600" />
+        <di:waypoint x="1175" y="600" />
+        <di:waypoint x="1175" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_tolerance_gateway" bpmnElement="Flow_tolerance_gateway">
+        <di:waypoint x="520" y="218" />
+        <di:waypoint x="570" y="218" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_within_tolerance" bpmnElement="Flow_within_tolerance">
+        <di:waypoint x="595" y="193" />
+        <di:waypoint x="595" y="120" />
+        <di:waypoint x="680" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_variance" bpmnElement="Flow_variance">
+        <di:waypoint x="595" y="243" />
+        <di:waypoint x="595" y="336" />
+        <di:waypoint x="649" y="336" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_autoapprove_end" bpmnElement="Flow_autoapprove_end">
+        <di:waypoint x="790" y="120" />
+        <di:waypoint x="860" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_agent_gate" bpmnElement="Flow_agent_gate">
+        <di:waypoint x="759" y="336" />
+        <di:waypoint x="804.5" y="336" />
+        <di:waypoint x="804.5" y="340" />
+        <di:waypoint x="850" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_agent_error" bpmnElement="Flow_agent_error">
+        <di:waypoint x="699" y="394" />
+        <di:waypoint x="699" y="560" />
+        <di:waypoint x="1175" y="560" />
+        <di:waypoint x="1175" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_gate_decision" bpmnElement="Flow_gate_decision">
+        <di:waypoint x="960" y="340" />
+        <di:waypoint x="1010" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_approve" bpmnElement="Flow_approve">
+        <di:waypoint x="1060" y="340" />
+        <di:waypoint x="1120" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_prep_update" bpmnElement="Flow_prep_update">
+        <di:waypoint x="1230" y="340" />
+        <di:waypoint x="1290" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_prep_error" bpmnElement="Flow_prep_error">
+        <di:waypoint x="1170" y="398" />
+        <di:waypoint x="1170" y="460" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_update_end" bpmnElement="Flow_update_end">
+        <di:waypoint x="1400" y="340" />
+        <di:waypoint x="1460" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_escalate" bpmnElement="Flow_escalate">
+        <di:waypoint x="1035" y="365" />
+        <di:waypoint x="1035" y="500" />
+        <di:waypoint x="1120" y="500" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_Flow_routebuyer_end" bpmnElement="Flow_routebuyer_end">
+        <di:waypoint x="1230" y="500" />
+        <di:waypoint x="1460" y="500" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
