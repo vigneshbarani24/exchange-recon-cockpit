@@ -16,8 +16,12 @@ three coded agents through one Maestro instance to "Corrected & closed."**
 - Trace: `composed-run-3-corrected-element-executions.json`. Watcher log:
   `../backups/logs/run3-v105-corrected-watcher.log`.
 
-A multi-PO campaign (6 live POs, all three endings — see `../runs/` and
-`src/data/runsManifest.json`) reproduces the pattern at volume.
+A multi-PO campaign (6 live POs, both gate branches — see `../runs/` and
+`src/data/runsManifest.json`) reproduces the pattern at volume. The deterministic
+auto-clear ending is designed in the flow but parked behind a filed script-output
+platform defect, so in-tolerance cases deliberately route to the human (the manifest
+records `expected: auto-approved` vs `ending: escalated` for those runs — conservative
+by default, and honestly labeled).
 
 ## Run 1 — composed instance completed (escalation path)
 

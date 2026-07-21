@@ -49,8 +49,10 @@ One diagram carries the whole architecture.
 - **Below the waterline, the deterministic mass.** Rules, tolerance gates, the RPA and
   integration layer. The bulk of the work, cleared silently, without a single model call. In
   this build that is `Task_Tolerance`: 2 percent price, 1 unit quantity, plain JavaScript
-  inside the BPMN. If the invoice is within tolerance it auto-clears and no agent is ever
-  invoked.
+  inside the BPMN. By design an in-tolerance invoice auto-clears with no agent invoked; in
+  the deployed flow that branch is parked behind a filed script-output platform defect, so
+  today in-tolerance cases route conservatively to the human. Say it that way on stage:
+  designed, parked, conservative by default.
 - **At the waterline, the exception-handling agents.** Matching, variance, posting-prep.
   They reason only where determinism runs out. Call them exception-handling agents
   everywhere, in the repo, the deck and out loud. The name is the argument.
