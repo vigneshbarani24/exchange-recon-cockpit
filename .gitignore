@@ -50,3 +50,7 @@ posting-prep-agent/out.json
 **/AGENTS.md
 **/CLAUDE.md
 .vercel
+
+# local secrets
+scripts/.teams-webhook
+.env.local

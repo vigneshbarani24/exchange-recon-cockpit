@@ -17,12 +17,15 @@ The honesty spine. Every finale claim must trace here. Sourced from four read-on
   (job `875fc4d3…`, 53s) → deterministic tolerance gate → **variance-agent as a real StartAgentJob**
   (job `7631a1d9…`, 62s) → **message-based human gate paused ~6 min and was cleared by a governed
   `ApproveGate` message** → completed (escalation path on run 1). Evidence: `finale/maestro/`.
-- **Precision for Q&A:** run 1's decision routing defaulted to the governed *escalate* ending
-  (message-envelope shape); the Approve → posting-prep → Corrected path is wired in v1.0.3 —
-  only claim the three-agents-in-one-instance version if a completed run shows `Task_PostingPrepAgent`
-  with a job key. The gate correlates message name+reference; it does not verify approver *role*
-  (Action Center task = roadmap). The old hard rule ("never say the gate cleared") is retired —
-  superseded by this run.
+- **ALL THREE agents in one instance — PROVEN (run 3, v1.0.5 two-gate, 2026-07-21).** Instance
+  `2db6d4d8-b245-4531-9057-8172232524db` completed **End_Corrected**: matching (job `fdbb41a2…`)
+  → tolerance gate → variance (job `ebee41c4…`) → event-based gateway (`ApproveGate` message
+  consumed, `EscalateGate` terminated) → **posting-prep (job `c1ee53ae…`)** → held update stub →
+  Corrected & closed. Trace: `finale/maestro/composed-run-3-corrected-element-executions.json`.
+  Runs 1-2 (v1.0.2/1.0.3) completed on the governed escalation ending — reproducibility evidence.
+- **Precision for Q&A:** the gate correlates message name+reference; it does not verify approver
+  *role* (Action Center task = roadmap). The old hard rule ("never say the gate cleared") is
+  retired — superseded by these runs. Decision = which message arrives (ApproveGate/EscalateGate).
 - Historical refs (pre-2026-07-21 state): `DEMO.md:84-101`, `CODING-AGENTS.md:74-79`, `ARCHITECTURE.md:110`.
 - **Portal process 2206307 (`sol.Agentic.ExchangeReconBpmn@1.0.2`) is the LEGACY STUB BPMN — do NOT demo it as the real 3-agent flow.** Confirmed from a live trace of instance `255785a6-1b72-4059-b079-5613f2eb7c55` (2026-07-20, trace + instance JSON): the "Variance agent: explain variance" step is `elementType: ScriptTask` (elementId `Task_Agent`, a single stub — not `StartAgentJob`), `orchestratorJobLink` is empty on every step, all five steps completed in ~3 s total, and the start event is the legacy "Settlement pair ready." So **zero real agent jobs launched**; this instance proves only that the Maestro shell + tolerance gate + message-based human gate run e2e as personal automation. It does **not** prove the composed 3-agent run. The real P2P StartAgentJob BPMN is a later package version and remains BUILT-NOT-RUN. Ref: `trace-1784543789525.json`, `Instance_255785a6…json`.
 

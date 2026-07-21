@@ -1,13 +1,16 @@
 // The governed back office, operating — a Bizdex/VB-identity operating surface for the
 // P2P reconciliation. Phase 1: renders entirely from the captured real reconciliation
 // (src/lib/reconDemo.ts) — zero network, always renders. The live-run panel is Phase 2.
+import { useState } from "react";
 import { reconCase, agentPipeline } from "../lib/reconDemo";
+import { RunsBoard } from "./RunsBoard";
 
 // Deep links to the real systems. The Orchestrator folder is where the 3 agent jobs ran.
-// TODO(VB): set SAP_PORTAL to your S/4HANA Fiori URL (e.g. https://<tenant>.s4hana.cloud.sap).
+// SAP_PORTAL opens "Manage Purchase Orders" — search PO 4500000021 to show the two lines
+// (RM27 Packaging Box, RM16) the variance agent read live over MCP.
 const UIPATH_PORTAL =
   "https://staging.uipath.com/hackathon26_751/DefaultTenant/orchestrator_/?tid=743053&fid=3093256";
-const SAP_PORTAL = "https://my-s4-tenant.s4hana.cloud.sap";
+const SAP_PORTAL = "https://my405139.s4hana.cloud.sap/ui#PurchaseOrder-manage";
 
 // The three agents' real Orchestrator jobs (all Successful, Shared/ExchangeReconDemo).
 const runs = [
@@ -20,6 +23,7 @@ const line10 = reconCase.lines[0];
 const line20 = reconCase.lines[1];
 
 export function OperatingSurface({ onExit }: { onExit?: () => void }) {
+  const [showRuns, setShowRuns] = useState(false);
   return (
     <div className="osurf">
       <style>{CSS}</style>
@@ -28,8 +32,8 @@ export function OperatingSurface({ onExit }: { onExit?: () => void }) {
         <div className="os-brand">
           <span className="os-wordmark">Exchange&nbsp;Recon</span>
           <nav className="os-nav">
-            <a className="on active">Home</a>
-            <a className="on">Runs</a>
+            <a className={`on ${showRuns ? "" : "active"}`} onClick={() => setShowRuns(false)}>Home</a>
+            <a className={`on ${showRuns ? "active" : ""}`} onClick={() => setShowRuns(true)}>Runs</a>
             <a className="on">Brain</a>
             <a className="on">Audit</a>
           </nav>
@@ -59,11 +63,14 @@ export function OperatingSurface({ onExit }: { onExit?: () => void }) {
         </div>
 
         <div className="os-actions">
-          <button className="chip chip-accent" title="Live run — Phase 2">＋ Run another invoice</button>
+          <button className="chip chip-accent" onClick={() => setShowRuns(true)}>＋ Run another invoice</button>
           <a className="chip" href={UIPATH_PORTAL} target="_blank" rel="noreferrer">Open in UiPath Orchestrator ↗</a>
           <a className="chip" href={SAP_PORTAL} target="_blank" rel="noreferrer">Open in SAP S/4HANA ↗</a>
         </div>
 
+        {showRuns ? (
+          <RunsBoard onBack={() => setShowRuns(false)} />
+        ) : (
         <div className="os-grid">
           {/* HERO — sign-off (cols 1-2, rows 1-2) */}
           <section className="card hero">
@@ -208,6 +215,7 @@ export function OperatingSurface({ onExit }: { onExit?: () => void }) {
             </div>
           </section>
         </div>
+        )}
 
         <div className="os-foot">
           Numbers are the agents’ actual output against live SAP S/4HANA. The write-back is prepared and held.

@@ -1,0 +1,60 @@
+[
+ {
+  "id": 101,
+  "po": "4500000021",
+  "invoice": "INV-88231",
+  "scenario": "Composed proof run 1 (v1.0.2) - price +10% and over-delivery",
+  "decision": "approve",
+  "expected": "escalated",
+  "ending": "escalated",
+  "instanceStatus": "Completed",
+  "instanceId": "f823f696-aa32-466b-99fc-72a84cd74ea7",
+  "agentJobs": {
+   "matching": "875fc4d3-c6e2-495d-baf3-381a294fd85b",
+   "variance": "7631a1d9-39f9-4661-9959-b479304713b0"
+  },
+  "startedUtc": "2026-07-21T05:59:29+00:00",
+  "finishedUtc": "2026-07-21T06:07:23+00:00",
+  "durationSec": 474,
+  "steps": []
+ },
+ {
+  "id": 102,
+  "po": "4500000021",
+  "invoice": "INV-88231",
+  "scenario": "Composed proof run 2 (v1.0.3) - reproducibility check",
+  "decision": "approve",
+  "expected": "escalated",
+  "ending": "escalated",
+  "instanceStatus": "Completed",
+  "instanceId": "3f78d3a5-112f-45fe-9835-c5148c680037",
+  "agentJobs": {
+   "matching": "3ffcfe3f-a1c7-4e8e-ab58-437a421adfd9",
+   "variance": "7e123592-b65b-476d-a08c-36e7921ea7ad"
+  },
+  "startedUtc": "2026-07-21T06:19:00+00:00",
+  "finishedUtc": "2026-07-21T06:22:00+00:00",
+  "durationSec": 180,
+  "steps": []
+ },
+ {
+  "id": 103,
+  "po": "4500000021",
+  "invoice": "INV-88231",
+  "scenario": "Composed proof run 3 (v1.0.5 two-gate) - full Approve path",
+  "decision": "approve",
+  "expected": "approved-corrected",
+  "ending": "approved-corrected",
+  "instanceStatus": "Completed",
+  "instanceId": "2db6d4d8-b245-4531-9057-8172232524db",
+  "agentJobs": {
+   "matching": "fdbb41a2-6974-44ff-a9d5-7bf9fc732327",
+   "variance": "ebee41c4-5b75-4925-8ed8-44d8afc28b19",
+   "postingPrep": "c1ee53ae-5c17-4508-bb47-dd7e9a670241"
+  },
+  "startedUtc": "2026-07-21T06:41:00+00:00",
+  "finishedUtc": "2026-07-21T06:44:30+00:00",
+  "durationSec": 210,
+  "steps": []
+ }
+]
