@@ -1,5 +1,685 @@
 [
  {
+  "id": 1,
+  "po": "4500000021",
+  "invoice": "INV-88231",
+  "scenario": "Price +10% and over-delivery on a 2-line PO",
+  "decision": "approve",
+  "expected": "approved-corrected",
+  "ending": "approved-corrected",
+  "instanceStatus": "Completed",
+  "instanceId": "fe234790-2283-4534-a37b-ac58ff9bfab0",
+  "agentJobs": {
+   "matching": "8f019701-66a3-4e6c-a5b3-a9279da12c8e",
+   "variance": "2e8bc435-4f85-4a96-b8e8-5953acd140e7",
+   "postingPrep": "f53d2853-e86f-4ba0-a4c2-4a7640463c4a"
+  },
+  "startedUtc": "2026-07-21T07:13:40+00:00",
+  "finishedUtc": "2026-07-21T07:16:46+00:00",
+  "durationSec": 186,
+  "steps": [
+   {
+    "elementId": "Event_start",
+    "type": "StartEvent",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:13:43.2688429Z",
+    "completed": "2026-07-21T07:13:43.4700654Z"
+   },
+   {
+    "elementId": "Task_MatchAgent",
+    "type": "ServiceTask",
+    "extension": "Orchestrator.StartAgentJob",
+    "status": "Completed",
+    "jobKey": "8f019701-66a3-4e6c-a5b3-a9279da12c8e",
+    "started": "2026-07-21T07:13:43.7410366Z",
+    "completed": "2026-07-21T07:14:34.2745909Z"
+   },
+   {
+    "elementId": "Task_Tolerance",
+    "type": "ScriptTask",
+    "extension": "Scp.Script",
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:14:34.5685492Z",
+    "completed": "2026-07-21T07:14:34.9005029Z"
+   },
+   {
+    "elementId": "Gateway_Tolerance",
+    "type": "ExclusiveGateway",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:14:35.4766185Z",
+    "completed": "2026-07-21T07:14:35.5429579Z"
+   },
+   {
+    "elementId": "Task_VarianceAgent",
+    "type": "ServiceTask",
+    "extension": "Orchestrator.StartAgentJob",
+    "status": "Completed",
+    "jobKey": "2e8bc435-4f85-4a96-b8e8-5953acd140e7",
+    "started": "2026-07-21T07:14:35.7495564Z",
+    "completed": "2026-07-21T07:15:34.0663203Z"
+   },
+   {
+    "elementId": "GW_HumanWait",
+    "type": "EventBasedGateway",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:15:34.3786529Z",
+    "completed": "2026-07-21T07:15:34.5098245Z"
+   },
+   {
+    "elementId": "Event_EscalateMsg",
+    "type": "IntermediateCatchEvent",
+    "extension": "Maestro.ReceiveMessageEvent",
+    "status": "Terminated",
+    "jobKey": null,
+    "started": "2026-07-21T07:15:34.9090943Z",
+    "completed": "2026-07-21T07:15:54.3123353Z"
+   },
+   {
+    "elementId": "Event_Approve",
+    "type": "IntermediateCatchEvent",
+    "extension": "Maestro.ReceiveMessageEvent",
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:15:34.9091144Z",
+    "completed": "2026-07-21T07:15:54.0912376Z"
+   },
+   {
+    "elementId": "Task_PostingPrepAgent",
+    "type": "ServiceTask",
+    "extension": "Orchestrator.StartAgentJob",
+    "status": "Completed",
+    "jobKey": "f53d2853-e86f-4ba0-a4c2-4a7640463c4a",
+    "started": "2026-07-21T07:15:54.4057118Z",
+    "completed": "2026-07-21T07:16:42.387993Z"
+   },
+   {
+    "elementId": "Task_UpdatePO",
+    "type": "ScriptTask",
+    "extension": "Scp.Script",
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:16:42.6836285Z",
+    "completed": "2026-07-21T07:16:43.0234266Z"
+   },
+   {
+    "elementId": "End_Corrected",
+    "type": "EndEvent",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:16:43.3055338Z",
+    "completed": "2026-07-21T07:16:43.5288792Z"
+   }
+  ]
+ },
+ {
+  "id": 2,
+  "po": "4500001668",
+  "invoice": "INV-90341",
+  "scenario": "Clean 5-line invoice, exact match",
+  "decision": "auto",
+  "expected": "auto-approved",
+  "ending": "escalated",
+  "instanceStatus": "Completed",
+  "instanceId": "534fb38e-7840-4345-a2c9-0e0e4b5aaf57",
+  "agentJobs": {
+   "matching": "10cf7a73-bfc2-4004-b06b-f2bb99d822e9",
+   "variance": "1a2287b1-5039-4ac8-b1fb-68ce89455532"
+  },
+  "startedUtc": "2026-07-21T07:30:00+00:00",
+  "finishedUtc": "2026-07-21T07:32:53+00:00",
+  "durationSec": 173,
+  "steps": [
+   {
+    "elementId": "Event_start",
+    "type": "StartEvent",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:30:03.3370542Z",
+    "completed": "2026-07-21T07:30:03.5867717Z"
+   },
+   {
+    "elementId": "Task_MatchAgent",
+    "type": "ServiceTask",
+    "extension": "Orchestrator.StartAgentJob",
+    "status": "Completed",
+    "jobKey": "10cf7a73-bfc2-4004-b06b-f2bb99d822e9",
+    "started": "2026-07-21T07:30:03.8404697Z",
+    "completed": "2026-07-21T07:31:04.4094881Z"
+   },
+   {
+    "elementId": "Task_Tolerance",
+    "type": "ScriptTask",
+    "extension": "Scp.Script",
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:31:04.6652338Z",
+    "completed": "2026-07-21T07:31:05.222013Z"
+   },
+   {
+    "elementId": "Gateway_Tolerance",
+    "type": "ExclusiveGateway",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:31:05.5876354Z",
+    "completed": "2026-07-21T07:31:05.6501467Z"
+   },
+   {
+    "elementId": "Task_VarianceAgent",
+    "type": "ServiceTask",
+    "extension": "Orchestrator.StartAgentJob",
+    "status": "Completed",
+    "jobKey": "1a2287b1-5039-4ac8-b1fb-68ce89455532",
+    "started": "2026-07-21T07:31:06.0875838Z",
+    "completed": "2026-07-21T07:32:15.4391847Z"
+   },
+   {
+    "elementId": "GW_HumanWait",
+    "type": "EventBasedGateway",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:32:15.6859725Z",
+    "completed": "2026-07-21T07:32:15.8630725Z"
+   },
+   {
+    "elementId": "Event_EscalateMsg",
+    "type": "IntermediateCatchEvent",
+    "extension": "Maestro.ReceiveMessageEvent",
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:32:16.152706Z",
+    "completed": "2026-07-21T07:32:36.8064523Z"
+   },
+   {
+    "elementId": "Event_Approve",
+    "type": "IntermediateCatchEvent",
+    "extension": "Maestro.ReceiveMessageEvent",
+    "status": "Terminated",
+    "jobKey": null,
+    "started": "2026-07-21T07:32:16.1537858Z",
+    "completed": "2026-07-21T07:32:37.0314229Z"
+   },
+   {
+    "elementId": "Task_RouteBuyer",
+    "type": "ScriptTask",
+    "extension": "Scp.Script",
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:32:37.1024771Z",
+    "completed": "2026-07-21T07:32:37.460667Z"
+   },
+   {
+    "elementId": "End_Escalated",
+    "type": "EndEvent",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:32:37.703307Z",
+    "completed": "2026-07-21T07:32:37.9516832Z"
+   }
+  ]
+ },
+ {
+  "id": 3,
+  "po": "4500001676",
+  "invoice": "INV-90355",
+  "scenario": "Over-delivery: 18 units billed vs 15 ordered",
+  "decision": "approve",
+  "expected": "approved-corrected",
+  "ending": "approved-corrected",
+  "instanceStatus": "Completed",
+  "instanceId": "876cae63-776f-4820-a585-5794e0edb309",
+  "agentJobs": {
+   "matching": "8ef0e2fc-762d-45ab-a458-096470d87d4f",
+   "variance": "61763920-9411-4bb6-b717-27a4bf75e9d7",
+   "postingPrep": "fcbc9868-3089-42aa-a51a-bb717d9961e8"
+  },
+  "startedUtc": "2026-07-21T07:32:54+00:00",
+  "finishedUtc": "2026-07-21T07:36:10+00:00",
+  "durationSec": 195,
+  "steps": [
+   {
+    "elementId": "Event_start",
+    "type": "StartEvent",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:32:57.0040956Z",
+    "completed": "2026-07-21T07:32:57.1925511Z"
+   },
+   {
+    "elementId": "Task_MatchAgent",
+    "type": "ServiceTask",
+    "extension": "Orchestrator.StartAgentJob",
+    "status": "Completed",
+    "jobKey": "8ef0e2fc-762d-45ab-a458-096470d87d4f",
+    "started": "2026-07-21T07:32:57.4438698Z",
+    "completed": "2026-07-21T07:33:52.0975873Z"
+   },
+   {
+    "elementId": "Task_Tolerance",
+    "type": "ScriptTask",
+    "extension": "Scp.Script",
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:33:52.4165452Z",
+    "completed": "2026-07-21T07:33:52.7361162Z"
+   },
+   {
+    "elementId": "Gateway_Tolerance",
+    "type": "ExclusiveGateway",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:33:52.9682467Z",
+    "completed": "2026-07-21T07:33:53.1023872Z"
+   },
+   {
+    "elementId": "Task_VarianceAgent",
+    "type": "ServiceTask",
+    "extension": "Orchestrator.StartAgentJob",
+    "status": "Completed",
+    "jobKey": "61763920-9411-4bb6-b717-27a4bf75e9d7",
+    "started": "2026-07-21T07:33:53.3000677Z",
+    "completed": "2026-07-21T07:34:52.2660933Z"
+   },
+   {
+    "elementId": "GW_HumanWait",
+    "type": "EventBasedGateway",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:34:52.5537291Z",
+    "completed": "2026-07-21T07:34:52.7314218Z"
+   },
+   {
+    "elementId": "Event_Approve",
+    "type": "IntermediateCatchEvent",
+    "extension": "Maestro.ReceiveMessageEvent",
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:34:53.0656656Z",
+    "completed": "2026-07-21T07:35:03.9762046Z"
+   },
+   {
+    "elementId": "Event_EscalateMsg",
+    "type": "IntermediateCatchEvent",
+    "extension": "Maestro.ReceiveMessageEvent",
+    "status": "Terminated",
+    "jobKey": null,
+    "started": "2026-07-21T07:34:53.0770724Z",
+    "completed": "2026-07-21T07:35:04.1873287Z"
+   },
+   {
+    "elementId": "Task_PostingPrepAgent",
+    "type": "ServiceTask",
+    "extension": "Orchestrator.StartAgentJob",
+    "status": "Completed",
+    "jobKey": "fcbc9868-3089-42aa-a51a-bb717d9961e8",
+    "started": "2026-07-21T07:35:04.2875704Z",
+    "completed": "2026-07-21T07:35:56.0181469Z"
+   },
+   {
+    "elementId": "Task_UpdatePO",
+    "type": "ScriptTask",
+    "extension": "Scp.Script",
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:35:56.3336856Z",
+    "completed": "2026-07-21T07:35:56.6402399Z"
+   },
+   {
+    "elementId": "End_Corrected",
+    "type": "EndEvent",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:35:56.8930971Z",
+    "completed": "2026-07-21T07:35:57.0883047Z"
+   }
+  ]
+ },
+ {
+  "id": 4,
+  "po": "4500001681",
+  "invoice": "INV-90402",
+  "scenario": "Price +10% on high-value line (3000 -> 3300)",
+  "decision": "escalate",
+  "expected": "escalated",
+  "ending": "escalated",
+  "instanceStatus": "Completed",
+  "instanceId": "61c79659-c1ea-4ac8-8a8f-b521f9c53635",
+  "agentJobs": {
+   "matching": "d0c51cb4-6238-4b04-bfec-6e22477a0e02",
+   "variance": "8f3b398c-191d-4f04-ba33-b9611229230b"
+  },
+  "startedUtc": "2026-07-21T07:36:10+00:00",
+  "finishedUtc": "2026-07-21T07:39:32+00:00",
+  "durationSec": 202,
+  "steps": [
+   {
+    "elementId": "Event_start",
+    "type": "StartEvent",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:37:07.2211162Z",
+    "completed": "2026-07-21T07:37:07.4406572Z"
+   },
+   {
+    "elementId": "Task_MatchAgent",
+    "type": "ServiceTask",
+    "extension": "Orchestrator.StartAgentJob",
+    "status": "Completed",
+    "jobKey": "d0c51cb4-6238-4b04-bfec-6e22477a0e02",
+    "started": "2026-07-21T07:37:07.7386532Z",
+    "completed": "2026-07-21T07:38:04.9819644Z"
+   },
+   {
+    "elementId": "Task_Tolerance",
+    "type": "ScriptTask",
+    "extension": "Scp.Script",
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:38:05.2250009Z",
+    "completed": "2026-07-21T07:38:05.4889297Z"
+   },
+   {
+    "elementId": "Gateway_Tolerance",
+    "type": "ExclusiveGateway",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:38:05.7355159Z",
+    "completed": "2026-07-21T07:38:05.8006829Z"
+   },
+   {
+    "elementId": "Task_VarianceAgent",
+    "type": "ServiceTask",
+    "extension": "Orchestrator.StartAgentJob",
+    "status": "Completed",
+    "jobKey": "8f3b398c-191d-4f04-ba33-b9611229230b",
+    "started": "2026-07-21T07:38:05.9933965Z",
+    "completed": "2026-07-21T07:39:07.6496907Z"
+   },
+   {
+    "elementId": "GW_HumanWait",
+    "type": "EventBasedGateway",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:39:07.9255499Z",
+    "completed": "2026-07-21T07:39:08.0514215Z"
+   },
+   {
+    "elementId": "Event_Approve",
+    "type": "IntermediateCatchEvent",
+    "extension": "Maestro.ReceiveMessageEvent",
+    "status": "Terminated",
+    "jobKey": null,
+    "started": "2026-07-21T07:39:08.3929115Z",
+    "completed": "2026-07-21T07:39:15.455023Z"
+   },
+   {
+    "elementId": "Event_EscalateMsg",
+    "type": "IntermediateCatchEvent",
+    "extension": "Maestro.ReceiveMessageEvent",
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:39:08.4281669Z",
+    "completed": "2026-07-21T07:39:15.2375487Z"
+   },
+   {
+    "elementId": "Task_RouteBuyer",
+    "type": "ScriptTask",
+    "extension": "Scp.Script",
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:39:15.5298413Z",
+    "completed": "2026-07-21T07:39:15.8233113Z"
+   },
+   {
+    "elementId": "End_Escalated",
+    "type": "EndEvent",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:39:16.1248941Z",
+    "completed": "2026-07-21T07:39:16.3470601Z"
+   }
+  ]
+ },
+ {
+  "id": 5,
+  "po": "4500001666",
+  "invoice": "INV-90366",
+  "scenario": "Price +1.01%, inside the 2% tolerance",
+  "decision": "auto",
+  "expected": "auto-approved",
+  "ending": "escalated",
+  "instanceStatus": "Completed",
+  "instanceId": "625d8972-7d51-419d-b0e7-c803771289d3",
+  "agentJobs": {
+   "matching": "5f4d5369-1688-4bcb-af14-68a40512a668",
+   "variance": "7a4d870b-0065-4565-81be-680c4e6fbb5c"
+  },
+  "startedUtc": "2026-07-21T08:40:06+00:00",
+  "finishedUtc": "2026-07-21T08:42:37+00:00",
+  "durationSec": 151,
+  "steps": [
+   {
+    "elementId": "Event_start",
+    "type": "StartEvent",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T08:40:09.8266458Z",
+    "completed": "2026-07-21T08:40:10.0862482Z"
+   },
+   {
+    "elementId": "Task_MatchAgent",
+    "type": "ServiceTask",
+    "extension": "Orchestrator.StartAgentJob",
+    "status": "Completed",
+    "jobKey": "5f4d5369-1688-4bcb-af14-68a40512a668",
+    "started": "2026-07-21T08:40:10.4613738Z",
+    "completed": "2026-07-21T08:41:03.1450592Z"
+   },
+   {
+    "elementId": "Task_Tolerance",
+    "type": "ScriptTask",
+    "extension": "BPMN.ScriptTask",
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T08:41:03.4491741Z",
+    "completed": "2026-07-21T08:41:03.7177898Z"
+   },
+   {
+    "elementId": "Gateway_Tolerance",
+    "type": "ExclusiveGateway",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T08:41:03.9747402Z",
+    "completed": "2026-07-21T08:41:04.0564833Z"
+   },
+   {
+    "elementId": "Task_VarianceAgent",
+    "type": "ServiceTask",
+    "extension": "Orchestrator.StartAgentJob",
+    "status": "Completed",
+    "jobKey": "7a4d870b-0065-4565-81be-680c4e6fbb5c",
+    "started": "2026-07-21T08:41:04.2688897Z",
+    "completed": "2026-07-21T08:42:10.1728826Z"
+   },
+   {
+    "elementId": "GW_HumanWait",
+    "type": "EventBasedGateway",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T08:42:10.4636138Z",
+    "completed": "2026-07-21T08:42:10.7117483Z"
+   },
+   {
+    "elementId": "Event_EscalateMsg",
+    "type": "IntermediateCatchEvent",
+    "extension": "Maestro.ReceiveMessageEvent",
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T08:42:11.0381805Z",
+    "completed": "2026-07-21T08:42:20.6220347Z"
+   },
+   {
+    "elementId": "Event_Approve",
+    "type": "IntermediateCatchEvent",
+    "extension": "Maestro.ReceiveMessageEvent",
+    "status": "Terminated",
+    "jobKey": null,
+    "started": "2026-07-21T08:42:11.0690189Z",
+    "completed": "2026-07-21T08:42:20.8498543Z"
+   },
+   {
+    "elementId": "Task_RouteBuyer",
+    "type": "ScriptTask",
+    "extension": "BPMN.ScriptTask",
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T08:42:20.9235792Z",
+    "completed": "2026-07-21T08:42:21.1681255Z"
+   },
+   {
+    "elementId": "End_Escalated",
+    "type": "EndEvent",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T08:42:21.4850394Z",
+    "completed": "2026-07-21T08:42:21.7457892Z"
+   }
+  ]
+ },
+ {
+  "id": 6,
+  "po": "4500001680",
+  "invoice": "INV-90410",
+  "scenario": "Under-delivery: 8 billed vs 11 ordered (EUR)",
+  "decision": "escalate",
+  "expected": "escalated",
+  "ending": "escalated",
+  "instanceStatus": "Completed",
+  "instanceId": "8e9faa84-e105-40e1-a9a5-948e02eb3878",
+  "agentJobs": {
+   "matching": "ff82f8c4-3410-4afc-8ca0-4cbd808cd5a3",
+   "variance": "0b93cd5e-9b70-4664-ba10-9484029a845b"
+  },
+  "startedUtc": "2026-07-21T07:42:26+00:00",
+  "finishedUtc": "2026-07-21T07:45:16+00:00",
+  "durationSec": 169,
+  "steps": [
+   {
+    "elementId": "Event_start",
+    "type": "StartEvent",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:42:29.8690472Z",
+    "completed": "2026-07-21T07:42:30.0821277Z"
+   },
+   {
+    "elementId": "Task_MatchAgent",
+    "type": "ServiceTask",
+    "extension": "Orchestrator.StartAgentJob",
+    "status": "Completed",
+    "jobKey": "ff82f8c4-3410-4afc-8ca0-4cbd808cd5a3",
+    "started": "2026-07-21T07:42:30.3615162Z",
+    "completed": "2026-07-21T07:43:28.0298181Z"
+   },
+   {
+    "elementId": "Task_Tolerance",
+    "type": "ScriptTask",
+    "extension": "Scp.Script",
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:43:28.2977738Z",
+    "completed": "2026-07-21T07:43:28.5790724Z"
+   },
+   {
+    "elementId": "Gateway_Tolerance",
+    "type": "ExclusiveGateway",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:43:28.8545344Z",
+    "completed": "2026-07-21T07:43:29.1863408Z"
+   },
+   {
+    "elementId": "Task_VarianceAgent",
+    "type": "ServiceTask",
+    "extension": "Orchestrator.StartAgentJob",
+    "status": "Completed",
+    "jobKey": "0b93cd5e-9b70-4664-ba10-9484029a845b",
+    "started": "2026-07-21T07:43:29.4164382Z",
+    "completed": "2026-07-21T07:44:42.0249415Z"
+   },
+   {
+    "elementId": "GW_HumanWait",
+    "type": "EventBasedGateway",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:44:42.2931954Z",
+    "completed": "2026-07-21T07:44:42.460767Z"
+   },
+   {
+    "elementId": "Event_EscalateMsg",
+    "type": "IntermediateCatchEvent",
+    "extension": "Maestro.ReceiveMessageEvent",
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:44:42.8905942Z",
+    "completed": "2026-07-21T07:44:59.4199975Z"
+   },
+   {
+    "elementId": "Event_Approve",
+    "type": "IntermediateCatchEvent",
+    "extension": "Maestro.ReceiveMessageEvent",
+    "status": "Terminated",
+    "jobKey": null,
+    "started": "2026-07-21T07:44:42.9500242Z",
+    "completed": "2026-07-21T07:44:59.5981464Z"
+   },
+   {
+    "elementId": "Task_RouteBuyer",
+    "type": "ScriptTask",
+    "extension": "Scp.Script",
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:44:59.6659842Z",
+    "completed": "2026-07-21T07:44:59.9463664Z"
+   },
+   {
+    "elementId": "End_Escalated",
+    "type": "EndEvent",
+    "extension": null,
+    "status": "Completed",
+    "jobKey": null,
+    "started": "2026-07-21T07:45:00.2884088Z",
+    "completed": "2026-07-21T07:45:00.5247728Z"
+   }
+  ]
+ },
+ {
   "id": 101,
   "po": "4500000021",
   "invoice": "INV-88231",

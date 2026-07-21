@@ -78,6 +78,27 @@ MCP connection (XSUAA client-credentials, OData `execute-entity-operation`):
 | Cockpit | **@uipath/uipath-typescript** SDK, Vite + React + TypeScript | `src/lib/sdk.ts`, `src/lib/exchange.ts` |
 | Built with | **Claude Code via UiPath for Coding Agents** | [CODING-AGENTS.md](./CODING-AGENTS.md) |
 
+## Built with a coding agent (Claude Code × UiPath for Coding Agents)
+
+This project was built end to end with **Claude Code through UiPath for Coding Agents** — the
+official `uip` CLI and skills (`uipath-maestro-bpmn`, `uipath-agents`, `uipath-platform`) driving
+scaffold, pack, publish, deploy, run, and diagnosis. What the coding agent authored: the three
+coded LangGraph agents, the Maestro BPMN (including the event-based two-gate human decision), the
+cockpit, the eval suites, and the run/notify tooling in `scripts/`.
+
+Its single most valuable contribution was not writing code: it **diagnosed the unresolved
+`releaseKey`/`folderId` binding failure** that made every CLI-deployed version of the composed
+flow fault at runtime (error 170005) — proving across five packaging variants that the CLI pack
+path never resolves agent bindings, and identifying the Studio Web canvas round-trip that fixes
+it. It then ran the composed instance to completion, drove a six-PO run campaign that exposed and
+fixed two further defects, executed the 12-case eval suite, and **independently validated the
+eval ground truth by reading the purchase orders over the same SAP MCP the agents use**
+([finale/evals/CLAUDE-TESTER-VALIDATION.md](./finale/evals/CLAUDE-TESTER-VALIDATION.md)) — the
+model acting as a tester, not just a code generator.
+
+Evidence: [CODING-AGENTS.md](./CODING-AGENTS.md) (session/commit trail),
+[finale/maestro/](./finale/maestro/) (composed-run traces), the commit history of this repo.
+
 ## Setup & run for judging
 
 **Option A — zero setup (recommended for a quick look):** open **[exchange-recon-cockpit.vercel.app](https://exchange-recon-cockpit.vercel.app)** — the seeded Reconciliation cockpit, no login, runs in your browser.

@@ -1,5 +1,9 @@
 # VERIFIED-STATE.md — what is actually true (July 2026)
 
+> **2026-07-21: superseded as the primary spine by [`2026-07-21-grounded/TRUTH.md`](2026-07-21-grounded/TRUTH.md)** —
+> the composed 3-agent Maestro run is now LIVE-PROVEN (End_Corrected, instance `2db6d4d8…`).
+> This file remains accurate but reads with that banner in mind.
+
 The honesty spine. Every finale claim must trace here. Sourced from four read-only audits + primary git history + job records in the repo. Tier labels: **LIVE-PROVEN** / **BUILT-NOT-RUN** / **HELD** / **ASPIRATIONAL**.
 
 ## LIVE-PROVEN (say these freely)

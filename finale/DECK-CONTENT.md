@@ -47,7 +47,7 @@ Maestro BPMN · Coded LangGraph Agents · LLM Gateway (gpt-4o) · Orchestrator �
 ## Slide 5 — Architecture *(show BEFORE the demo)*
 One clean diagram (reuse `docs/diagrams/`). Left→right:
 Supplier invoice → **matching · variance · posting-prep agents** (read S/4 over MCP · read-only — **all three proven live**) → **deterministic tolerance gate** → **human Approve/Escalate** (Action Center) → **prepared correction, held**.
-Label each element **LIVE** (agent reads) · **BUILT** (Maestro spine) · **HELD** (write-back).
+Label each element **LIVE** (agent reads) · **LIVE** (Maestro spine — composed instance completed 2026-07-21, all three agents, both gate branches) · **HELD** (write-back).
 
 > **Notes (20s):** "Here's the whole flow before I show it running. Agents read SAP and reconcile — read-only. A deterministic rule decides auto-clear versus escalate. A human approves. And only then a deterministic step writes. Three kinds of authority, kept separate on purpose."
 

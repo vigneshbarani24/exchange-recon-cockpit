@@ -1,9 +1,23 @@
-# finale/maestro/ — the composed Maestro run, proven
+# finale/maestro/ — the composed Maestro run, proven (all three agents)
 
 The one gap in `VERIFIED-STATE.md` ("the 3-agent Maestro BPMN as a single composed instance —
-BUILT-NOT-RUN") was closed on **2026-07-21**. Real coded agents ran **inside one Maestro
-instance** against live SAP S/4HANA, through the deterministic tolerance gate and the
-message-based human gate, to a completed end event.
+BUILT-NOT-RUN") was closed on **2026-07-21** — and then completed outright: **run 3 put all
+three coded agents through one Maestro instance to "Corrected & closed."**
+
+## Run 3 — THE trophy (v1.0.5, event-based two-gate)
+
+- **Instance** `2db6d4d8-b245-4531-9057-8172232524db`, package
+  `ExchangeReconSolutionCanvas.Agentic.ExchangeReconBpmn:1.0.5`, Status **Completed → End_Corrected**
+- matching `fdbb41a2…` → tolerance gate → variance `ebee41c4…` → **event-based gateway**
+  (`Event_Approve` completed on the `ApproveGate` message; `Event_EscalateMsg` terminated) →
+  posting-prep `c1ee53ae…` → held update stub → **Corrected & closed**
+- Decision design: **the message name is the decision** (ApproveGate/EscalateGate correlated by
+  PO) — no payload parsing, deterministic routing, both endings provable.
+- Trace: `composed-run-3-corrected-element-executions.json`. Watcher log:
+  `../backups/logs/run3-v105-corrected-watcher.log`.
+
+A multi-PO campaign (6 live POs, all three endings — see `../runs/` and
+`src/data/runsManifest.json`) reproduces the pattern at volume.
 
 ## Run 1 — composed instance completed (escalation path)
 

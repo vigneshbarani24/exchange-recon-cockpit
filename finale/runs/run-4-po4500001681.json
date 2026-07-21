@@ -1,0 +1,349 @@
+{
+ "CreationUserKey": "ab2bfad4-7acd-4b09-8f53-ca103d911050",
+ "FolderKey": "e3945ea1-de36-4504-bf98-dc6503edc87f",
+ "InstanceDisplayName": "ExchangeReconBpmn-70816484",
+ "InstanceId": "61c79659-c1ea-4ac8-8a8f-b521f9c53635",
+ "OrganizationId": "32eb7f85-2f79-477a-9700-a3f8f55a24f9",
+ "PackageId": "ExchangeReconSolutionCanvas.Agentic.ExchangeReconBpmn",
+ "PackageKey": "ExchangeReconSolutionCanvas.Agentic.ExchangeReconBpmn:1.0.6",
+ "PackageVersion": "1.0.6",
+ "ProcessKey": "6a4bbaeb-9b3d-4fd3-85a3-8505bda654fc",
+ "Source": "Manual",
+ "TenantId": "6607a069-79dd-4c68-a6b3-728651e2d064",
+ "Status": "Completed",
+ "StartedTimeUtc": "2026-07-21T07:37:06.909738Z",
+ "CompletedTimeUtc": "2026-07-21T07:39:16.5317698Z",
+ "ElementExecutions": [
+  {
+   "CompletedTimeUtc": "2026-07-21T07:37:07.4406572Z",
+   "ElementId": "Event_start",
+   "ElementType": "StartEvent",
+   "ElementExtensionType": null,
+   "ParentRunId": null,
+   "ParentElementId": null,
+   "ParentElementRunId": null,
+   "RunId": "",
+   "StartedTimeUtc": "2026-07-21T07:37:07.2211162Z",
+   "Status": "Completed",
+   "ExternalLink": "",
+   "MaestroLink": "",
+   "ElementRuns": [
+    {
+     "Status": "Completed",
+     "StartedTimeUtc": "2026-07-21T07:37:07.1473311Z",
+     "CompletedTimeUtc": "2026-07-21T07:37:07.4406572Z",
+     "IncomingFlowId": null,
+     "IncomingFlowIds": [],
+     "ElementRunId": "521a038a-1d16-4c18-aead-8419ac0af582",
+     "MarkerItemIndex": null,
+     "WorkflowId": "61c79659-c1ea-4ac8-8a8f-b521f9c53635/BpmnGenericWorkflow",
+     "TemporalExecutionId": "61c79659-c1ea-4ac8-8a8f-b521f9c53635/BpmnGenericWorkflow/Event_start/521a038a-1d16-4c18-aead-8419ac0af582",
+     "Version": 2,
+     "ParentElementRunId": null,
+     "JobKey": null
+    }
+   ],
+   "JobKey": null
+  },
+  {
+   "CompletedTimeUtc": "2026-07-21T07:38:04.9819644Z",
+   "ElementId": "Task_MatchAgent",
+   "ElementType": "ServiceTask",
+   "ElementExtensionType": "Orchestrator.StartAgentJob",
+   "ParentRunId": null,
+   "ParentElementId": null,
+   "ParentElementRunId": null,
+   "RunId": "",
+   "StartedTimeUtc": "2026-07-21T07:37:07.7386532Z",
+   "Status": "Completed",
+   "ExternalLink": "https://staging.uipath.com/32eb7f85-2f79-477a-9700-a3f8f55a24f9/6607a069-79dd-4c68-a6b3-728651e2d064/orchestrator_/jobs(sidepanel:sidepanel/jobs/d0c51cb4-6238-4b04-bfec-6e22477a0e02/details)?fid=3252146",
+   "MaestroLink": "",
+   "ElementRuns": [
+    {
+     "Status": "Completed",
+     "StartedTimeUtc": "2026-07-21T07:37:08.3450139Z",
+     "CompletedTimeUtc": "2026-07-21T07:38:04.9819644Z",
+     "IncomingFlowId": "Flow_start_match",
+     "IncomingFlowIds": [
+      "Flow_start_match"
+     ],
+     "ElementRunId": "ddddc905-6012-45d7-82e3-89ecbcb4364d",
+     "MarkerItemIndex": null,
+     "WorkflowId": "61c79659-c1ea-4ac8-8a8f-b521f9c53635/BpmnGenericWorkflow",
+     "TemporalExecutionId": "61c79659-c1ea-4ac8-8a8f-b521f9c53635/BpmnGenericWorkflow/Task_MatchAgent/ddddc905-6012-45d7-82e3-89ecbcb4364d",
+     "Version": 2,
+     "ParentElementRunId": null,
+     "JobKey": "d0c51cb4-6238-4b04-bfec-6e22477a0e02"
+    }
+   ],
+   "JobKey": "d0c51cb4-6238-4b04-bfec-6e22477a0e02"
+  },
+  {
+   "CompletedTimeUtc": "2026-07-21T07:38:05.4889297Z",
+   "ElementId": "Task_Tolerance",
+   "ElementType": "ScriptTask",
+   "ElementExtensionType": "Scp.Script",
+   "ParentRunId": null,
+   "ParentElementId": null,
+   "ParentElementRunId": null,
+   "RunId": "",
+   "StartedTimeUtc": "2026-07-21T07:38:05.2250009Z",
+   "Status": "Completed",
+   "ExternalLink": "",
+   "MaestroLink": "",
+   "ElementRuns": [
+    {
+     "Status": "Completed",
+     "StartedTimeUtc": "2026-07-21T07:38:05.1656482Z",
+     "CompletedTimeUtc": "2026-07-21T07:38:05.4889297Z",
+     "IncomingFlowId": "Flow_match_tolerance",
+     "IncomingFlowIds": [
+      "Flow_match_tolerance"
+     ],
+     "ElementRunId": "37ea1ac7-7417-4b7e-b536-89b1e4b71f7f",
+     "MarkerItemIndex": null,
+     "WorkflowId": "61c79659-c1ea-4ac8-8a8f-b521f9c53635/BpmnGenericWorkflow",
+     "TemporalExecutionId": "61c79659-c1ea-4ac8-8a8f-b521f9c53635/BpmnGenericWorkflow/Task_Tolerance/37ea1ac7-7417-4b7e-b536-89b1e4b71f7f",
+     "Version": 2,
+     "ParentElementRunId": null,
+     "JobKey": null
+    }
+   ],
+   "JobKey": null
+  },
+  {
+   "CompletedTimeUtc": "2026-07-21T07:38:05.8006829Z",
+   "ElementId": "Gateway_Tolerance",
+   "ElementType": "ExclusiveGateway",
+   "ElementExtensionType": null,
+   "ParentRunId": null,
+   "ParentElementId": null,
+   "ParentElementRunId": null,
+   "RunId": "",
+   "StartedTimeUtc": "2026-07-21T07:38:05.7355159Z",
+   "Status": "Completed",
+   "ExternalLink": "",
+   "MaestroLink": "",
+   "ElementRuns": [
+    {
+     "Status": "Completed",
+     "StartedTimeUtc": "2026-07-21T07:38:05.6779666Z",
+     "CompletedTimeUtc": "2026-07-21T07:38:05.8006829Z",
+     "IncomingFlowId": "Flow_tolerance_gateway",
+     "IncomingFlowIds": [
+      "Flow_tolerance_gateway"
+     ],
+     "ElementRunId": "f8adcc7f-d6b4-4fe3-9dab-8e349a3b138d",
+     "MarkerItemIndex": null,
+     "WorkflowId": null,
+     "TemporalExecutionId": null,
+     "Version": 2,
+     "ParentElementRunId": null,
+     "JobKey": null
+    }
+   ],
+   "JobKey": null
+  },
+  {
+   "CompletedTimeUtc": "2026-07-21T07:39:07.6496907Z",
+   "ElementId": "Task_VarianceAgent",
+   "ElementType": "ServiceTask",
+   "ElementExtensionType": "Orchestrator.StartAgentJob",
+   "ParentRunId": null,
+   "ParentElementId": null,
+   "ParentElementRunId": null,
+   "RunId": "",
+   "StartedTimeUtc": "2026-07-21T07:38:05.9933965Z",
+   "Status": "Completed",
+   "ExternalLink": "https://staging.uipath.com/32eb7f85-2f79-477a-9700-a3f8f55a24f9/6607a069-79dd-4c68-a6b3-728651e2d064/orchestrator_/jobs(sidepanel:sidepanel/jobs/8f3b398c-191d-4f04-ba33-b9611229230b/details)?fid=3252146",
+   "MaestroLink": "",
+   "ElementRuns": [
+    {
+     "Status": "Completed",
+     "StartedTimeUtc": "2026-07-21T07:38:06.4920574Z",
+     "CompletedTimeUtc": "2026-07-21T07:39:07.6496907Z",
+     "IncomingFlowId": "Flow_variance",
+     "IncomingFlowIds": [
+      "Flow_variance"
+     ],
+     "ElementRunId": "6db08076-7664-4248-b4f7-e36331db1fc8",
+     "MarkerItemIndex": null,
+     "WorkflowId": "61c79659-c1ea-4ac8-8a8f-b521f9c53635/BpmnGenericWorkflow",
+     "TemporalExecutionId": "61c79659-c1ea-4ac8-8a8f-b521f9c53635/BpmnGenericWorkflow/Task_VarianceAgent/6db08076-7664-4248-b4f7-e36331db1fc8",
+     "Version": 2,
+     "ParentElementRunId": null,
+     "JobKey": "8f3b398c-191d-4f04-ba33-b9611229230b"
+    }
+   ],
+   "JobKey": "8f3b398c-191d-4f04-ba33-b9611229230b"
+  },
+  {
+   "CompletedTimeUtc": "2026-07-21T07:39:08.0514215Z",
+   "ElementId": "GW_HumanWait",
+   "ElementType": "EventBasedGateway",
+   "ElementExtensionType": null,
+   "ParentRunId": null,
+   "ParentElementId": null,
+   "ParentElementRunId": null,
+   "RunId": "",
+   "StartedTimeUtc": "2026-07-21T07:39:07.9255499Z",
+   "Status": "Completed",
+   "ExternalLink": "",
+   "MaestroLink": "",
+   "ElementRuns": [
+    {
+     "Status": "Completed",
+     "StartedTimeUtc": "2026-07-21T07:39:07.8526059Z",
+     "CompletedTimeUtc": "2026-07-21T07:39:08.0514215Z",
+     "IncomingFlowId": "Flow_agent_gate",
+     "IncomingFlowIds": [
+      "Flow_agent_gate"
+     ],
+     "ElementRunId": "11471553-4600-414b-8fe0-0a6f2af71a33",
+     "MarkerItemIndex": null,
+     "WorkflowId": null,
+     "TemporalExecutionId": null,
+     "Version": 2,
+     "ParentElementRunId": null,
+     "JobKey": null
+    }
+   ],
+   "JobKey": null
+  },
+  {
+   "CompletedTimeUtc": "2026-07-21T07:39:15.455023Z",
+   "ElementId": "Event_Approve",
+   "ElementType": "IntermediateCatchEvent",
+   "ElementExtensionType": "Maestro.ReceiveMessageEvent",
+   "ParentRunId": null,
+   "ParentElementId": null,
+   "ParentElementRunId": null,
+   "RunId": "",
+   "StartedTimeUtc": "2026-07-21T07:39:08.3929115Z",
+   "Status": "Terminated",
+   "ExternalLink": "",
+   "MaestroLink": "",
+   "ElementRuns": [
+    {
+     "Status": "Terminated",
+     "StartedTimeUtc": "2026-07-21T07:39:08.2780423Z",
+     "CompletedTimeUtc": "2026-07-21T07:39:15.455023Z",
+     "IncomingFlowId": "Flow_wait_approve",
+     "IncomingFlowIds": [
+      "Flow_wait_approve"
+     ],
+     "ElementRunId": "b65bff78-9c44-4064-b204-89f11a710707",
+     "MarkerItemIndex": null,
+     "WorkflowId": "61c79659-c1ea-4ac8-8a8f-b521f9c53635/BpmnGenericWorkflow",
+     "TemporalExecutionId": "61c79659-c1ea-4ac8-8a8f-b521f9c53635/BpmnGenericWorkflow/Event_Approve/b65bff78-9c44-4064-b204-89f11a710707",
+     "Version": 2,
+     "ParentElementRunId": null,
+     "JobKey": null
+    }
+   ],
+   "JobKey": null
+  },
+  {
+   "CompletedTimeUtc": "2026-07-21T07:39:15.2375487Z",
+   "ElementId": "Event_EscalateMsg",
+   "ElementType": "IntermediateCatchEvent",
+   "ElementExtensionType": "Maestro.ReceiveMessageEvent",
+   "ParentRunId": null,
+   "ParentElementId": null,
+   "ParentElementRunId": null,
+   "RunId": "",
+   "StartedTimeUtc": "2026-07-21T07:39:08.4281669Z",
+   "Status": "Completed",
+   "ExternalLink": "",
+   "MaestroLink": "",
+   "ElementRuns": [
+    {
+     "Status": "Completed",
+     "StartedTimeUtc": "2026-07-21T07:39:08.2809477Z",
+     "CompletedTimeUtc": "2026-07-21T07:39:15.2375487Z",
+     "IncomingFlowId": "Flow_wait_escalate",
+     "IncomingFlowIds": [
+      "Flow_wait_escalate"
+     ],
+     "ElementRunId": "296f29ac-3624-4d4a-99b5-ea4baab87771",
+     "MarkerItemIndex": null,
+     "WorkflowId": "61c79659-c1ea-4ac8-8a8f-b521f9c53635/BpmnGenericWorkflow",
+     "TemporalExecutionId": "61c79659-c1ea-4ac8-8a8f-b521f9c53635/BpmnGenericWorkflow/Event_EscalateMsg/296f29ac-3624-4d4a-99b5-ea4baab87771",
+     "Version": 2,
+     "ParentElementRunId": null,
+     "JobKey": null
+    }
+   ],
+   "JobKey": null
+  },
+  {
+   "CompletedTimeUtc": "2026-07-21T07:39:15.8233113Z",
+   "ElementId": "Task_RouteBuyer",
+   "ElementType": "ScriptTask",
+   "ElementExtensionType": "Scp.Script",
+   "ParentRunId": null,
+   "ParentElementId": null,
+   "ParentElementRunId": null,
+   "RunId": "",
+   "StartedTimeUtc": "2026-07-21T07:39:15.5298413Z",
+   "Status": "Completed",
+   "ExternalLink": "",
+   "MaestroLink": "",
+   "ElementRuns": [
+    {
+     "Status": "Completed",
+     "StartedTimeUtc": "2026-07-21T07:39:15.4562608Z",
+     "CompletedTimeUtc": "2026-07-21T07:39:15.8233113Z",
+     "IncomingFlowId": "Flow_escalate",
+     "IncomingFlowIds": [
+      "Flow_escalate"
+     ],
+     "ElementRunId": "1cdb26ca-2f52-439d-af60-d4923408fd29",
+     "MarkerItemIndex": null,
+     "WorkflowId": "61c79659-c1ea-4ac8-8a8f-b521f9c53635/BpmnGenericWorkflow",
+     "TemporalExecutionId": "61c79659-c1ea-4ac8-8a8f-b521f9c53635/BpmnGenericWorkflow/Task_RouteBuyer/1cdb26ca-2f52-439d-af60-d4923408fd29",
+     "Version": 2,
+     "ParentElementRunId": null,
+     "JobKey": null
+    }
+   ],
+   "JobKey": null
+  },
+  {
+   "CompletedTimeUtc": "2026-07-21T07:39:16.3470601Z",
+   "ElementId": "End_Escalated",
+   "ElementType": "EndEvent",
+   "ElementExtensionType": null,
+   "ParentRunId": null,
+   "ParentElementId": null,
+   "ParentElementRunId": null,
+   "RunId": "",
+   "StartedTimeUtc": "2026-07-21T07:39:16.1248941Z",
+   "Status": "Completed",
+   "ExternalLink": "",
+   "MaestroLink": "",
+   "ElementRuns": [
+    {
+     "Status": "Completed",
+     "StartedTimeUtc": "2026-07-21T07:39:16.0674617Z",
+     "CompletedTimeUtc": "2026-07-21T07:39:16.3470601Z",
+     "IncomingFlowId": "Flow_routebuyer_end",
+     "IncomingFlowIds": [
+      "Flow_routebuyer_end"
+     ],
+     "ElementRunId": "0b6441fa-efce-4ba2-be6e-7f91fb7052ef",
+     "MarkerItemIndex": null,
+     "WorkflowId": "61c79659-c1ea-4ac8-8a8f-b521f9c53635/BpmnGenericWorkflow",
+     "TemporalExecutionId": "61c79659-c1ea-4ac8-8a8f-b521f9c53635/BpmnGenericWorkflow/End_Escalated/0b6441fa-efce-4ba2-be6e-7f91fb7052ef",
+     "Version": 2,
+     "ParentElementRunId": null,
+     "JobKey": null
+    }
+   ],
+   "JobKey": null
+  }
+ ],
+ "TraceId": "61c79659c1ea4ac88a8fb521f9c53635",
+ "ReleaseName": "ExchangeReconBpmn",
+ "IsThrottled": false
+}

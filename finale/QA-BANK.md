@@ -51,7 +51,7 @@
 ## Business impact & adoption (either judge may ask)
 
 **"Is anyone actually going to use this — or is it a hackathon toy?"**
-> It's real — there's a live customer POC for exactly this. A UK travel-sector enterprise gets about 200 supplier invoices a month landing in SAP automatically, and attaching each one to its matching purchase order is still fully manual. That's precisely the workflow this agent governs. So the business case isn't illustrative — it's a funded engagement, which is the strongest adoption signal I can give you.
+> It's real — there's a live customer POC for exactly this. A UK travel-sector enterprise gets about 200 supplier invoices a week landing in SAP automatically, and attaching each one to its matching purchase order is still fully manual. That's precisely the workflow this agent governs. So the business case isn't illustrative — it's a funded engagement, which is the strongest adoption signal I can give you.
 
 **"What's the roadmap — how does this become a product?"**
 > Three moves. One: ingest the real invoice PDF with UiPath IXP / Document Understanding, so it starts from the document, not structured text — that's what the customer needs next. Two: extend the same governed pattern to the rest of the repeatable back office — goods-receipt matching, dispute triage, dunning — one control model, many agents. Three: the two-layer governance makes it portable across the estate. This reconciliation is agent #1.

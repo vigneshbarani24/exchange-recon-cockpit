@@ -36,7 +36,7 @@ Adapted from `DEMO.md:50-59`, regrounded.
 > Full layered fallback ("backups to backups") is in `BACKUPS.md`; the exact live-run commands are in `RUN-LIVE.md`. The write-back stays **held** on camera — never attempt it live.
 - **If the live invoke (beat 2) stalls > ~10s:** calm line — *"the connection to SAP is slow right now, let me show you this exact run"* — cut to the **captured job tab** (already open) and keep narrating as if live. It *is* the same real run. Do not apologize twice.
 - **If anything else breaks:** cut to the **fallback video** on the second device, keep talking over it. The cockpit hero tab is self-contained and should never break; if even that dies, go to video.
-- **Never:** try the 3-agent Maestro run live (it can't complete), try to show the write-back land (it 404s), or demo the fraud/duplicate/goods-receipt cases (no code). See `VERIFIED-STATE.md`.
+- **Never:** try to show the write-back land (it 404s upstream — armed and held is the story), or demo the fraud/duplicate/goods-receipt cases (no code). The 3-agent composed Maestro run **CAN and DOES complete** (proven 2026-07-21, ten completed instances — see `maestro/README.md`); start it early per the DUMP §10 choreography. See `2026-07-21-grounded/TRUTH.md`.
 
 ## Honest framing to hold in Q&A (verbatim-safe)
 - Agent reads live SAP over MCP — **real, read-only**.

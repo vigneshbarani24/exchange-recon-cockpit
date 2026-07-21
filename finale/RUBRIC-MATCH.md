@@ -45,8 +45,8 @@ Five **equally-weighted** criteria, scored on the **live presentation + Q&A** (D
 | Criterion | Today | After the moves |
 |---|---|---|
 | Business Impact & Adoption | 2.5 | 4 |
-| Platform Usage | 4.5 | 4.5 |
-| Technical Execution | 4 | 4 |
+| Platform Usage | 4.5 | **5** (composed Maestro instance LIVE-PROVEN 2026-07-21; two-gate decision; agents+BPMN shipped as one solution) |
+| Technical Execution | 4 | **4.5** (10 completed instances across 6 live POs; 12-case scored evals; defects found+fixed by running) |
 | Creativity & Innovation | 4 | 4–4.5 |
 | Presentation | 3 | 4 |
 | Coding-agent bonus | +1 | +2 |
