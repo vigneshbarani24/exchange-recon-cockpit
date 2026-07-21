@@ -91,3 +91,39 @@ Service registry, REST API operations, solution lifecycle via uip CLI.
 - Start instance at 0:20 of the 5-minute slot; it finishes agent work while you talk.
 - Gate wait is the dramatic beat, not dead air.
 - Fallback ladder exists (COMPOSED-RUN-STEPS.md); demo path is 100% reliable or it is not shown.
+
+## 13. Field positioning (finalist field announced, 31 across 3 tracks; 11 in this track)
+
+- The opening sentence no other finalist can say: "This is the only project in the field
+  whose agents reason over a live third-party system of record at runtime: real SAP S/4HANA,
+  read over MCP, by agents that are structurally incapable of writing back on their own."
+- Three beats that flip the submission-time weaknesses into offense:
+  1. The submission said plainly that the composed run did not complete green, and that we
+     would not dress it up. Since then it completed ten times across six live purchase
+     orders, both endings. Close that loop on stage: honesty first, then the finish. It is
+     the strongest single credibility beat available.
+  2. Most of the field treats evaluation as a roadmap slide. Here it is done: twelve of
+     twelve eval cases passing, with ground truth independently validated against the live
+     tenant by a second model acting as a tester.
+  3. Governance across the field is mostly a prompt promise ("the agent never decides").
+     Here it is structural: no write tools bound, a deterministic tolerance gate, a human
+     message gate, a finance-owned DMN policy artifact, and a 21-artifact evidence bucket.
+- Field patterns worth matching: every strong finalist opens with a named quantified pain
+  and one dramatic time-compression number. Ours exist: 2 minutes 56 seconds governed
+  end-to-end, 57 second agent verdict, and the value cards in section 10.
+- Field pattern to respect: the strongest rivals carry one crisp ROI one-liner. Ours must be
+  stated in analyst-hours on the judgment step and labeled as modeled; a labeled model reads
+  as credible, an unlabeled number reads as inflated.
+- Write-back stance is a differentiator, not a gap: rivals claim autonomy; this project
+  proves restraint. "Armed, not fired" is the line judges on governance and quality reward.
+- Rules fact verified 2026-07-21, load-bearing for the deck: the coding-agent bonus is
+  applied "within the Platform Usage criterion in both Phase 1 and Phase 2 judging", and in
+  Phase 2 "the judging panel will apply the same bonus on the same scale". The +2 is
+  RE-EARNED in the finale, not banked from submission. The build story (binding-resolution
+  diagnosis, CODING-AGENTS.md, commit trail) must get an explicit on-screen beat in the live
+  presentation. Scale: 2 = documented + evidence + meaningfully integrated.
+- Rules fact verified 2026-07-21: community votes "do not influence the judges' scores";
+  People's Choice is a standalone award. Forum push is worth one time-boxed nudge, nothing
+  more. Max two prizes per project: one track or overall prize plus one special award.
+  Realistic special-award targets: Best Demo / Presentation, and Best Product Feedback
+  (the five filed defects).

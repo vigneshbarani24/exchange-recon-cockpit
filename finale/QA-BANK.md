@@ -7,7 +7,7 @@
 ## For Taqi Jaffri (agent governance · evaluation · orchestration)
 
 **"How did you evaluate the agent — how do you know it's right, not just impressive once?"**
-> All three agents have LLM-judge eval suites now — twelve scenarios against the real PO, scored for semantic similarity to the expected outcome. Variance covers clean-match, price-variance, over- and under-delivery, both together, and the tolerance boundary; matching covers clean, extra-line, and partial-reference; posting-prep covers quantity, price, and an ambiguous-action guardrail that must return not-ready. So it's multi-scenario behaviour, not one happy path. What's still roadmap — and I'll say it plainly — is tool-trajectory scoring and CI-gated regression, which is exactly where UiPath evals / Test Cloud come in.
+> All three agents have LLM-judge eval suites — twelve scenarios against the real PO, scored for semantic similarity to the expected outcome, and all twelve pass. Variance covers clean-match, price-variance, over- and under-delivery, both together, and the tolerance boundary; matching covers clean, extra-line, and partial-reference; posting-prep covers quantity, price, and an ambiguous-action guardrail that must return not-ready. And the ground truth itself is verified, not assumed — a second model acted as an independent tester, validating every expected value directly against the live SAP tenant over the same MCP the agents use. What's still roadmap — and I'll say it plainly — is tool-trajectory scoring and CI-gated regression, which is exactly where UiPath evals / Test Cloud come in. One platform gap I filed as product feedback: portal eval reporting isn't available for CLI-published coded agents, so the results live in the repo and the evidence bucket.
 
 **"What happens when the model drifts, or hits something it wasn't built for?"**
 > Two layers. The agent is bounded — read-only prompts, a six-turn tool loop, structured output; if it can't read the PO it returns an empty match rather than guessing. And the architecture caps the blast radius: the worst case is a wrong *proposal* a human rejects, never a wrong *posting* — the agent physically cannot write to SAP. Drift detection over time — watching the classification distribution run-to-run — is the next instrumentation; I haven't wired it yet.
@@ -32,19 +32,22 @@
 ## For Ingo Philipp (testing · quality · edge cases)
 
 **"How did you test this? What are the edge cases?"**
-> Unit tests cover the cockpit's pure logic — instance-status triage, the response unwrap, the formatters. The agent I tested against the golden path plus the one variance eval case. The edge cases I reasoned about but haven't all hardened: malformed or adversarial supplier docs, PO-not-found, SAP timeout, multi-line and multi-material POs, unit-of-measure and currency mismatch, and tolerance-boundary exactness. I can tell you for any of those whether it's handled in code, in the prompt, or not yet.
+> Three layers. Unit tests cover the cockpit's pure logic — instance-status triage, the response unwrap, the formatters. Twelve eval cases across the three agents, all passing, with the ground truth independently validated against live SAP by a second model. And at the process level, ten completed governed Maestro instances across six different live purchase orders, exercising every ending — auto-clear, approve-then-correct, and escalate. The edge cases I reasoned about but haven't all hardened: malformed or adversarial supplier docs, PO-not-found, SAP timeout, multi-line and multi-material POs, unit-of-measure and currency mismatch. I can tell you for any of those whether it's handled in code, in the prompt, or not yet.
 
 **"A green demo isn't release-readiness. What's your quality signal?"**
-> Completely agree — a passing demo proves nothing. My honest signal today is narrow: one golden path proven live, one eval case, and the structural guarantee that the failure mode is a rejected proposal, not a bad posting. Release-readiness needs an evalset per agent, tool-trajectory assertions, and a regression suite that turns every incident into a permanent test — that's Test Cloud territory, and it's roadmap, not done.
+> Completely agree — a passing demo proves nothing. My signal today is three-fold: ten completed governed instances across six live purchase orders covering both gate branches, twelve passing eval cases per-agent with independently validated ground truth, and the structural guarantee that the failure mode is a rejected proposal, not a bad posting. What it still isn't is continuous: release-readiness needs tool-trajectory assertions and a CI-gated regression suite that turns every incident into a permanent test — that's Test Cloud territory, and it's roadmap, not done.
 
 **"Where does it break, and what's the blast radius?"**
 > It breaks first at the single MCP dependency to SAP and at supplier-document parsing. But the blast radius is deliberately tiny: the agent reads and proposes, it never writes. Worst case, a human sees a wrong proposal and rejects it. Nothing reaches SAP without a human clicking approve — and even then a *separate* deterministic step does the write. The agent can't.
 
 **"Did you use Test Cloud or agentic testing?"**
-> Not yet — honestly. I have a functional eval on the variance agent and unit tests on the cockpit. Agentic testing with Test Cloud is the clear next step, and it's the right tool, because what I need to test is behavior and tool-trajectory, not just outputs.
+> Not Test Cloud yet — honestly. I have twelve eval cases across the three agents via the UiPath eval framework, with a second model as an independent tester validating ground truth against live SAP, plus unit tests on the cockpit. Agentic testing with Test Cloud is the clear next step, and it's the right tool, because what I need to test next is behavior and tool-trajectory, not just outputs.
 
 **"How do you trust an auto-clear versus an escalation?"**
 > The auto-clear is deterministic, not agentic — a fixed tolerance rule (2% price, 1 unit) decides it, so it's auditable and repeatable. The agent's judgment only ever produces a *proposal* that a human sees. So the thing I trust automatically is a rule; the thing that needs a human is the agent's judgment. That split is deliberate.
+
+**"Your read-only guarantee — is that tested, or just asserted?"**
+> Tested at two levels, structurally first. The agents have no write tool bound — a write instruction can't execute because the capability doesn't exist in their tool set; that's not a prompt promise, it's the tool contract. And resilience is proven, not claimed: in the enriched twin of this flow, a notification step was made to fail three separate times, and every time the boundary error event degraded the flow gracefully to the human gate — an integration failure can never block governance. The negative case isn't hypothetical; it ran.
 
 ---
 
@@ -73,7 +76,7 @@
 > Substantially. The coded agents, the Maestro BPMN, and the cockpit were scaffolded and hardened with Claude Code through UiPath for Coding Agents, using the official `uip` skills — then hand-reviewed. It's documented with the commit trail in `CODING-AGENTS.md`. Deliberately blended — that's where the platform is going.
 
 **"What would you do next / what's not production-ready?"**
-> Three things, in order: reconcile the BPMN-to-agent contract and prove one composed Maestro run; land the write-back once the MCP key bug is fixed; and build the evalset-per-agent plus regression suite in Test Cloud. I know exactly what's real and what's next — that's the point.
+> Three things, in order: land the held write-back once the upstream MCP key bug is fixed — it's coded and one server-side fix away; move approval into Teams where the reviewers already work — the notification leg is already deployed and running in the enriched twin; and make quality continuous with tool-trajectory assertions and CI-gated regression in Test Cloud, on top of the twelve passing evals. I know exactly what's real and what's next — that's the point.
 
 ---
 
