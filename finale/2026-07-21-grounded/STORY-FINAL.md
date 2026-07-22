@@ -95,9 +95,11 @@ Screen: approve; the prepared correction, held; then the status slide.
 > Slack itself, and when it escalates, email too. No spreadsheets announcing themselves.
 > The process speaks.
 >
-> One more sentence, because it changed the build: this was written with a coding agent
-> working the same platform you are judging, and when the hardest problem hit, it was the
-> coding agent that found the cause. The whole trail ships with the submission.
+> One more sentence, because it is the part a jury should weigh: I had never built on this
+> platform before this hackathon. A first-time builder, working with a coding agent on the
+> same platform you are judging, took this from nothing to a funded-pilot-grade proof, and
+> when the hardest problem hit, it was the coding agent that found the cause. That is not
+> just my story. That is your product working. The whole trail ships with the submission.
 
 ### Beat 5: the value, then The Take (4:15 to 4:50, ~90 words)
 Screen: slide 7, the value cards.

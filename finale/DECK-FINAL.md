@@ -172,7 +172,10 @@ The footer line runs full width beneath the table in a smaller weight.
 > when it finishes, adds email when it escalates, and if nobody answers within ten minutes it
 > escalates itself. It cannot spend money alone. Not a policy it follows, not a promise we
 > typed: the ability does not exist. When anything is uncertain it goes to a person by
-> default, and every claim on this table has a record behind it.
+> default, and every claim on this table has a record behind it. And one more thing this
+> table cannot show: I had never built on this platform before this hackathon. A first-time
+> builder plus a coding agent went from nothing to a funded-pilot-grade proof, and when the
+> hardest problem hit, the coding agent found the cause. That is your product working.
 > And the agents, the BPMN, and the cockpit were built with Claude Code: when composition failed
 > for two days, the coding agent diagnosed the platform defect, and the commit trail ships
 > with the submission.
