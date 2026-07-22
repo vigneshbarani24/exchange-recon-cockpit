@@ -34,4 +34,8 @@ export const config = {
 
   // Poll interval for the live queue (ms).
   pollMs: Number(import.meta.env.VITE_POLL_MS ?? "8000"),
+
+  // Optional: Teams incoming-webhook URL. When set, the cockpit posts a card at
+  // the moment the approver acts. Keep it in .env only — never committed.
+  teamsWebhook: import.meta.env.VITE_TEAMS_WEBHOOK || "",
 } as const;

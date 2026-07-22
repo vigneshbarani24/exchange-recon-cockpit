@@ -11,6 +11,7 @@ interface ImportMetaEnv {
   readonly VITE_UIPATH_FOLDER_ID?: string;
   readonly VITE_EXCHANGE_PROCESS_NAME?: string;
   readonly VITE_POLL_MS?: string;
+  readonly VITE_TEAMS_WEBHOOK?: string;
 }
 
 interface ImportMeta {

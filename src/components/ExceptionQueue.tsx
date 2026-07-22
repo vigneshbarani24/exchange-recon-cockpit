@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import type { UiPath } from "@uipath/uipath-typescript/core";
 import { config } from "../lib/config";
 import { listExchangeInstances, needsAttention, type InstanceRow } from "../lib/exchange";
+import { sendGateDecision, type GateDecision } from "../lib/gate";
 
 function statusTone(status = ""): string {
   const s = status.toLowerCase();
@@ -25,6 +26,30 @@ export function ExceptionQueue({
   const [rows, setRows] = useState<InstanceRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState<string>();
+  const [gatePo, setGatePo] = useState("4500000021");
+  const [gateNote, setGateNote] = useState("Accept the proposed correction.");
+  const [gateBusy, setGateBusy] = useState<GateDecision | null>(null);
+  const [gateMsg, setGateMsg] = useState<string>();
+
+  const decide = useCallback(
+    async (decision: GateDecision) => {
+      setGateBusy(decision);
+      setGateMsg(undefined);
+      try {
+        const res = await sendGateDecision(sdk, {
+          decision,
+          purchaseOrder: gatePo.trim(),
+          note: gateNote.trim(),
+        });
+        setGateMsg(`${decision === "approve" ? "Approved" : "Escalated"} · message ${res.id.slice(0, 8)}`);
+      } catch (e) {
+        setGateMsg(e instanceof Error ? e.message : String(e));
+      } finally {
+        setGateBusy(null);
+      }
+    },
+    [sdk, gatePo, gateNote],
+  );
 
   const refresh = useCallback(async () => {
     try {
@@ -61,6 +86,43 @@ export function ExceptionQueue({
           No Exchange instances yet. Start one in Maestro to see it here.
         </div>
       )}
+
+      <div className="px-5 py-4 border-b border-line bg-node/40">
+        <div className="font-mono text-[0.65rem] uppercase tracking-wide text-muted mb-2">
+          Human gate — the decision is a governed message
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <input
+            value={gatePo}
+            onChange={(e) => setGatePo(e.target.value)}
+            placeholder="Purchase order"
+            className="w-36 bg-canvas2 border border-line rounded px-2 py-1.5 font-mono text-xs"
+            aria-label="Purchase order reference"
+          />
+          <input
+            value={gateNote}
+            onChange={(e) => setGateNote(e.target.value)}
+            placeholder="Reviewer note (goes to the audit trail)"
+            className="flex-1 min-w-[180px] bg-canvas2 border border-line rounded px-2 py-1.5 text-xs"
+            aria-label="Reviewer note"
+          />
+          <button
+            onClick={() => void decide("approve")}
+            disabled={gateBusy !== null || !gatePo.trim()}
+            className="px-3 py-1.5 rounded border border-green/40 text-greenb font-mono text-xs uppercase tracking-wide hover:bg-green/10 disabled:opacity-40"
+          >
+            {gateBusy === "approve" ? "Sending…" : "Approve"}
+          </button>
+          <button
+            onClick={() => void decide("escalate")}
+            disabled={gateBusy !== null || !gatePo.trim()}
+            className="px-3 py-1.5 rounded border border-amber/40 text-amberb font-mono text-xs uppercase tracking-wide hover:bg-amber/10 disabled:opacity-40"
+          >
+            {gateBusy === "escalate" ? "Sending…" : "Escalate"}
+          </button>
+        </div>
+        {gateMsg && <div className="mt-2 font-mono text-[0.7rem] text-muted break-words">{gateMsg}</div>}
+      </div>
 
       <ul className="divide-y divide-line">
         {rows.map((r) => (
