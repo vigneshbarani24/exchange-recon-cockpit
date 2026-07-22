@@ -60,7 +60,7 @@
 ## Business impact & adoption (either judge may ask)
 
 **"Is anyone actually going to use this — or is it a hackathon toy?"**
-> It's real — there's a funded customer pilot for exactly this class of work, proven live on a real S/4HANA cloud tenant. A UK adventure travel group gets about 200 supplier invoices a week landing in SAP automatically, and attaching each one to its matching purchase order is still fully manual. That's precisely the workflow this agent governs. So the business case isn't illustrative — it's a funded engagement, which is the strongest adoption signal I can give you.
+> Real enough that a customer is already paying for it. A UK adventure travel group runs a funded pilot, proven live on a real S/4HANA cloud tenant: about two hundred supplier invoices a week arrive in SAP on their own, and a person still clears every one by hand. That's precisely the workflow this agent governs, and the reconciliation you just watched is the next card. The business case isn't illustrative — it's a funded engagement, which is the strongest adoption signal I can give you.
 
 **"What's the roadmap — how does this become a product?"**
 > The frame first: we build the boring agents, and this reconciliation is agent number one of a family, not a one-off. Three moves from here. One: ingest the real invoice PDF with UiPath IXP / Document Understanding, so it starts from the document, not structured text — that's what the customer needs next. Two: extend the same governed pattern to the rest of the repeatable back office — goods-receipt matching, dispute triage, dunning — one control model, many agents. Three: the two-layer governance makes it portable across the estate. This reconciliation is agent #1.

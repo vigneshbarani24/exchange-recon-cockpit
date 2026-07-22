@@ -57,11 +57,12 @@ The five headline numbers sit as a single strip beneath the map.
 
 **SAY**
 
-> This is a real back-office contract, taken apart task by task: two hundred and thirty-four
-> tasks, and one hundred and eighty-seven of them are the same shape. Checking, matching,
-> chasing, reconciling. The work people were hired to do and hated every minute of. When one
-> invoice disagrees with one purchase order, it crosses five desks and takes four days. The
-> card running behind me is the first of those tasks, handed to an agent you can audit.
+> This is a real back-office contract: paying suppliers, collecting from customers, keeping
+> the records clean, closing the books. Two hundred and thirty-four tasks. One hundred and
+> eighty-seven are the same shape: checking, matching, chasing, reconciling. The work people
+> were hired to do and hated every minute of. And exactly nine are moments where only a
+> person signs. Card number one is running behind me right now, and in about a minute it
+> will do the one thing demos never do. It will stop.
 
 ---
 
@@ -132,10 +133,10 @@ approval beat, so the eye lands on the wait.
 
 **SAY**
 
-> Here is the shape of the next couple of minutes before I switch to the live screen. Three
-> agents do three minutes of work that used to take four days, and then the process stops, on
-> purpose, and waits for a person. Then comes the moment that decides whether you believe me:
-> the numbers it could only know by reading the real ledger. It will wait as long as it takes.
+> Here is the shape of the next couple of minutes before I switch to the live screen. It
+> does four days of work in under three minutes, and then it stops, on purpose, and waits
+> forever for one person. Both are the point. Then comes the moment that decides whether
+> you believe me: the numbers it could only know by reading the real ledger.
 
 ---
 
@@ -169,8 +170,9 @@ The footer line runs full width beneath the table in a smaller weight.
 > endings. Twelve graded tests, all passing, checked by an independent second model. And as
 > of last night the process reports its own outcomes: it tells the team in Teams and Slack
 > when it finishes, adds email when it escalates, and if nobody answers within ten minutes it
-> escalates itself. It cannot spend money alone, and when anything is uncertain it goes to a
-> person by default. Every claim on this table has a record behind it.
+> escalates itself. It cannot spend money alone. Not a policy it follows, not a promise we
+> typed: the ability does not exist. When anything is uncertain it goes to a person by
+> default, and every claim on this table has a record behind it.
 > And the agents, the BPMN, and the cockpit were built with Claude Code: when composition failed
 > for two days, the coding agent diagnosed the platform defect, and the commit trail ships
 > with the submission.
@@ -189,7 +191,7 @@ The footer line runs full width beneath the table in a smaller weight.
 >
 > ROI, modeled on pilot volumes with stated assumptions: 200 invoices/week, assuming ~15% exceptions and ~12 min of manual PO lookup per exception = ~6 analyst-hours/week on the judgment step; the agent's measured verdict is 57 seconds, human approval retained ≈ **~5.5 analyst-hours/week reclaimed (modeled)**.
 >
-> **AI is the new RPA, and it needs the same discipline RPA got.**
+> **Deterministic AI is the new RPA.**
 
 Visual: outcome triptych across the top, three numbers on equal footing. The adoption line and
 the single labeled ROI line sit mid-slide. The closing sentence anchors the base in the largest
@@ -201,9 +203,13 @@ type on the slide.
 > where one exception costs five desks and four days. And a UK adventure travel group with
 > two hundred supplier invoices a week that would flow through exactly this gate; that pilot
 > is funded and proven live. On those volumes this returns roughly five and a half analyst
-> hours a week, modeled and labeled as such, with a person still holding the pen. And there
-> are one hundred and eighty-six more cards on that map. Boring is a feature. Boring is what
-> auditors sign. AI is the new RPA, and it needs the same discipline RPA got. Thank you.
+> hours a week. That number is a model, and the slide says so. Call it most of somebody's
+> Friday, handed back every week, with a person still holding the pen. Reconciliation is
+> card number one; there are one hundred and eighty-six more on the map, and not one needs
+> a second project: the gate stays, the rulebook stays, only the checking changes. Every
+> one of them is boring. And boring is a feature. Boring is what auditors sign.
+> Deterministic AI is the new RPA, and this platform is giving it the same discipline it
+> gave RPA the first time. Thank you.
 
 ---
 

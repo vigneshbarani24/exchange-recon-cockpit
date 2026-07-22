@@ -23,7 +23,8 @@ map on slide two shows the other cards.
 ## The Take (the close, land it word for word)
 
 > Boring is a feature. Boring is what auditors sign.
-> AI is the new RPA, and it needs the same discipline RPA got. Thank you.
+> Deterministic AI is the new RPA, and this platform is giving it the same discipline it
+> gave RPA the first time. Thank you.
 
 ---
 
@@ -44,11 +45,13 @@ Screen: start the run at 0:20 and say so. Slide 2 (the map), then slide 3 or 4.
 > I have just started the process. It takes about three minutes, so let me tell you what
 > it is while it runs.
 >
-> This is a real back-office contract, taken apart task by task: two hundred and
-> thirty-four tasks, and one hundred and eighty-seven of them are the same shape. Checking.
+> This is a real back-office contract, taken apart task by task: paying suppliers,
+> collecting from customers, keeping the records clean, closing the books. Two hundred and
+> thirty-four tasks. One hundred and eighty-seven of them are the same shape. Checking.
 > Matching. Chasing. Reconciling. The work people were hired to do and hated every minute
-> of. When one invoice disagrees with one purchase order, it crosses five desks and takes
-> four days, and nobody involved would call it a good use of their week.
+> of. And exactly nine are moments where only a person signs. When one invoice disagrees
+> with one purchase order, it crosses five desks and takes four days, and nobody involved
+> would call it a good use of their week.
 >
 > So this is not a one-off use case. We build the boring agents: agents for exactly that
 > work, and nothing else. They do not chat, they do not improvise, they do not touch
@@ -57,15 +60,15 @@ Screen: start the run at 0:20 and say so. Slide 2 (the map), then slide 3 or 4.
 > second. The agents only reason where the rules run out. And one person, at the top,
 > holds the only pen that can commit anything.
 >
-> The card running behind me right now is the first one: the invoice that does not match.
+> Card number one is running behind me right now: the invoice that does not match. And in
+> about a minute it is going to do the one thing demos never do. It is going to stop.
 
 ### Beat 3: the stop (2:10 to 3:00, ~120 words)
 Screen: the instance, suspended at the gate. Then the variance verdict. Slow down.
 
-> And there it is. Three minutes of work that used to take four days, and now it has
-> stopped. On purpose. It found the problem, wrote up the evidence, proposed the fix, and
-> now it waits for a person. It will wait as long as it takes, because speed was never
-> allowed to outrank authority here.
+> And there it is. It found the problem, wrote up the evidence, proposed the fix, and
+> stopped. On purpose. It did four days of work in under three minutes, and now it will
+> wait forever for one person. Both are the point.
 >
 > Now the moment that decides whether you believe any of this. The agent was given only
 > the supplier's numbers. It is reporting the purchase order side: twenty-five pounds,
@@ -81,8 +84,8 @@ Screen: approve; the prepared correction, held; then the status slide.
 
 > A person decides. I approve, and it finishes the paperwork: the exact correction,
 > written up, ready, and held. Nothing is posted. The system that found the problem is
-> physically unable to spend the money that fixes it. That is not a promise we typed
-> somewhere. The ability does not exist.
+> physically unable to spend the money that fixes it. Not a policy it follows. Not a
+> promise we typed. The ability does not exist.
 >
 > Everything here is built to be signed off, not just admired. Twelve graded tests, all
 > passing, checked against the live ledger by a second, independent model. Every decision
@@ -103,11 +106,14 @@ Screen: slide 7, the value cards.
 > year, where one exception costs five desks and four days. And a UK adventure travel
 > group with two hundred supplier invoices a week that would flow through exactly this
 > gate; that pilot is funded and proven live. On those volumes this returns roughly five
-> and a half analyst hours a week, modeled and labeled as such, with a person still
-> holding the pen. And there are one hundred and eighty-six more cards on the map.
+> and a half analyst hours a week. That number is a model, and the slide says so. Call it
+> most of somebody's Friday, handed back every week, with a person still holding the pen.
+> Reconciliation is card number one. There are one hundred and eighty-six more on the map,
+> and not one of them needs a second project: the gate stays, the rulebook stays, only the
+> checking changes. Every single one of them is boring.
 >
-> Boring is a feature. Boring is what auditors sign. AI is the new RPA, and it needs the
-> same discipline RPA got. Thank you.
+> And boring is a feature. Boring is what auditors sign. Deterministic AI is the new RPA,
+> and this platform is giving it the same discipline it gave RPA the first time. Thank you.
 
 Hold 4:50 to 5:00. Do not fill it.
 
