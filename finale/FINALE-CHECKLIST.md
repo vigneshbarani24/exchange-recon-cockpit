@@ -66,11 +66,21 @@ Smokes are IN PROGRESS. Record literal outcomes here when they land, do not gues
 | Escalate path on 1.0.7 | EscalateGate clears, Gmail SendTask fires (owner inbox), Slack SendTask posts to #general, End_Escalated | **GREEN to End_Escalated** (4139bdeb). Connector legs terminated silently in ~1s, NO email/Slack sent; both boundaries caught and routed onward. Legs = DEGRADED-BY-DESIGN, degradation proof count now five. |
 | PT10M timer on the gate | Event_GateTimeout fires after 10 min unattended, escalate path runs, boundary catch-alls swallow any connector failure | **FIRED** (e2b9e3d8). Ten minutes unattended, timer took the escalate path on its own, both message branches terminated, End_Escalated. Trace in finale/maestro/. |
 
-1.0.8 (adds the policy task) smoke result, filled: Task_PolicyRule terminated in ~1s
-(defect #5 reproduced same-folder) and Boundary_RuleErr CAUGHT it; gate cleared clean on
-approve. Then posting-prep failed post-gate WITHOUT its boundary firing; instance faulted
-and was cancelled. Twin corrected-ending proof remains 1.0.7 (3aed9118). Net: the twin is
-the roadmap exhibit; do not demo it.
+Late rounds (1.0.9 to 1.0.12), final state: notification fan-out deployed on BOTH
+endings (Teams card, Gmail, Slack, each boundary-shielded); two more green completions
+(26194c64, 21230b01); every notification leg still blocked by the undocumented runtime
+carrier (findings 12 to 15 filed, including the policy task rejecting REAL computed
+arguments, instance 21230b01, the best feedback screenshot in the kit). DEMO CLAIMS:
+never say the flow sends Teams/Gmail/Slack today; say the endings close with
+notification hooks armed and governance that no notification failure can block.
+
+1.0.8 (adds the policy task) smoke result, corrected after diagnosis: the first attempt
+faulted on MY harness's bad test data (a supplier doc for the wrong PO left matched_lines
+empty; input expression 400300 on the first-line index; note, input-eval failures bypass
+the boundary, filed as finding #11). Rerun with paired data: **1.0.8 GREEN end to end**
+(870263b2). Policy task terminated per defect #5, Boundary_RuleErr caught it, three-branch
+gate, approve won, posting-prep completed, End_Corrected. The twin has its green; it
+remains the roadmap exhibit, canvas remains the demo.
 
 **DEMO INSTANCE FOR TOMORROW: RECOMMENDED = CANVAS 1.0.6** (battle-tested ten times, DUMP
 choreography unchanged, gate waits indefinitely). The twin 1.0.8 is the roadmap-live

@@ -272,3 +272,58 @@ one second, no model call), but the auto-clear ENDING itself is the subject of f
 parked behind the script-output defect, and no instance has ended auto-cleared; in-tolerance
 cases route conservatively to the human. The sentences describe design intent. Stated here
 so the survey text and the runtime record cannot be read as contradicting each other.
+
+
+**11. Input-expression evaluation failures bypass boundary error events.**
+
+When an activity's input expression fails to evaluate (error 400300, here
+`=vars.matchedLines[0].po_item` against an empty list), the element is marked Failed and
+the instance faults, but the task's attached boundary error event never fires: the failure
+happens before the task is considered running. Reproduced on ExchangeReconTeamsNotify
+1.0.8, instance e387d1ec. Consequence: a flow that is fully shielded with boundary events
+on every integration and agent task can still fault, unhandled, on a data-shape surprise
+in the inputs. Suggest either routing input-evaluation failures through the same boundary
+error path as execution failures, or documenting the distinction and offering a
+flow-level error handler for pre-execution failures.
+
+
+### Addendum part two, dated 2026-07-22 late evening (the carrier discovery)
+
+Continued iteration on the enriched twin (versions 1.0.9 through 1.0.12) produced four
+sharper findings, each with a committed trace:
+
+**12. Runtime carrier split: separate uipath:input elements execute; context fields do
+not reach the runtime.** On Intsvc.ActivityExecution, a body passed as a separate
+uipath:input element (type json, target body) arrived fully evaluated, expressions
+resolved, visible in the instance variables view. The connection passed as a context
+field arrived null (error: Value cannot be null, Parameter 'Connection'), whether given
+as a binding reference or a literal id. On Intsvc.UnifiedHttpRequest, method/url/headers
+set as context fields produce 'Method' is required and cannot be empty at runtime. The
+registry note "inputs are managed by the IS connector framework and serialized as
+separate uipath:input elements" appears to describe exactly this, but the required
+element shape is undocumented. Suggest documenting the runtime carrier per extension
+type, or reading context fields at runtime.
+
+**13. Positive: =js: expressions inside a task's JSON body inputs evaluate correctly,**
+including multi-statement function bodies computing over an agent's structured output
+(used to compute price/quantity/value variances inline from matched lines after script
+outputs proved unusable). This is a practical workaround lane for finding #2.
+
+**14. Orchestrator.BusinessRules task rejects valid numeric arguments.** With real
+numbers delivered (instance 21230b01, JobArguments visible in the variables view as
+PriceVariancePct 10, QtyVarianceUnits 1, LineValueGbp 1375), the task still returns 400
+Invalid business rule task arguments / Invalid activity input. Note the variables view
+shows the argument keys PascalCased while the DMN inputs are snake_case
+(price_variance_pct); if the runtime re-cases JobArguments keys before rule input
+matching, no snake_case DMN input can ever be matched by this task. The rule artifact
+itself is well-formed (attached DMN validates; the same table renders and versions in
+the portal). No public rule-execution API endpoint was discoverable to cross-check
+evaluation directly (OData GET returns BusinessRule does not exist against the linked
+folder; all execute-shaped POSTs return 405).
+
+**15. Script-task output bindings never populate, full scope.** Instance 870263b2
+variables show every declared script output null, including the canvas-native whole
+result output, while the same script's computed values demonstrably exist (the inline
+recomputation in finding #13 yields correct numbers from the same data). This widens
+finding #2 from "gateway condition unreachable" to "script outputs are never available
+to any downstream consumer."

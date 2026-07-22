@@ -60,11 +60,14 @@ client is referred to only as "a UK adventure travel group".
 ## 7. Two artifacts, one narrative
 
 - **ExchangeReconCanvas** (v1.0.6, frozen): the proven core. Demo runs here.
-- **ExchangeReconTeamsNotify** (Shared/ExchangeReconTeams, now v1.0.7, see section 14): the
-  enriched twin. Proven on v1.0.6: UiPath-native Teams card sent BY the flow (not a local
-  script), approve path green, boundary error resilience proved x3 (a notification outage can
-  never block the gate), DMN policy InvoiceTolerancePolicy linked to the folder. v1.0.7 adds
-  the timer, connector legs, and policy task rows tracked in section 14.
+- **ExchangeReconTeamsNotify** (Shared/ExchangeReconTeams, now v1.0.12, see section 14): the
+  enriched twin. Proven on v1.0.6: approve path green and boundary error resilience proved
+  x3 on the notify leg (a notification outage can never block the gate); DMN policy
+  InvoiceTolerancePolicy linked to the folder. Correction on the Teams card: the flow has
+  never successfully delivered one (the notify task fails on the undocumented runtime
+  carrier, findings 3 and 12); the card that demos is sent by the ops script and is
+  labeled as such. v1.0.7 through v1.0.12 add the timer, both-ending notification fan-out,
+  and policy task rows tracked in section 14.
 - The line: "the roadmap is not a slide either. It is already deployed, in its own folder."
 
 ## 8. The thesis (Card A)
@@ -175,13 +178,18 @@ Service registry, REST API operations, solution lifecycle via uip CLI.
     three-branch gate. Defect #5 now has a same-folder reproduction AND a proven
     mitigation on the same trace. Present the policy task as: wired, terminates per the
     filed defect, degrades cleanly, policy remains the finance-owned linked artifact.
-  - One open item, deliberately not chased on T-1: in that same 1.0.8 run, posting-prep
-    failed after the gate and its boundary did not fire; the instance faulted and was
-    cancelled for hygiene. The twin's corrected ending stands proven on 1.0.7 (3aed9118).
-    Consequence: the twin is firmly the roadmap exhibit, canvas is firmly the demo.
-  - Demo instance choice: **CANVAS 1.0.6** (recommended and now reinforced by the 1.0.8
-    posting-prep fault; VB can only override at rehearsal with two consecutive green twin
-    runs, which 1.0.8 no longer has).
+  - The earlier 1.0.8 posting-prep fault: RESOLVED, and it was never the flow. The smoke
+    harness fed one purchase order a supplier document written for a different one; the
+    matching agent correctly matched nothing, and a downstream input indexing the first
+    matched line failed on the empty list (error 400300). Rerun with correctly paired
+    data: **1.0.8 GREEN end to end** (870263b2), policy task terminating and caught by
+    its boundary, three-branch gate, approve, posting-prep completed, held update,
+    End_Corrected. The lesson worth telling: the flow refused to make sense of nonsense.
+    Side finding: an input-evaluation failure does not trigger the task's boundary error
+    event (it fails before the task runs) — filed as feedback finding #11.
+  - Demo instance choice: **CANVAS 1.0.6** stays the recommendation (ten proven runs, DUMP
+    choreography unchanged, gate waits indefinitely). The twin is the roadmap exhibit
+    with its own green: timer fired, policy absorbed, 1.0.8 corrected ending proven.
 
 ### Entitlement map (verified tonight, load-bearing for honesty)
 
@@ -203,6 +211,27 @@ Service registry, REST API operations, solution lifecycle via uip CLI.
   releaseKeys (defect 1) DOES work for Integration Service connections through deploy
   config. A positive finding, and it sharpens defect 1: the mechanism exists and works for
   connections, so agent releases are the specific gap.
+
+### Late-evening round two: fan-out on both endings, and the carrier discovery
+
+- The twin advanced to **1.0.12**: notification fan-out now sits on BOTH endings
+  (approve: Teams card, Gmail, Slack after the held update; escalate: the same trio after
+  route-to-buyer), every leg behind its own boundary. Two more green completions
+  (26194c64 on 1.0.10, 21230b01 on 1.0.12) with every dead leg degrading cleanly. The
+  graceful-degradation count is now in double digits across the night.
+- The policy task now receives REAL computed numbers (price variance 10, quantity 1,
+  line value 1375, visible in the instance variables view) via inline expressions that
+  route around the dead script outputs, and the wrapper still rejects them with a 400.
+  The variables view showing correct arguments beside the rejection is the strongest
+  product-feedback screenshot in the kit (instance 21230b01). Feedback file now carries
+  15 findings.
+- Honest status for the deck's notification rows: designed, deployed, boundary-shielded,
+  blocked by an undocumented runtime carrier (context fields do not reach the runtime;
+  the working carrier shape for connections is undocumented). The one notification that
+  works today remains the webhook card sent by the ops script, clearly labeled as such.
+- Do not claim on stage that the flow sends Teams/Gmail/Slack today. The claim that is
+  true and strong: the flow closes both endings with notification hooks armed and a
+  proven property that no notification failure can ever block governance.
 
 ### Deck consequences
 
