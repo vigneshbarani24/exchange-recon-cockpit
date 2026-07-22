@@ -207,6 +207,37 @@ type on the slide.
 
 ---
 
+## Slide 8: THE ROADMAP IS A MAP (optional 8th slide, or the backing slide for Q&A)
+
+**SHOW**
+
+> ## One card is live. The map is the roadmap.
+>
+> Left: screenshot of the public contract-map artifact ("The contract, re-architected"):
+> **234 tasks mapped · 187 agent-automatable · 9 human gates · 38 client-retained · 75→37 FTEs**,
+> with the live card ringed: Invoice reconciliation · Reconcile · Gate.
+>
+> Right, the KPI wiring, labeled honestly:
+> **Measured today:** 2:56 governed end to end · 57s agent verdict · ~2s flow-sent notification ·
+> 10-minute gate SLA · both endings notified in Teams, Slack, Gmail.
+> **Next sprint:** these per-run metrics feed Insights (enabled on this tenant on finale eve)
+> as straight-through rate, hours reclaimed, and exception mix per supplier.
+> **Then:** the next cards on the same spine: dunning, cash application, goods-receipt matching.
+
+Visual: the artifact screenshot carries the left half; the right half is three short stacked
+bands (Measured today / Next sprint / Then). One ring, one arrow from the ringed card to the
+Measured band.
+
+**SAY**
+
+> Every number on the left is a real contract, taken apart task by task, and the ringed card is
+> the one running live behind me. The right side is deliberately honest: today we measure the
+> run itself, the next sprint feeds those measurements into Insights as business KPIs, and the
+> cards after this one reuse the same three pieces: exception agents, a human gate, a governed
+> policy. The pilot pays for the platform.
+
+---
+
 ## Paste-up notes
 
 - **Font sizes.** Slide titles 40pt and up. Body and table text 24pt and up. The one number
