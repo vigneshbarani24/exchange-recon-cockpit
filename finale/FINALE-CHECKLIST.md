@@ -2,6 +2,29 @@
 
 One page to run the day. Facts frozen 2026-07-22 evening. All smoke outcomes are filled with verified results; nothing is pending.
 
+
+## 0. FROM THE OFFICIAL FINALIST EMAIL (do these first)
+
+- [ ] **RSVP NOW** via the link in Andreea's email ("confirm your attendance in the event
+      here"). The one hard action in the email. Do it before anything else.
+- [ ] Format confirmed: 5 minutes presentation + demo, 3 minutes jury Q&A, YOU share the
+      screen with the PPT. "Stick with the allocated time" is explicit: our script lands
+      at 4:50 with a held buffer; rehearse to that.
+- [ ] The deck must be on the attached template: DONE, the built PPT sits on exactly that
+      template (Downloads: AgentHack 2026 Finale - Exchange Recon (VB).pptx).
+- [ ] Community Favorite mechanics (corrected): it is DEVPOST LIKES on the project in the
+      gallery, top 3 win $500, voting open until July 30. Post on social, tag UiPath
+      Community, link the Devpost page. This continues AFTER the finale; do not spend
+      finale-morning time on it beyond one post.
+- [ ] Best Product Feedback ($1,500, individual): the email invites submissions through
+      the form "if you haven't already". We submitted the early 7-finding version; the
+      pack now holds 16 trace-backed findings. Submit an updated entry pasted from
+      finale/2026-07-21-grounded/FEEDBACK-FINDINGS-FINAL.md (thesis line + findings +
+      trace index). Most detailed and insightful wins; ours is both.
+- [ ] Forum use-case post: this email contains NO forum instructions, so nothing is
+      overdue; the rules said instructions come from the organizers. Watch for a separate
+      mail and comply when it arrives.
+
 ## Constants (do not re-derive under pressure)
 
 | Thing | Value |
