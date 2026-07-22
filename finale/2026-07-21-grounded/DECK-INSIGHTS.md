@@ -248,3 +248,32 @@ Service registry, REST API operations, solution lifecycle via uip CLI.
   while agent releases still cannot.
 - Hard rule for tomorrow: no CLI updates before the finale. Canvas (1.0.5, deployed 1.0.6)
   stays frozen as the guaranteed demo floor.
+
+
+## 15. The final night result (2026-07-22, late): the flow speaks
+
+- Twin at 1.0.16, canvas-wired via Studio Web round-trip (the same cure as June, now
+  proven a second time as the platform law: executable config for connector, HTTP, and
+  rule tasks is canvas-generated; no hand-authored XML can supply it).
+- Instance 6b2ecc38 (approve): Teams card and Slack message SENT BY THE FLOW, End_Corrected.
+  First flow-sent notifications in the project's history.
+- Instance 1021b02a (escalate): Teams card, Gmail email, and Slack message ALL SENT BY THE
+  FLOW, End_Escalated. Full notification sweep on one ending.
+- Status rows for the deck: Teams card from the flow LIVE both endings; Slack LIVE both
+  endings; Gmail LIVE on escalate (approve-path task one field off, boundary covers it);
+  SLA timer LIVE (fired twice unattended); policy task CLOSED as platform defect with the
+  double-wrap capture (tolerance verdict visible in the trace, rule receiving nulls from
+  broken mappings, and real values rejected when smuggled in).
+- Script-task law learned twice tonight: bare variable references fault after a canvas
+  republish; the throw-proof pattern (typeof guards plus key normalization) is now in the
+  tolerance and held-update scripts.
+- Action Center: service ENABLED by VB at the Admin level (was never entitlement-blocked,
+  only unprovisioned). Inbox live; task creation gated behind an Action App, now a named
+  one-artifact next step. Reword the entitlement answer accordingly.
+- Business-value tie: Insights is provisioned; the night's 40+ agent jobs feed its
+  out-of-box dashboards by morning. Measured outcome metrics for the value slide:
+  2:56 governed end-to-end, 57s agent verdict, ~2s flow-sent notification latency,
+  gate SLA 10 minutes, ~5.5 modeled analyst-hours/week reclaimed on pilot volumes.
+- Demo decision: canvas remains the recommended floor. The twin now holds two consecutive
+  1.0.16 greens WITH live notifications; per the checklist rule, VB may promote it at
+  rehearsal only after two more greens, accepting the 7-minute approve window.
