@@ -46,7 +46,7 @@ export function ReconciliationView() {
           </div>
           <div className="text-right">
             <span className="font-mono text-[0.6rem] uppercase tracking-wide px-2 py-1 rounded border border-green/40 text-greenb">
-              live S/4 · via MCP
+              captured · live S/4 run · via MCP
             </span>
             <div className="font-mono text-[0.65rem] text-muted mt-2 max-w-[280px]">{c.source}</div>
           </div>

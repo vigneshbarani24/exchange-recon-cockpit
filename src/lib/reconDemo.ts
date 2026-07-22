@@ -48,7 +48,7 @@ export const reconCase: ReconCase = {
   supplier: "11300001",
   currency: "GBP",
   invoice: "INV-88231",
-  source: "SAP S/4HANA Cloud · API_PURCHASEORDER_PROCESS_SRV (live, via MCP)",
+  source: "SAP S/4HANA Cloud · API_PURCHASEORDER_PROCESS_SRV (captured from the live run, via MCP)",
   overallStatus: "variance-found",
   confidence: 0.95,
   lines: [

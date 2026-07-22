@@ -50,7 +50,7 @@ that do not agree already visible. Nothing animates.
 >
 > Callout: This build is one card on that map: **Invoice reconciliation · Reconcile · Gate.**
 >
-> Pain anchor: **$5.7M exception class · 5 desks · 4 days.**
+> Pain anchor: **$5.7M/yr manual back-office scope · one exception: 5 desks · 4 days.**
 
 Visual: screenshot placeholder of the public contract-map artifact, the full swim-lane
 teardown. One card on it is ringed. An inset zooms that card to the Reconcile and Gate steps.
@@ -132,7 +132,7 @@ approval beat, so the eye lands on the wait.
 
 **SAY**
 
-> Here is the shape of the next ninety seconds before I switch to the live screen. Three
+> Here is the shape of the next couple of minutes before I switch to the live screen. Three
 > agents run as real Orchestrator jobs inside one instance, the process suspends at the human
 > gate, and then comes the moment that decides whether you believe me: the PO-side reveal.
 > After a person approves, it prepares the correction and holds it. It will wait as long as it takes.
@@ -150,14 +150,14 @@ approval beat, so the eye lands on the wait.
 > | Composed governed runs | **LIVE** | 10 instances, 6 live POs, both gate branches |
 > | Live SAP reads | **LIVE** | real tenant, runtime |
 > | Evals 12/12 | **LIVE** | ground truth model-validated |
-> | Human gate | **LIVE** | suspends indefinitely |
+> | Human gate | **LIVE** | suspended and resumed on demand; 20s to 6min pauses observed, durable by design |
 > | SLA timer on the human gate | **LIVE** | armed and correctly cancelled on the winning branch (enriched twin 1.0.7, green tonight) |
 > | Auto-clear branch | **PARKED** | platform defect filed, conservative-by-default routing |
 > | SAP write-back | **HELD** | by design, armed not fired |
 > | Action Center / Teams approval | **ROADMAP** | service not provisioned on hackathon tenant; message gate by entitlement, not by omission |
 > | NEXT elements | **ROADMAP** | native review task · policy task in-flow · Test Cloud regression · dunning + cash application on the same spine |
 >
-> Footer: Agents, BPMN, and cockpit built with Claude Code through UiPath for Coding Agents. When composition failed for two days, the coding agent diagnosed the platform defect. Commit trail public.
+> Footer: Agents, BPMN, and cockpit built with Claude Code through UiPath for Coding Agents. When composition failed for two days, the coding agent diagnosed the platform defect. Commit trail ships with the submission (say "public" only once the repo flip is confirmed).
 
 Visual: a plain status table, LIVE in green, PARKED in amber, HELD in a held-not-broken grey.
 The footer line runs full width beneath the table in a smaller weight.
@@ -171,7 +171,8 @@ The footer line runs full width beneath the table in a smaller weight.
 > a filed platform defect with the conservative path as the default, and Action Center is simply
 > not provisioned on this tenant, so the message gate is an entitlement boundary, not a shortcut.
 > And the agents, the BPMN, and the cockpit were built with Claude Code: when composition failed
-> for two days, the coding agent diagnosed the platform defect, and the commit trail is public.
+> for two days, the coding agent diagnosed the platform defect, and the commit trail ships
+> with the submission.
 
 ---
 
@@ -183,9 +184,9 @@ The footer line runs full width beneath the table in a smaller weight.
 >
 > **2:56 end to end · 0 write tools bound · 100% of decisions reconstructable**
 >
-> Adoption: a UK adventure travel group, ~200 supplier invoices a week through exactly this gate. A funded POC.
+> Adoption: a UK adventure travel group, ~200 supplier invoices a week; funded pilot, proven live on a real S/4HANA cloud tenant.
 >
-> ROI, modeled on POC volumes: 200 invoices/week × ~15% exceptions × ~12 min manual PO lookup = ~6 analyst-hours/week; agent compresses judgment prep to under a minute with human approval retained ≈ **5.5 analyst-hours/week reclaimed**.
+> ROI, modeled on pilot volumes with stated assumptions: 200 invoices/week, assuming ~15% exceptions and ~12 min of manual PO lookup per exception = ~6 analyst-hours/week on the judgment step; the agent's measured verdict is 57 seconds, human approval retained ≈ **~5.5 analyst-hours/week reclaimed (modeled)**.
 >
 > **AI is the new RPA, and it needs the same discipline RPA got.**
 
@@ -195,10 +196,11 @@ type on the slide.
 
 **SAY**
 
-> Two enterprises, one pattern: a refiner where this class of exception cost millions, and a UK
-> adventure travel group running two hundred supplier invoices a week through exactly this gate
-> as a funded POC. On those volumes the model reclaims roughly five and a half analyst-hours a
-> week, with a person still holding the pen. The industry spent this month arguing who owns the
+> Two enterprises, one pattern: a refiner whose manual back office, the one this exception
+> lives in, runs to millions a year, and a UK adventure travel group whose two hundred supplier
+> invoices a week would flow through exactly this gate; the pilot is funded and proven live on
+> a real S/4HANA cloud tenant. On those volumes the model, with its assumptions stated,
+> reclaims roughly five and a half analyst-hours a week, with a person still holding the pen. The industry spent this month arguing who owns the
 > model. The back-office question is who owns the decision, and here the answer is always a
 > person. AI is the new RPA, and it needs the same discipline RPA got. Thank you.
 

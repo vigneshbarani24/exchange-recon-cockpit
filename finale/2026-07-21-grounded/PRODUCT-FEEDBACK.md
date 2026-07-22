@@ -221,3 +221,54 @@ the thing that matters most, so today I would reach for an Action Center task to
 first-class way to attach a verified approver identity to a message-based gate, so the decision
 carries a person and not just a payload, would close the last gap between this being a working
 process and a deployable financial control.
+
+---
+
+## Addendum: findings filed after survey submission, verified 2026-07-22
+
+The survey above is submitted. These three findings were verified the evening before the finale
+and are recorded here in the same style as Q10: grounded, with IDs, verifiable.
+
+**8. The Actions service is not provisioned on the hackathon staging tenant, so no form of
+Action Center HITL is possible here by entitlement.**
+
+Task API POST `/tasks/GenericTasks/CreateTask` returns 404 with "Service: actions not found in
+Organization". The consequence is that neither native Actions.HITL user tasks nor external
+Action Center tasks are possible on this tenant, so human in the loop is limited to Maestro
+message events by entitlement rather than by design choice. This lands directly on the honest
+limit called out in Q13: the one feature that would attach a verified approver identity to the
+gate is the one the tenant cannot provision. Suggest documenting an entitlement matrix for
+hackathon tenants, or enabling Actions on tenants that have ProcessOrchestration enabled.
+
+**9. Positive finding: hand-authored connection bindings deploy correctly when resolved with
+`uip solution deploy config link`.**
+
+Connection bindings hand-authored in a Maestro BPMN, as Intsvc.ActivityExecution service tasks
+referencing `=bindings.X` plus connection resources declared in `bindings_v2.json`, pack,
+publish, and deploy correctly once the bindings are resolved via `uip solution deploy config
+link`. Proven on ExchangeReconSolutionTeams 1.0.7, deployment ExchangeReconTeams,
+ActivationStatus SuccessfulActivate, with a Gmail SendEmail task and a Slack SendMessage task
+both linked to live connections. This is the exact binding class that fails for agent releaseKey
+bindings in finding #1. The deploy-config path proves resolution outside the Studio Web canvas
+is possible. Suggest extending the same resolution mechanism to process and agent resources so
+hand-authored BPMN can deploy without a Studio Web round-trip.
+
+**10. Test Manager v2 API allows project creation but exposes no working test-case route.**
+
+POST `/projects` works, with the note that the field is `projectPrefix`; project "Exchange Recon
+- Agent Evals" (prefix RECON, id 3dcc9b9e-8719-0100-48a7-0b49ea40aef1) was created this way. But
+every test-case route tried, `/testcases`, `/test-cases`, `/testCases`, and the project-scoped
+variants, returns 404 itemNotFound. The consequence is that test cases must be created by hand
+in the UI, which turns an automatable eval-publishing step into a click task. Suggest publishing
+the case CRUD surface or documenting the intended route.
+
+
+### Correction note, dated 2026-07-22 (survey text above is frozen as submitted)
+
+Two sentences in the submitted survey describe the tolerance gate's auto-clear as runtime
+behavior ("auto-clears anything inside tolerance without any model call"; "clears the bulk
+of cases"). For the record: the deterministic tolerance CHECK ran in every instance (about
+one second, no model call), but the auto-clear ENDING itself is the subject of finding #2,
+parked behind the script-output defect, and no instance has ended auto-cleared; in-tolerance
+cases route conservatively to the human. The sentences describe design intent. Stated here
+so the survey text and the runtime record cannot be read as contradicting each other.

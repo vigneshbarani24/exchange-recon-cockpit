@@ -5,7 +5,8 @@ Source study: The AI Daily Brief (NLW), editions of 2026-07-13 through 2026-07-2
 the exact argument this project makes, published days before the finale. The finale story
 should stand on that ground: the discourse already turned our way; we are the demonstration.
 
-Rules honored throughout: no em dashes in this file, never "three way match", no customer
+Rules honored throughout: no em dashes in this file, never name the match by document
+count (always "invoice to PO reconciliation"), no customer
 names, write-back stays HELD, vocabulary lock from the red-team pass (live S/4HANA cloud
 tenant; six-PO campaign, both gate branches; designed, parked, conservative by default;
 model-validated facts). Every Part B claim is screenshot-true against TRUTH.md and
@@ -126,9 +127,12 @@ Screen: start the instance at 0:20 and say so; slide 3, then the iceberg.
 ### Beat 3: the gate, and the reveal (2:10 to 3:00, ~120 words)
 Screen: switch to the instance, suspended at the gate; then the variance output. Slow down.
 
-> "And there it is. The process has stopped. Three agents ran as real Orchestrator jobs
-> inside this one instance, and now it is suspended, waiting for a person. It will wait
-> as long as it takes. The industry is celebrating the self-driving company this month,
+> "And there it is. The process has stopped. Two agents have already run as real
+> Orchestrator jobs inside this one instance, a third waits on the far side of the gate,
+> and the whole thing is suspended, waiting for a person. It will wait as long as it
+> takes. (Canvas instance only. If demoing the 1.0.7 twin, say instead: it waits ten
+> minutes for a person, and if nobody comes, policy takes the escalate path on its own.
+> Governed either way.) The industry is celebrating the self-driving company this month,
 > and fair enough. But where the work is money in a system of record, the self-driving
 > company still pulls over at the gate.
 >
@@ -155,14 +159,19 @@ reviewer); posting-prep; the held correction; End_Corrected; then the build slid
 > One more thing, because it changed the build: the agents, the BPMN, and the cockpit
 > were built with Claude Code through UiPath for Coding Agents, and when the composition
 > failed for two days, it was the coding agent that diagnosed the platform defect. The
-> commit trail is public."
+> commit trail ships with the submission."
+>
+> (Say "the commit trail is public" only after the repo visibility flip is confirmed;
+> the check is in the finale checklist pre-flight.)
 
 ### Beat 5: the take (4:15 to 4:50, ~90 words)
 Screen: slide 7, two value cards.
 
-> "Two enterprises, one pattern. A refiner where this class of exception cost millions,
-> and a UK adventure travel group taking two hundred supplier invoices a week through
-> exactly this gate. Deployment is a configuration delta, not a rebuild.
+> "Two enterprises, one pattern. A refiner whose manual back office, the one this
+> exception lives in, runs to millions a year, and a UK adventure travel group whose two
+> hundred supplier invoices a week would flow through exactly this gate; the pilot is
+> funded and proven live on a real S/4HANA cloud tenant. Deployment is a configuration
+> delta, not a rebuild.
 >
 > The industry spent this month arguing about who owns the model. The back office
 > question is simpler and older: who owns the decision. In this process the answer is
@@ -207,7 +216,9 @@ a source citation mid-demo.
 
 - 2:56 end to end, 57 s verdict, 1.1 s tolerance, suspends at gate: trophy instance
   2db6d4d8, finale/maestro/.
-- Ten completed instances, six live POs, both gate branches: runsManifest.json.
+- Ten completed instances, six live POs, both gate branches: nine in runsManifest.json
+  plus the twin approve proof in the tenant's Teams folder (know the split if a judge
+  counts the cockpit's runs board).
 - Twelve of twelve evals, model-validated ground truth: finale/evals/.
 - No write tool bound; held update stub: agent tool manifests, BPMN Task_UpdatePO.
 - Auto-clear designed, parked, conservative by default: filed defect #2; manifest shows
