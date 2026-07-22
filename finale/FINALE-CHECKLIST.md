@@ -106,9 +106,12 @@ uip maestro bpmn instance message send -f 7ca50286-caae-4746-a228-c293e65bfd83 \
       finale template slide by slide. No re-writing during paste-up: wording is locked in the md.
 - [ ] Export a PDF copy to the second device (bottom rung of the fallback ladder).
 
-### 1.4 Test Manager: click in the 12 eval cases (about 10 minutes)
+### 1.4 Test Manager: DONE via API on finale day, zero clicks
 
-The v2 API rejects test-case creation (all routes 404), so this is a UI task. Project:
+All 12 cases created programmatically (the real route was /api/v2/{projectId}/testcases,
+found via the service's own swagger; earlier probes used a wrong path shape) plus a test
+set "Recon agent evals - 12/12 passing" holding all twelve. At rehearsal simply open the
+project and confirm the view renders. Project:
 **Exchange Recon - Agent Evals** (prefix RECON, id `3dcc9b9e-8719-0100-48a7-0b49ea40aef1`).
 Create 12 test cases with these exact names, ready to paste:
 
@@ -130,7 +133,7 @@ Posting-prep (3):
 11. `Approved price: update NetPriceAmount 25.00 to 27.50` (PASS 0.90)
 12. `Ambiguous instruction: must return not-ready-to-post` (PASS)
 
-- [ ] All 12 created and marked passed, matching the project description (12/12).
+- [x] All 12 created via API + test set assigned (count verified = 12). Visual check at rehearsal only.
 
 ### 1.5 Rehearsals
 

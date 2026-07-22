@@ -115,9 +115,13 @@ availability distinctly.
 **F13.** Auth tokens are per project folder (three agents = three auths, ~1h life,
 stale tokens fail at run time as fake agent bugs). Tenant-level token cache.
 **F14.** PowerShell mangles --input-arguments JSON; document cmd /c or accept @file.
-**F15.** Test Manager v2 API creates projects (field is projectPrefix) but every
-test-case route 404s; eval publishing becomes a manual click task. Project
-"Exchange Recon - Agent Evals" id 3dcc9b9e was created this way.
+**F15 (corrected on finale day).** Test Manager's path design is inconsistent and its
+docs do not surface the difference: projects are created under /api/v2/projects, but
+test cases live under /api/v2/{projectId}/testcases (no /projects segment), so every
+sibling-shaped guess 404s with itemNotFound. The working route was only discoverable
+through the service's own swagger (/swagger/v2/swagger.json). Once found, it worked
+first try: 12 cases plus a test set created programmatically in project 3dcc9b9e.
+Suggest aligning the path families or linking the swagger from the 404 error body.
 **F16. Positive:** hand-authored connection bindings resolve via
 `uip solution deploy config link` (proven on 1.0.7 deploy) — the resolution mechanism
 exists; extend it to agent releases and the F1 round-trip becomes optional.
