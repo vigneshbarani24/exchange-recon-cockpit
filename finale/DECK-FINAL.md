@@ -21,8 +21,8 @@ dash. The no-em-dash rule wins, so the title uses a colon instead.
 
 **SHOW**
 
-> # Exchange Recon: the governed back office.
-> ### Exception work, handed to agents you can audit.
+> # Exchange Recon: we build the boring agents.
+> ### The back-office work people hated, done by agents you can audit.
 >
 > `Maestro BPMN · 3 coded agents · live SAP S/4HANA over MCP · human gate · evidence bucket`
 
@@ -32,10 +32,9 @@ that do not agree already visible. Nothing animates.
 
 **SAY**
 
-> A supplier invoiced us, and the price and quantity do not match the purchase order in SAP.
-> Someone has to work out why, against the live system of record, before money moves. Most
-> agentic demos would now agree two numbers they invented. This one is about to read a
-> purchase order it has never seen.
+> A supplier invoiced us, and the numbers do not match the purchase order. Someone has to
+> work out why, against the real ledger, before money moves. Most demos would now agree two
+> numbers they invented. This one is about to read a purchase order it has never seen.
 
 ---
 
@@ -58,10 +57,11 @@ The five headline numbers sit as a single strip beneath the map.
 
 **SAY**
 
-> This is a real back-office contract, taken apart task by task. The migration automated the
-> transaction and left the exception human: five desks, four days, real money. Our build is
-> one card on that map, and an agent can be perfectly valid in the ERP and still be
-> unauthorized in the business.
+> This is a real back-office contract, taken apart task by task: two hundred and thirty-four
+> tasks, and one hundred and eighty-seven of them are the same shape. Checking, matching,
+> chasing, reconciling. The work people were hired to do and hated every minute of. When one
+> invoice disagrees with one purchase order, it crosses five desks and takes four days. The
+> card running behind me is the first of those tasks, handed to an agent you can audit.
 
 ---
 
@@ -82,10 +82,10 @@ words. The verbs are the design.
 
 **SAY**
 
-> The whole build is three verbs. Read means the agent reaches into the live cloud tenant at
-> runtime: it is handed only the supplier's numbers and comes back with the PO side, which it
-> could only know by reading SAP. Reconcile keeps determinism, agent judgment, and human
-> authority in separate hands, and Prove is why you do not have to take the demo's word for it.
+> We build the boring agents, and every one of them does three things. It reads the real
+> ledger, live, not a copy. It reconciles: rules decide most cases in a second, the agent
+> reasons only where rules run out, and a person keeps the only pen. And it proves itself:
+> graded tests, evidence for every decision, so you never have to take the demo's word for it.
 
 ---
 
@@ -107,10 +107,10 @@ run as a caption band under the image.
 
 **SAY**
 
-> So the architecture is a hierarchy of authority. Below the waterline, determinism: a
-> tolerance rule, two percent on price, one unit on quantity, one second, no model call at
-> all. At the waterline the agents reason only where determinism runs out, and at the peak a
-> person is the only actor who can commit anything. Reasoning is real. Authority is the problem.
+> Authority here is a hierarchy, not a pipeline. Most of the work is decided by rules finance
+> already owns: two percent on price, one unit on quantity, settled in a second. The agents
+> only reason about what the rules cannot settle. And at the top a person is the only actor
+> who can commit anything. Reasoning is real. Authority is the problem.
 
 ---
 
@@ -133,9 +133,9 @@ approval beat, so the eye lands on the wait.
 **SAY**
 
 > Here is the shape of the next couple of minutes before I switch to the live screen. Three
-> agents run as real Orchestrator jobs inside one instance, the process suspends at the human
-> gate, and then comes the moment that decides whether you believe me: the PO-side reveal.
-> After a person approves, it prepares the correction and holds it. It will wait as long as it takes.
+> agents do three minutes of work that used to take four days, and then the process stops, on
+> purpose, and waits for a person. Then comes the moment that decides whether you believe me:
+> the numbers it could only know by reading the real ledger. It will wait as long as it takes.
 
 ---
 
@@ -165,12 +165,12 @@ The footer line runs full width beneath the table in a smaller weight.
 
 **SAY**
 
-> I will not dress up the state. Ten composed runs across six live purchase orders on both
-> gate branches, evals twelve of twelve with model-validated ground truth, and on the eve of
-> this presentation the enriched twin began sending its own notifications: a Teams card and
-> Slack message on approve, a full Teams, Gmail, and Slack sweep on escalate, and a ten-minute
-> SLA timer that fired unattended, twice. Write-back is held by design, and the auto-clear
-> branch is parked behind a filed platform defect with the conservative path as the default.
+> I will not dress up the state. Ten completed runs across six live purchase orders, both
+> endings. Twelve graded tests, all passing, checked by an independent second model. And as
+> of last night the process reports its own outcomes: it tells the team in Teams and Slack
+> when it finishes, adds email when it escalates, and if nobody answers within ten minutes it
+> escalates itself. It cannot spend money alone, and when anything is uncertain it goes to a
+> person by default. Every claim on this table has a record behind it.
 > And the agents, the BPMN, and the cockpit were built with Claude Code: when composition failed
 > for two days, the coding agent diagnosed the platform defect, and the commit trail ships
 > with the submission.
@@ -197,13 +197,13 @@ type on the slide.
 
 **SAY**
 
-> Two enterprises, one pattern: a refiner whose manual back office, the one this exception
-> lives in, runs to millions a year, and a UK adventure travel group whose two hundred supplier
-> invoices a week would flow through exactly this gate; the pilot is funded and proven live on
-> a real S/4HANA cloud tenant. On those volumes the model, with its assumptions stated,
-> reclaims roughly five and a half analyst-hours a week, with a person still holding the pen. The industry spent this month arguing who owns the
-> model. The back-office question is who owns the decision, and here the answer is always a
-> person. AI is the new RPA, and it needs the same discipline RPA got. Thank you.
+> Two businesses, one pattern. A refiner whose manual back office runs to millions a year,
+> where one exception costs five desks and four days. And a UK adventure travel group with
+> two hundred supplier invoices a week that would flow through exactly this gate; that pilot
+> is funded and proven live. On those volumes this returns roughly five and a half analyst
+> hours a week, modeled and labeled as such, with a person still holding the pen. And there
+> are one hundred and eighty-six more cards on that map. Boring is a feature. Boring is what
+> auditors sign. AI is the new RPA, and it needs the same discipline RPA got. Thank you.
 
 ---
 
