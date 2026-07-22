@@ -275,3 +275,61 @@ Measured band.
 - **Vocabulary lock.** Live S/4HANA cloud tenant, never production ERP. HELD, never broken.
   Auto-clear is designed, parked, conservative by default. No customer name ever leaves your
   mouth. Never name the supplier-invoice-PO-receipt check by its industry phrase.
+
+
+---
+
+## THE JURY LAYER (for whoever builds and delivers this deck)
+
+Two judges, both UiPath product VPs. Every slide above serves one of them; this section
+says how. Blend nothing new into the slides; this is the delivery lens.
+
+### Judge 1: agent governance, evaluations, orchestration
+
+His public record, repeatedly: agents are non-deterministic and that is a liability where
+money and compliance live; even humans are constrained inside workflows; agents are
+defined by evaluations, not demos; sometimes determinism is good. This deck is his
+worldview staged. The sentences that must reach him, and where they live:
+- "Rules decide most cases in a second; the agents only reason where the rules run out"
+  (slide 3 and 4 SAY): his determinism position, returned as a running system.
+- "Twelve graded tests, all passing, checked by an independent second model" (slide 6
+  SAY): say it UNPROMPTED; evaluations-before-demos is his signature bar.
+- "One person holds the only pen" (slides 3, 4, 7): his multi-eye protocol in one line.
+- The closer "Deterministic AI is the new RPA" (slide 7): his company thesis said back
+  with evidence.
+Danger words near him: fully autonomous, the agent decides, agent-to-agent orchestration.
+
+### Judge 2: testing, quality, edge cases
+
+His creed: certainty is the closing of the testing mind; the enemy is confidence without
+evidence; quality signal over volume. He asks HOW YOU KNOW. His sentences:
+- "Tested, not asserted" and the triad "Not a policy it follows. Not a promise we typed.
+  The ability does not exist" (slide 6 SAY).
+- "When anything is uncertain, it goes to a person by default" (slide 6): risk-based
+  posture as architecture.
+- His home surface holds our work: a Test Manager project with all twelve cases in a set
+  named 12/12 passing. Mention it exists; let him open it.
+- The sixteen filed platform findings are the tester's mindset he evangelizes; the one
+  about failures that bypass safety nets is a sentence he will repeat to his own team.
+Danger words near him: it works, full coverage, any certainty without a record.
+
+### Both together
+
+They are product VPs. The findings, the API spelunking, the walked service boundaries
+are free product research handed to the owners of those products. The first-time-builder
+line on slide 6 ("a first-time builder plus a coding agent went from nothing to a
+funded-pilot-grade proof; that is your product working") validates their company's
+biggest current bet to its own executives. No rival slide can do that.
+
+### The zeitgeist pivot (hold for Q&A or the close)
+
+The discourse this month celebrates the self-driving company. Complete it, do not fight
+it: "The self-driving company is real, and where the work is money in a system of
+record, it still pulls over at the gate." Tie to the platform: the self-driving company
+needs roads, signs, and traffic law: gates, rulebooks, audit. That is what this platform
+has been building since the RPA era; this project is the proof their thesis runs.
+
+### The safe home base under any pressure
+
+A real ledger. A person with the only pen. A record for everything. Any hard question
+routes to one of those three, then stops talking.
