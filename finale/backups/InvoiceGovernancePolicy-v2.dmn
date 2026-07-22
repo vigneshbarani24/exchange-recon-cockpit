@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/"
+             id="InvoiceGovernancePolicyV2Defs"
+             name="InvoiceGovernancePolicy"
+             namespace="http://kaartech.com/exchange-recon/policies">
+  <decision id="Decision_InvoiceGovernance" name="InvoiceGovernancePolicy">
+    <description>Owned by Finance. The policy family for P2P invoice-to-PO reconciliation,
+version 2: adds the approved-vendor gate and the quality hold to the original tolerance
+columns. Price tolerance 2.0%, quantity tolerance 1 unit, four-eyes threshold GBP 25,000.
+The reconciliation flow does not change when this table grows; finance adds columns and
+rules here, versioned, with no deployment.</description>
+    <decisionTable id="DecisionTable_InvoiceGovernance" hitPolicy="FIRST">
+      <input id="Input_VendorApproved" label="vendor_approved">
+        <inputExpression id="InputExpr_VendorApproved" typeRef="boolean">
+          <text>vendor_approved</text>
+        </inputExpression>
+      </input>
+      <input id="Input_QualityHold" label="quality_hold">
+        <inputExpression id="InputExpr_QualityHold" typeRef="boolean">
+          <text>quality_hold</text>
+        </inputExpression>
+      </input>
+      <input id="Input_PriceVariancePct" label="price_variance_pct">
+        <inputExpression id="InputExpr_PriceVariancePct" typeRef="number">
+          <text>price_variance_pct</text>
+        </inputExpression>
+      </input>
+      <input id="Input_QtyVarianceUnits" label="qty_variance_units">
+        <inputExpression id="InputExpr_QtyVarianceUnits" typeRef="number">
+          <text>qty_variance_units</text>
+        </inputExpression>
+      </input>
+      <input id="Input_LineValueGbp" label="line_value_gbp">
+        <inputExpression id="InputExpr_LineValueGbp" typeRef="number">
+          <text>line_value_gbp</text>
+        </inputExpression>
+      </input>
+      <output id="Output_Decision" label="decision" name="decision" typeRef="string" />
+      <rule id="Rule_VendorBlock">
+        <description>Supplier is not on the approved vendor list: block and route to
+procurement. No variance math matters until the vendor is approved.</description>
+        <inputEntry id="R1_Vendor"><text>false</text></inputEntry>
+        <inputEntry id="R1_Quality"><text>-</text></inputEntry>
+        <inputEntry id="R1_Price"><text>-</text></inputEntry>
+        <inputEntry id="R1_Qty"><text>-</text></inputEntry>
+        <inputEntry id="R1_Value"><text>-</text></inputEntry>
+        <outputEntry id="R1_Out"><text>"block-unapproved-vendor"</text></outputEntry>
+      </rule>
+      <rule id="Rule_QualityHold">
+        <description>Quality management holds this material: no clearance while the
+hold stands, regardless of price and quantity.</description>
+        <inputEntry id="R2_Vendor"><text>-</text></inputEntry>
+        <inputEntry id="R2_Quality"><text>true</text></inputEntry>
+        <inputEntry id="R2_Price"><text>-</text></inputEntry>
+        <inputEntry id="R2_Qty"><text>-</text></inputEntry>
+        <inputEntry id="R2_Value"><text>-</text></inputEntry>
+        <outputEntry id="R2_Out"><text>"hold-quality-review"</text></outputEntry>
+      </rule>
+      <rule id="Rule_FourEyes">
+        <description>High-value line: four-eyes approval regardless of variance</description>
+        <inputEntry id="R3_Vendor"><text>-</text></inputEntry>
+        <inputEntry id="R3_Quality"><text>-</text></inputEntry>
+        <inputEntry id="R3_Price"><text>-</text></inputEntry>
+        <inputEntry id="R3_Qty"><text>-</text></inputEntry>
+        <inputEntry id="R3_Value"><text>&gt; 25000</text></inputEntry>
+        <outputEntry id="R3_Out"><text>"four-eyes-approval"</text></outputEntry>
+      </rule>
+      <rule id="Rule_PriceBreach">
+        <description>Price variance outside tolerance: human review with evidence</description>
+        <inputEntry id="R4_Vendor"><text>-</text></inputEntry>
+        <inputEntry id="R4_Quality"><text>-</text></inputEntry>
+        <inputEntry id="R4_Price"><text>&gt; 2</text></inputEntry>
+        <inputEntry id="R4_Qty"><text>-</text></inputEntry>
+        <inputEntry id="R4_Value"><text>-</text></inputEntry>
+        <outputEntry id="R4_Out"><text>"human-review"</text></outputEntry>
+      </rule>
+      <rule id="Rule_QtyBreach">
+        <description>Quantity variance outside tolerance: human review with evidence</description>
+        <inputEntry id="R5_Vendor"><text>-</text></inputEntry>
+        <inputEntry id="R5_Quality"><text>-</text></inputEntry>
+        <inputEntry id="R5_Price"><text>-</text></inputEntry>
+        <inputEntry id="R5_Qty"><text>&gt; 1</text></inputEntry>
+        <inputEntry id="R5_Value"><text>-</text></inputEntry>
+        <outputEntry id="R5_Out"><text>"human-review"</text></outputEntry>
+      </rule>
+      <rule id="Rule_AutoClear">
+        <description>Approved vendor, no quality hold, within all tolerances:
+auto-clear, zero human touch.</description>
+        <inputEntry id="R6_Vendor"><text>true</text></inputEntry>
+        <inputEntry id="R6_Quality"><text>false</text></inputEntry>
+        <inputEntry id="R6_Price"><text>&lt;= 2</text></inputEntry>
+        <inputEntry id="R6_Qty"><text>&lt;= 1</text></inputEntry>
+        <inputEntry id="R6_Value"><text>&lt;= 25000</text></inputEntry>
+        <outputEntry id="R6_Out"><text>"auto-clear"</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="Diagram_InvoiceGovernance">
+      <dmndi:DMNShape id="Shape_DecisionV2" dmnElementRef="Decision_InvoiceGovernance">
+        <dc:Bounds x="160" y="100" width="220" height="80" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

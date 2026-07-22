@@ -151,11 +151,12 @@ approval beat, so the eye lands on the wait.
 > | Live SAP reads | **LIVE** | real tenant, runtime |
 > | Evals 12/12 | **LIVE** | ground truth model-validated |
 > | Human gate | **LIVE** | suspended and resumed on demand; 20s to 6min pauses observed, durable by design |
-> | SLA timer on the human gate | **LIVE** | armed and correctly cancelled on the winning branch (enriched twin 1.0.7, green tonight) |
+> | Flow-sent notifications | **LIVE** | Teams card + Slack on approve; Teams + Gmail + Slack on escalate (twin 1.0.16, traces committed) |
+> | SLA timer on the human gate | **LIVE** | fired unattended twice; escalated on its own, then notified |
 > | Auto-clear branch | **PARKED** | platform defect filed, conservative-by-default routing |
 > | SAP write-back | **HELD** | by design, armed not fired |
-> | Action Center / Teams approval | **ROADMAP** | service not provisioned on hackathon tenant; message gate by entitlement, not by omission |
-> | NEXT elements | **ROADMAP** | native review task · policy task in-flow · Test Cloud regression · dunning + cash application on the same spine |
+> | Action Center | **ENABLED** | service turned on at Admin level on finale eve; task creation via an Action App is the next artifact |
+> | NEXT elements | **ROADMAP** | Action App review task · Slack button approvals · Test Cloud regression · dunning + cash application on the same spine |
 >
 > Footer: Agents, BPMN, and cockpit built with Claude Code through UiPath for Coding Agents. When composition failed for two days, the coding agent diagnosed the platform defect. Commit trail ships with the submission (say "public" only once the repo flip is confirmed).
 
@@ -164,12 +165,12 @@ The footer line runs full width beneath the table in a smaller weight.
 
 **SAY**
 
-> I will not dress up the state. Ten composed runs completed across six live purchase orders on
-> both gate branches, evals twelve of twelve with model-validated ground truth, and tonight the
-> enriched twin ran green with a three-branch gate whose SLA timer armed and then cancelled
-> cleanly when approve won. Write-back is held by design, the auto-clear branch is parked behind
-> a filed platform defect with the conservative path as the default, and Action Center is simply
-> not provisioned on this tenant, so the message gate is an entitlement boundary, not a shortcut.
+> I will not dress up the state. Ten composed runs across six live purchase orders on both
+> gate branches, evals twelve of twelve with model-validated ground truth, and on the eve of
+> this presentation the enriched twin began sending its own notifications: a Teams card and
+> Slack message on approve, a full Teams, Gmail, and Slack sweep on escalate, and a ten-minute
+> SLA timer that fired unattended, twice. Write-back is held by design, and the auto-clear
+> branch is parked behind a filed platform defect with the conservative path as the default.
 > And the agents, the BPMN, and the cockpit were built with Claude Code: when composition failed
 > for two days, the coding agent diagnosed the platform defect, and the commit trail ships
 > with the submission.

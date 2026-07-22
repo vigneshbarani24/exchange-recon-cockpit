@@ -1,7 +1,6 @@
 # FINALE-CHECKLIST - 2026-07-23
 
-One page to run the day. Facts frozen 2026-07-22 evening. Anything marked `{{...}}` is an
-unresolved smoke outcome: fill it in tonight, never guess it.
+One page to run the day. Facts frozen 2026-07-22 evening. All smoke outcomes are filled with verified results; nothing is pending.
 
 ## Constants (do not re-derive under pressure)
 
@@ -66,13 +65,15 @@ Smokes are IN PROGRESS. Record literal outcomes here when they land, do not gues
 | Escalate path on 1.0.7 | EscalateGate clears, Gmail SendTask fires (owner inbox), Slack SendTask posts to #general, End_Escalated | **GREEN to End_Escalated** (4139bdeb). Connector legs terminated silently in ~1s, NO email/Slack sent; both boundaries caught and routed onward. Legs = DEGRADED-BY-DESIGN, degradation proof count now five. |
 | PT10M timer on the gate | Event_GateTimeout fires after 10 min unattended, escalate path runs, boundary catch-alls swallow any connector failure | **FIRED** (e2b9e3d8). Ten minutes unattended, timer took the escalate path on its own, both message branches terminated, End_Escalated. Trace in finale/maestro/. |
 
-Late rounds (1.0.9 to 1.0.12), final state: notification fan-out deployed on BOTH
-endings (Teams card, Gmail, Slack, each boundary-shielded); two more green completions
-(26194c64, 21230b01); every notification leg still blocked by the undocumented runtime
-carrier (findings 12 to 15 filed, including the policy task rejecting REAL computed
-arguments, instance 21230b01, the best feedback screenshot in the kit). DEMO CLAIMS:
-never say the flow sends Teams/Gmail/Slack today; say the endings close with
-notification hooks armed and governance that no notification failure can block.
+FINAL STATE (1.0.16, canvas round-trip, 2026-07-22 ~18:00 IST): THE FLOW SENDS ITS OWN
+NOTIFICATIONS. Approve ending (6b2ecc38): Teams card + Slack message sent by the flow,
+End_Corrected. Escalate ending (1021b02a): Teams + Gmail + Slack full sweep,
+End_Escalated. Approve-path Gmail task is one field off (boundary covers; compare its
+panel to the escalate one if time permits). SLA timer fired unattended twice. Policy
+task closed as a platform defect with the double-wrap capture (findings 12 to 15).
+DEMO CLAIMS now allowed: "the flow itself notifies Teams, Slack, and Gmail on its
+endings" (twin, both endings, traces in finale/maestro/). Still true and still say it:
+no notification failure can ever block governance.
 
 1.0.8 (adds the policy task) smoke result, corrected after diagnosis: the first attempt
 faulted on MY harness's bad test data (a supplier doc for the wrong PO left matched_lines
@@ -227,7 +228,7 @@ uip maestro bpmn instance message send -f e3945ea1-de36-4504-bf98-dc6503edc87f \
   --inputs '{"name":"EscalateGate","reference":"4500001681","itemData":{"decision":"escalate","note":"Pre-slot smoke, closing out."}}'
 ```
 
-(If {{DEMO-INSTANCE-DECISION}} chose the twin, run this smoke in the twin folder key
+(If the twin was promoted at rehearsal, run this smoke in the twin folder key
 `7ca50286-caae-4746-a228-c293e65bfd83` instead.)
 
 - [ ] Smoke reached a terminal end state, nothing left parked.

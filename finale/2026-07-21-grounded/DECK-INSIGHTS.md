@@ -63,11 +63,10 @@ client is referred to only as "a UK adventure travel group".
 - **ExchangeReconTeamsNotify** (Shared/ExchangeReconTeams, now v1.0.12, see section 14): the
   enriched twin. Proven on v1.0.6: approve path green and boundary error resilience proved
   x3 on the notify leg (a notification outage can never block the gate); DMN policy
-  InvoiceTolerancePolicy linked to the folder. Correction on the Teams card: the flow has
-  never successfully delivered one (the notify task fails on the undocumented runtime
-  carrier, findings 3 and 12); the card that demos is sent by the ops script and is
-  labeled as such. v1.0.7 through v1.0.12 add the timer, both-ending notification fan-out,
-  and policy task rows tracked in section 14.
+  InvoiceTolerancePolicy linked to the folder. SUPERSEDED on finale eve: after the canvas
+  round-trip, v1.0.16 sends its own notifications live on both endings. Section 15 is the
+  current truth for every notification and timer row; sections 14 and 15 together tell the
+  journey.
 - The line: "the roadmap is not a slide either. It is already deployed, in its own folder."
 
 ## 8. The thesis (Card A)
