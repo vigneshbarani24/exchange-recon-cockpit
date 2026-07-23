@@ -87,6 +87,18 @@ uip maestro bpmn instance message send -f e3945ea1-de36-4504-bf98-dc6503edc87f -
 
 Twin folder (notifications fire here): same commands with `-f 7ca50286-caae-4746-a228-c293e65bfd83`.
 
+SHELL RULE (learned the hard way on finale morning): the single-quote form above works
+ONLY in Git Bash. In cmd.exe, single quotes are literal and the JSON arrives stripped
+("Failed to parse inputs as JSON"). cmd-safe form, escaped double quotes:
+
+```
+uip maestro bpmn instance message send -f 7ca50286-caae-4746-a228-c293e65bfd83 --inputs "{\"name\":\"ApproveGate\",\"reference\":\"4500000021\",\"itemData\":{\"decision\":\"approve\",\"note\":\"Accept the proposed correction.\"}}"
+```
+
+Never fire a gate message unless the instance is suspended at the gate for that PO.
+CLI auto-update check is disabled for the day (uip config set autoVersionSync false);
+if the update banner ever reappears, ignore it: a failed update changes nothing.
+
 Or the cockpit Live tab: Human gate panel, PO field, Approve / Escalate buttons
 (browser PKCE click still untested; verify once before trusting it on stage).
 
