@@ -135,6 +135,14 @@ set the bar. Counter the early-slot calibration penalty with concreteness in the
 30 seconds (the cold open + run started at 0:20 already does this) and land the close
 verbatim: first impressions calibrate everyone who follows. Tenant must be clean and
 the instance list empty of parked gates by 15:30 CET.
+Slot-1 extras: join 15 min early for audio/share check (the opener gets the host's
+full attention). Say the four vocabulary seeds so every later pitch is measured by
+them: "the real ledger, not synthetic data" · "measured versus modeled, labeled" ·
+"it stopped, on purpose" · "the flow told the team itself". Last ten seconds: "it is
+all in the public repo, with the run traces" (flip the repo BEFORE 16:10 so this is
+true). Deliberation is ~110 minutes after we finish: the quotable and the close are
+the memory hooks, do not pad the deck to compensate. After presenting: mute, watch
+all ten, note what the judges probe.
 
 Twin gate messages (only difference from canvas is the folder key):
 
