@@ -96,6 +96,10 @@ uip maestro bpmn instance message send -f 7ca50286-caae-4746-a228-c293e65bfd83 -
 ```
 
 Never fire a gate message unless the instance is suspended at the gate for that PO.
+Escalate uses message name EscalateGate: the gateway routes on the NAME, so
+ApproveGate with an escalate note still approves. And the iron rule again, because it
+nearly happened on finale day: 0021's invoice text is Packaging Box + RM16, 1668's is
+Laptop lines. Crossing them faults the run (finding #11, the class boundaries miss).
 CLI auto-update check is disabled for the day (uip config set autoVersionSync false);
 if the update banner ever reappears, ignore it: a failed update changes nothing.
 
