@@ -7,15 +7,21 @@ One page to run the day. Facts frozen 2026-07-22 evening. All smoke outcomes are
 
 - [ ] **RSVP NOW** via the link in Andreea's email ("confirm your attendance in the event
       here"). The one hard action in the email. Do it before anything else.
-- [ ] Format confirmed: 5 minutes presentation + demo, 3 minutes jury Q&A, YOU share the
-      screen with the PPT. "Stick with the allocated time" is explicit: our script lands
-      at 4:50 with a held buffer; rehearse to that.
-      NOTE from last year's winner deck: the 2025 finale ran 3 min presentation + 4 min
-      demo + 3 Q&A (7 total). This year's email says 5. The email wins; but if the host
-      says seven on the day, expand the DEMO segment only (let the run breathe, show the
-      Teams and Slack messages arriving), never add slides.
-- [ ] The deck must be on the attached template: DONE, the built PPT sits on exactly that
-      template (Downloads: AgentHack 2026 Finale - Exchange Recon (VB).pptx).
+- [ ] Format CONFIRMED by the presentation guidelines: 5 minutes to demo + 3 minutes
+      Q&A (the 3+4 question from last year's winner deck is closed). Script lands at
+      4:50 with a held buffer; rehearse to that. Max 2 presenters (solo: fine); other
+      attendees muted, supporters can post in chat.
+- [ ] Guidelines say the judges HAVE ALREADY SEEN the project links and videos. Do not
+      re-introduce from zero: cold open stays (20 seconds), run starts at 0:20; if a
+      rehearsal runs long, compress the me-slide first, never the demo or the stop.
+- [ ] Deck rule verbatim: "use the same PowerPoint template you submitted previously
+      (updates/improvements are welcome)". VERIFIED compliant: the June-submitted deck
+      (Exchange Recon Cockpit - Vignesh Barani Sivakumar.pptx) and the rebuilt finale
+      deck share the identical template (same 13.32x7.50 canvas, same 22 layouts, same
+      theme palette). PRESENT THE REBUILT DECK (Downloads: AgentHack 2026 Finale -
+      Exchange Recon (VB).pptx). The Claude-design lookalike is non-compliant with this
+      rule and never goes on screen.
+- [ ] Live demo required, backup video handy "just in case": unchanged, video still P0.
 - [ ] Community Favorite mechanics (corrected): it is DEVPOST LIKES on the project in the
       gallery, top 3 win $500, voting open until July 30. Post on social, tag UiPath
       Community, link the Devpost page. This continues AFTER the finale; do not spend
