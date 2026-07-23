@@ -62,6 +62,7 @@ SHOW: dark slide. "It did four days of work in under three minutes." / "Now it w
 wait forever for one person." / "Both are the point."
 SAY: the beat-3 words from STORY-FINAL, slowly, over the suspended instance. Then the
 proof-of-live moment: the PO-side numbers it could only know by reading the real ledger.
+If it needs one more sentence: "The speed is the agents. The stop is the governance."
 
 ### 7 · PROOF [Technical Execution, Completeness]
 SHOW: seven-row status table (governed run 2:56 LIVE; exceptions, failures, edge cases
@@ -145,3 +146,5 @@ narration, never the demo, never the stop.
   bookkeeping, not our target; our card is the invoice gate."
 - The safe home base under pressure: a real ledger, a person with the only pen, a
   record for everything.
+- The adoption answer, one breath: "The process shape survives. The actor flips. Same
+  case, same systems, nothing replatformed."
