@@ -1,4 +1,4 @@
-# STORY-FINAL: we build the boring agents
+# STORY-FINAL: the new wave, deterministic exception-handling agents
 
 The finale story, business only. This file supersedes STORYCRAFT Part B as the spoken
 spine; STORYCRAFT Part A remains the technique reference. Choreography and timings are
@@ -13,12 +13,14 @@ parked with the conservative default, "live S/4HANA cloud tenant" never "product
 
 ## The line
 
-> **We build the boring agents.**
-> The deterministic back-office work people were hired to do and hated every minute of,
-> done by agents you can audit, with a person keeping the only pen.
+> **We build the new wave: deterministic exception-handling agents.**
+> RPA automated the transactions. The exceptions stayed human: the checking, matching,
+> chasing work people were hired to do and hated every minute of. These agents take the
+> exceptions, you can audit every step, and a person keeps the only pen.
 
 This is not a one-off use case. Reconciliation is agent number one of a family, and the
-map on slide two shows the other cards.
+map on slide two shows the other cards. The industry itself turned this year: autonomy
+without structure creates slop. This is what structure looks like.
 
 ## The Take (the close, land it word for word)
 
@@ -53,9 +55,10 @@ Screen: start the run at 0:20 and say so. Slide 2 (the map), then slide 3 or 4.
 > with one purchase order, it crosses five desks and takes four days, and nobody involved
 > would call it a good use of their week.
 >
-> So this is not a one-off use case. We build the boring agents: agents for exactly that
-> work, and nothing else. They do not chat, they do not improvise, they do not touch
-> money. Each one reads the real system, does the checking a person used to do, writes up
+> The first wave, RPA, automated the transactions and left the exceptions to people. The
+> second wave promised autonomous agents and mostly delivered noise. We build the new
+> wave: deterministic exception-handling agents, for exactly that leftover work and
+> nothing else. They do not chat, they do not improvise, they do not touch money. Each one reads the real system, does the checking a person used to do, writes up
 > its evidence, and stops. The rules that can be written down decide most cases in a
 > second. The agents only reason where the rules run out. And one person, at the top,
 > holds the only pen that can commit anything.

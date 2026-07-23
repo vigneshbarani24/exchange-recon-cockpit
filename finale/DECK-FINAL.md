@@ -21,8 +21,8 @@ dash. The no-em-dash rule wins, so the title uses a colon instead.
 
 **SHOW**
 
-> # Exchange Recon: we build the boring agents.
-> ### The back-office work people hated, done by agents you can audit.
+> # Exchange Recon: the new wave.
+> ### Deterministic exception-handling agents, for the work RPA left behind.
 >
 > `Maestro BPMN · 3 coded agents · live SAP S/4HANA over MCP · human gate · evidence bucket`
 
@@ -83,7 +83,7 @@ words. The verbs are the design.
 
 **SAY**
 
-> We build the boring agents, and every one of them does three things. It reads the real
+> We build deterministic exception-handling agents, and every one of them does three things. It reads the real
 > ledger, live, not a copy. It reconciles: rules decide most cases in a second, the agent
 > reasons only where rules run out, and a person keeps the only pen. And it proves itself:
 > graded tests, evidence for every decision, so you never have to take the demo's word for it.
