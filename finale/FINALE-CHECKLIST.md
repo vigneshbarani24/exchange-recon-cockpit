@@ -14,13 +14,16 @@ One page to run the day. Facts frozen 2026-07-22 evening. All smoke outcomes are
 - [ ] Guidelines say the judges HAVE ALREADY SEEN the project links and videos. Do not
       re-introduce from zero: cold open stays (20 seconds), run starts at 0:20; if a
       rehearsal runs long, compress the me-slide first, never the demo or the stop.
-- [ ] Deck rule verbatim: "use the same PowerPoint template you submitted previously
-      (updates/improvements are welcome)". VERIFIED compliant: the June-submitted deck
-      (Exchange Recon Cockpit - Vignesh Barani Sivakumar.pptx) and the rebuilt finale
-      deck share the identical template (same 13.32x7.50 canvas, same 22 layouts, same
-      theme palette). PRESENT THE REBUILT DECK (Downloads: AgentHack 2026 Finale -
-      Exchange Recon (VB).pptx). The Claude-design lookalike is non-compliant with this
-      rule and never goes on screen.
+- [ ] STAGE DECK (VB's call): Downloads/AgentHack 2026 Finale - Exchange Recon Cockpit
+      (v3 STAGE).pptx. Twelve fact fixes applied and scrub-verified CLEAN (no invented
+      stats, no gpt-4o, no URLs, versions true, Law 1 truthful). Known accepted risk:
+      it is a restyled deck, not the submitted template file. If anyone asks, the line
+      is: "restyled for the finale screen; same submission content, and I have it on
+      the template as well."
+      FALLBACK (fully template-compliant, 15 slides, also scrub-clean): Downloads/
+      AgentHack 2026 Finale - Exchange Recon (VB).pptx. Keep both on the machine and
+      the PDF of whichever presents on the second device.
+      Never on screen: the original v3 (uncorrected facts) and v1 (banned phrase).
 - [ ] Live demo required, backup video handy "just in case": unchanged, video still P0.
 - [ ] Community Favorite mechanics (corrected): it is DEVPOST LIKES on the project in the
       gallery, top 3 win $500, voting open until July 30. Post on social, tag UiPath
