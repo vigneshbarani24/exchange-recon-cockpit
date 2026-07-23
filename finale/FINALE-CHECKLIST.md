@@ -14,7 +14,7 @@ One page to run the day. Facts frozen 2026-07-22 evening. All smoke outcomes are
 - [ ] Guidelines say the judges HAVE ALREADY SEEN the project links and videos. Do not
       re-introduce from zero: cold open stays (20 seconds), run starts at 0:20; if a
       rehearsal runs long, compress the me-slide first, never the demo or the stop.
-- [ ] DECK FROZEN 18:26 IST finale day: 15 slides, notes on all 15, scrub CLEAN, PDF regenerated from the frozen file. No further edits.
+- [ ] DECK FROZEN 18:45 IST finale day (one VB-ordered addition after first freeze: the two-year field thesis on S2): 15 slides, notes on all 15, scrub CLEAN, PDF regenerated from the frozen file. No further edits.
       STAGE DECK (VB's call): Downloads/AgentHack 2026 Finale - Exchange Recon Cockpit
       (v3 STAGE).pptx. Seventeen fixes applied and scrub-verified CLEAN (no invented
       stats, no gpt-4o, no URLs, versions true, Law 1 truthful, anonymization leak
