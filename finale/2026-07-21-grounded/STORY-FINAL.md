@@ -172,4 +172,26 @@ narrative earns everything else.
 - Coding agent + trail: CODING-AGENTS.md, commit history ("ships with the submission"
   until the repo flip is confirmed).
 - 200 a week, funded pilot, proven live: QA-BANK adoption answer wording.
-- Five and a half hours: labeled model, arithmetic on deck slide 7.
+- Five and a half hours: labeled model, arithmetic on deck slide 8.
+
+---
+
+## Slide map for the rebuilt deck (finale morning, 2026-07-23)
+
+The beats above are unchanged. The deck was rebuilt to 10 mains + 4 Q&A appendix
+(Downloads: AgentHack 2026 Finale - Exchange Recon (VB).pptx; per-slide SHOW/SAY in
+DECK-FINAL.md). Where a beat says "slide N", read it against this map:
+
+| Beat | Slides on screen |
+|---|---|
+| Beat 1, cold open | S1 title, then the invoice beside the PO |
+| Beat 2, the work everyone hates | S2 me, S3 exception tail, S4 iceberg, S5 what we built (start the run at 0:20) |
+| Beat 3, the stop | the suspended instance, S6 behind it |
+| Beat 4, why finance signs | approve on screen, then S7 proof |
+| Beat 5, the value | S8 outcomes and customers, S9 roadmap |
+| The Take | S10 close, hold to 5:00 |
+
+Old references translate as: "slide 2 (the map)" is now Q&A appendix A4; "slide 3 or 4"
+is now S3; "the status slide" is S7; "slide 7, the value cards" is S8. The Q&A appendix
+(A1 governance, A2 testing, A3 architecture, A4 map) exists only for the 3-minute jury
+Q&A; never present it in the 5 minutes.

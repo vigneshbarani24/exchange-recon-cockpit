@@ -123,10 +123,13 @@ uip maestro bpmn instance message send -f 7ca50286-caae-4746-a228-c293e65bfd83 \
   --inputs '{"name":"EscalateGate","reference":"<PO>","itemData":{"decision":"escalate","note":"Rejected by reviewer."}}'
 ```
 
-### 1.3 Deck paste-up
+### 1.3 Deck: BUILT, no paste-up needed
 
-- [ ] Take `finale/DECK-FINAL.md` (drafted by the deck agent) and paste it onto the official
-      finale template slide by slide. No re-writing during paste-up: wording is locked in the md.
+- [x] The deck is built directly on the official template, finale morning: 10 mains +
+      4 Q&A appendix, iceberg + exception tail + the close, all images scrubbed and
+      embedded (Downloads: AgentHack 2026 Finale - Exchange Recon (VB).pptx; per-slide
+      SHOW/SAY in finale/DECK-FINAL.md; slide map appended to STORY-FINAL).
+- [ ] Open it once in PowerPoint, eyeball all 14 slides, fix nothing unless broken.
 - [ ] Export a PDF copy to the second device (bottom rung of the fallback ladder).
 
 ### 1.4 Test Manager: DONE via API on finale day, zero clicks
