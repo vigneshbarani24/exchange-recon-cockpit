@@ -15,8 +15,9 @@ One page to run the day. Facts frozen 2026-07-22 evening. All smoke outcomes are
       re-introduce from zero: cold open stays (20 seconds), run starts at 0:20; if a
       rehearsal runs long, compress the me-slide first, never the demo or the stop.
 - [ ] STAGE DECK (VB's call): Downloads/AgentHack 2026 Finale - Exchange Recon Cockpit
-      (v3 STAGE).pptx. Twelve fact fixes applied and scrub-verified CLEAN (no invented
-      stats, no gpt-4o, no URLs, versions true, Law 1 truthful). Known accepted risk:
+      (v3 STAGE).pptx. Seventeen fixes applied and scrub-verified CLEAN (no invented
+      stats, no gpt-4o, no URLs, versions true, Law 1 truthful, anonymization leak
+      removed, close moved to last main slide, all 15 slides eyeballed). Known risk:
       it is a restyled deck, not the submitted template file. If anyone asks, the line
       is: "restyled for the finale screen; same submission content, and I have it on
       the template as well."
