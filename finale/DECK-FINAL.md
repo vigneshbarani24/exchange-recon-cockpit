@@ -35,10 +35,11 @@ coding agent, on the platform you are judging."
 SHOW: the de-identified P2P swim-lane map with the manual-load tags (10, 12, 32, 19, 15
 manual; THE EXCEPTION TAIL; 88 pinned plus 20 orbiting = 108). Orange foot line:
 108 recurring manual activities, man-hours bought back, not headcount out.
-SAY (30s): "RPA automated the transaction. It never touched the exception. This is a
-real procure-to-pay flow from a downstream refiner, de-identified. Every copper tag is
-work a person still does by hand: one hundred and eight recurring activities on one
-process. Enterprises do not buy state of the art. They buy those hours back."
+SAY (30s): "RPA automated the transaction, and it did exactly what it was built to do.
+The exceptions were never its job. This is a real procure-to-pay flow from a downstream
+refiner, de-identified. Every copper tag is work a person still does by hand: one
+hundred and eight recurring activities on one process. Enterprises do not buy state of
+the art. They buy those hours back."
 
 ### 4 · WHAT COULD BE: THE ICEBERG [Creativity]
 SHOW: the iceberg. Rules decide below the waterline, agents reason only at it, one
@@ -137,6 +138,10 @@ narration, never the demo, never the stop.
 - Philipp must hear: the rubric's own words back: exceptions, failures, edge cases,
   each with a live proof and one honest PARKED with the defect filed.
 - Danger words, never say: autonomous end-to-end, replaces people, production ERP,
-  the match by document count, customer names.
+  the match by document count, customer names. Never a word against RPA (the room built
+  it; the close honors it, nothing else touches it). Never speak "financial close",
+  "month-end" or "the books": a rival pitches financial close, and we hand them nothing.
+  If a judge points at the close cards on the maps: "that lane is downstream
+  bookkeeping, not our target; our card is the invoice gate."
 - The safe home base under pressure: a real ledger, a person with the only pen, a
   record for everything.

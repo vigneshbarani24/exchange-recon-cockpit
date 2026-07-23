@@ -48,15 +48,16 @@ Screen: start the run at 0:20 and say so. Slide 2 (the map), then slide 3 or 4.
 > it is while it runs.
 >
 > This is a real back-office contract, taken apart task by task: paying suppliers,
-> collecting from customers, keeping the records clean, closing the books. Two hundred and
+> collecting from customers, keeping the records clean. Two hundred and
 > thirty-four tasks. One hundred and eighty-seven of them are the same shape. Checking.
 > Matching. Chasing. Reconciling. The work people were hired to do and hated every minute
 > of. And exactly nine are moments where only a person signs. When one invoice disagrees
 > with one purchase order, it crosses five desks and takes four days, and nobody involved
 > would call it a good use of their week.
 >
-> The first wave, RPA, automated the transactions and left the exceptions to people. The
-> second wave promised autonomous agents and mostly delivered noise. We build the new
+> The first wave, RPA, automated the transactions, and it did exactly what it was built
+> to do. The exceptions were never its job. The second wave promised autonomous agents
+> and mostly delivered noise. We build the new
 > wave: deterministic exception-handling agents, for exactly that leftover work and
 > nothing else. They do not chat, they do not improvise, they do not touch money. Each one reads the real system, does the checking a person used to do, writes up
 > its evidence, and stops. The rules that can be written down decide most cases in a
