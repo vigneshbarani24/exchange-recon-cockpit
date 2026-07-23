@@ -123,10 +123,12 @@ remains the roadmap exhibit, canvas remains the demo.
 **DEMO INSTANCE: VB'S CALL ON FINALE DAY = TWIN 1.0.16** (Shared/ExchangeReconTeams).
 Reason: the twin fires Teams + Slack (+ Gmail on escalate) live from the flow while the
 room watches: that is the cross-platform integration story happening on stage, not
-claimed. Guardrail before committing: ONE green rehearsal run on the twin this morning
-(start, gate, approve via cockpit or CLI, notifications arrive). If that rehearsal is
-not green, DROP TO CANVAS 1.0.6 without discussion (battle-tested ten times, gate waits
-indefinitely) and the cross-platform proof moves to the trace + screenshots in Q&A.
+claimed. GUARDRAIL SATISFIED, finale day 10:49 UTC: rehearsal instance 6bdd7653 GREEN
+end to end (V1 input, cmd approve, Teams + Slack sent by the flow, Gmail leg degraded
+and its boundary held, End_Corrected in 3:38). Timing learned: gate arms ~1:50 after
+start; approve by ~3:10 of the talk so the notifications land before the close.
+Fallback unchanged if anything smells wrong at showtime: CANVAS 1.0.6, gate waits
+indefinitely, cross-platform proof moves to traces in Q&A.
 Twin timing law: the gate self-escalates at 10 minutes, so the approve beat must land
 within ~7 minutes of the gate arming; never pre-start the twin instance. Have Teams and
 Slack windows ready behind the share for the after-the-stop reveal.
