@@ -54,6 +54,28 @@ human authority, never away from it.
 Five identical PO lines, two invoice lines: this is where match_basis and
 match_confidence earn their keep. Q&A ammunition, not the main demo.
 
+## Room-pick candidates (live-swept from the tenant on finale morning)
+
+Verified over MCP, read-only. Clean single-line GBP POs, safe for "any PO you name":
+- 4500001666: RM023 Temperature Sensor · 10 PC @ 48.50 GBP
+- 4500001665: 1740 Electric Motor 620W · 1 PC @ 50.00 GBP
+- 4500001664: 1891 Laptop Computer · 20 PAC @ 2000.00 GBP (10% variance = 4,000 GBP exposure)
+- 4500001663: 1978 Perfume · 2 L @ 10.00 GBP
+AVOID on stage: 4500001680 / 4500001679 (EUR docs, currency mismatch untested), any
+decimal-quantity AU-unit rows.
+
+Recipe for an unseen PO: run the lookup, then compose the invoice as "Supplier invoice
+INV-9xxxx, ref PO <n>, GBP. Line 1: Material <code> (<text>) <qty> <unit> at
+<price x 1.1> per ea." Price +10 percent is always a clean out-of-tolerance story.
+
+```json
+{"purchaseOrder":"4500001666","supplierDocument":"Supplier invoice INV-90520, ref PO 4500001666, GBP. Line 1: Material RM023 (Temperature Sensor) 10 PC at 53.35 per ea."}
+```
+
+```json
+{"purchaseOrder":"4500001664","supplierDocument":"Supplier invoice INV-90522, ref PO 4500001664, GBP. Line 1: Material 1891 (Laptop Computer) 20 PAC at 2200.00 per ea."}
+```
+
 ## Gate decisions (after the instance suspends)
 
 Canvas folder:
