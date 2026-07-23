@@ -10,6 +10,10 @@ One page to run the day. Facts frozen 2026-07-22 evening. All smoke outcomes are
 - [ ] Format confirmed: 5 minutes presentation + demo, 3 minutes jury Q&A, YOU share the
       screen with the PPT. "Stick with the allocated time" is explicit: our script lands
       at 4:50 with a held buffer; rehearse to that.
+      NOTE from last year's winner deck: the 2025 finale ran 3 min presentation + 4 min
+      demo + 3 Q&A (7 total). This year's email says 5. The email wins; but if the host
+      says seven on the day, expand the DEMO segment only (let the run breathe, show the
+      Teams and Slack messages arriving), never add slides.
 - [ ] The deck must be on the attached template: DONE, the built PPT sits on exactly that
       template (Downloads: AgentHack 2026 Finale - Exchange Recon (VB).pptx).
 - [ ] Community Favorite mechanics (corrected): it is DEVPOST LIKES on the project in the
