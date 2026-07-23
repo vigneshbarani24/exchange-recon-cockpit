@@ -120,12 +120,21 @@ the boundary, filed as finding #11). Rerun with paired data: **1.0.8 GREEN end t
 gate, approve won, posting-prep completed, End_Corrected. The twin has its green; it
 remains the roadmap exhibit, canvas remains the demo.
 
-**DEMO INSTANCE FOR TOMORROW: RECOMMENDED = CANVAS 1.0.6** (battle-tested ten times, DUMP
-choreography unchanged, gate waits indefinitely). The twin 1.0.8 is the roadmap-live
-exhibit: show the timer-fired trace and the three-branch gate as a 20-second beat or in
-Q&A. VB may override to twin at rehearsal ONLY if both rehearsal runs on the twin go green;
-if the twin demos, the gate self-escalates at 10 minutes, so the approve beat must land
-within ~7 minutes of the gate arming, and the STORYCRAFT beat-3 twin variant line applies.
+**DEMO INSTANCE: VB'S CALL ON FINALE DAY = TWIN 1.0.16** (Shared/ExchangeReconTeams).
+Reason: the twin fires Teams + Slack (+ Gmail on escalate) live from the flow while the
+room watches: that is the cross-platform integration story happening on stage, not
+claimed. Guardrail before committing: ONE green rehearsal run on the twin this morning
+(start, gate, approve via cockpit or CLI, notifications arrive). If that rehearsal is
+not green, DROP TO CANVAS 1.0.6 without discussion (battle-tested ten times, gate waits
+indefinitely) and the cross-platform proof moves to the trace + screenshots in Q&A.
+Twin timing law: the gate self-escalates at 10 minutes, so the approve beat must land
+within ~7 minutes of the gate arming; never pre-start the twin instance. Have Teams and
+Slack windows ready behind the share for the after-the-stop reveal.
+SLOT 1 (16:10 CET / 19:40 IST / 10:10 ET, presenting FIRST): judges have no anchor, we
+set the bar. Counter the early-slot calibration penalty with concreteness in the first
+30 seconds (the cold open + run started at 0:20 already does this) and land the close
+verbatim: first impressions calibrate everyone who follows. Tenant must be clean and
+the instance list empty of parked gates by 15:30 CET.
 
 Twin gate messages (only difference from canvas is the folder key):
 
