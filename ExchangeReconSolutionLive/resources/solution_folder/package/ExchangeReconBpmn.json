@@ -1,0 +1,23 @@
+{
+  "docVersion": "1.0.0",
+  "resource": {
+    "name": "ExchangeReconBpmn",
+    "kind": "package",
+    "apiVersion": "orchestrator.uipath.com/v1",
+    "projectKey": "c0590423-bb99-46c5-aa7d-fbd17cad5e6a",
+    "isOverridable": true,
+    "dependencies": [],
+    "runtimeDependencies": [],
+    "folders": [
+      {
+        "fullyQualifiedName": "solution_folder"
+      }
+    ],
+    "spec": {
+      "name": "ExchangeReconBpmn"
+    },
+    "locks": [],
+    "key": "9c18043a-17b3-47dc-b952-ee69f4342902",
+    "files": []
+  }
+}

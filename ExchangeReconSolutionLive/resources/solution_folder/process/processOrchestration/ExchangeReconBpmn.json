@@ -1,0 +1,94 @@
+{
+  "docVersion": "1.0.0",
+  "resource": {
+    "name": "ExchangeReconBpmn",
+    "kind": "process",
+    "type": "processOrchestration",
+    "apiVersion": "orchestrator.uipath.com/v1",
+    "projectKey": "c0590423-bb99-46c5-aa7d-fbd17cad5e6a",
+    "isOverridable": true,
+    "dependencies": [
+      {
+        "kind": "package",
+        "name": "ExchangeReconBpmn"
+      }
+    ],
+    "runtimeDependencies": [
+      {
+        "bindingType": "process",
+        "bindingValues": {},
+        "bindingMetadata": {
+          "bindingsVersion": "v1",
+          "solutionsSupport": "Required"
+        },
+        "resourceKind": "Process"
+      },
+      {
+        "bindingType": "process",
+        "bindingValues": {},
+        "bindingMetadata": {
+          "bindingsVersion": "v1",
+          "solutionsSupport": "Required"
+        },
+        "resourceKind": "Process"
+      },
+      {
+        "bindingType": "process",
+        "bindingValues": {},
+        "bindingMetadata": {
+          "bindingsVersion": "v1",
+          "solutionsSupport": "Required"
+        },
+        "resourceKind": "Process"
+      },
+      {
+        "bindingType": "process",
+        "bindingValues": {},
+        "bindingMetadata": {
+          "bindingsVersion": "v1",
+          "solutionsSupport": "Required"
+        },
+        "resourceKind": "Process"
+      },
+      {
+        "bindingType": "process",
+        "bindingValues": {},
+        "bindingMetadata": {
+          "bindingsVersion": "v1",
+          "solutionsSupport": "Required"
+        },
+        "resourceKind": "Process"
+      },
+      {
+        "bindingType": "process",
+        "bindingValues": {},
+        "bindingMetadata": {
+          "bindingsVersion": "v1",
+          "solutionsSupport": "Required"
+        },
+        "resourceKind": "Process"
+      }
+    ],
+    "folders": [
+      {
+        "fullyQualifiedName": "solution_folder"
+      }
+    ],
+    "spec": {
+      "type": "ProcessOrchestration",
+      "name": "ExchangeReconBpmn",
+      "package": {
+        "key": "9c18043a-17b3-47dc-b952-ee69f4342902"
+      },
+      "inputArguments": "{}",
+      "targetFrameworkValue": "Portable",
+      "retentionAction": "Delete",
+      "retentionPeriod": 30,
+      "staleRetentionAction": "Delete",
+      "staleRetentionPeriod": 180
+    },
+    "locks": [],
+    "key": "91df36c0-dace-4af3-a5a0-8e265d9f44a0",
+    "files": []
+  }
+}

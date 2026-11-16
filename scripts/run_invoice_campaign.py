@@ -219,12 +219,11 @@ def run_scenario(token: str, release_key: str, scenario: dict) -> dict:
         if not data:
             continue
         statuses = {e["ElementId"]: e["Status"] for e in data.get("ElementExecutions", [])}
-        if (
-            not sent
-            and scenario["decision"]
-            and statuses.get("Event_Approve") == "InProgress"
-        ):
-            send_gate(scenario["decision"], scenario["po"])
+        if not sent and statuses.get("Event_Approve") == "InProgress":
+            decision = scenario["decision"] or "escalate"
+            if not scenario["decision"]:
+                log(f"PO {scenario['po']}: gate armed unexpectedly (auto scenario) - escalating")
+            send_gate(decision, scenario["po"])
             sent = True
         if data.get("Status") in ("Completed", "Faulted", "Cancelled"):
             break
@@ -303,9 +302,9 @@ def main() -> None:
         chosen = [s for s in SCENARIOS if s["id"] in ids]
     token = uip_token()
     release_key = resolve_release(token)
-    log(f"release {release_key}; running {len(chosen)} scenarios in waves of 2")
+    log(f"release {release_key}; running {len(chosen)} scenarios sequentially")
     records = []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
         futures = [pool.submit(run_scenario, token, release_key, s) for s in chosen]
         for f in concurrent.futures.as_completed(futures):
             records.append(f.result())

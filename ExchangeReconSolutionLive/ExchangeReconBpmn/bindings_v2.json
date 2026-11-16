@@ -1,0 +1,101 @@
+{
+  "version": "2.0",
+  "resources": [
+    {
+      "id": "Binding_MatchAgentName",
+      "kind": "process",
+      "resource": "process",
+      "resourceSubType": "Agent",
+      "propertyAttribute": "name",
+      "name": "matching-agent",
+      "resourceKey": "531c73eb-7b26-44a3-8608-143f8cdf5746",
+      "metadata": {
+        "BindingsVersion": "v1",
+        "DisplayLabel": "matching-agent",
+        "SolutionsSupport": "Required",
+        "SubType": "Agent",
+        "PropertyAttribute": "name"
+      }
+    },
+    {
+      "id": "Binding_MatchAgentFolderPath",
+      "kind": "process",
+      "resource": "process",
+      "resourceSubType": "Agent",
+      "propertyAttribute": "folderPath",
+      "name": "matching-agent",
+      "resourceKey": "531c73eb-7b26-44a3-8608-143f8cdf5746",
+      "metadata": {
+        "BindingsVersion": "v1",
+        "DisplayLabel": "matching-agent",
+        "SolutionsSupport": "Required",
+        "SubType": "Agent",
+        "PropertyAttribute": "folderPath"
+      }
+    },
+    {
+      "id": "Binding_VarianceAgentName",
+      "kind": "process",
+      "resource": "process",
+      "resourceSubType": "Agent",
+      "propertyAttribute": "name",
+      "name": "variance-agent",
+      "resourceKey": "3963cb83-fb46-4b0f-9913-7503af04d7e6",
+      "metadata": {
+        "BindingsVersion": "v1",
+        "DisplayLabel": "variance-agent",
+        "SolutionsSupport": "Required",
+        "SubType": "Agent",
+        "PropertyAttribute": "name"
+      }
+    },
+    {
+      "id": "Binding_VarianceAgentFolderPath",
+      "kind": "process",
+      "resource": "process",
+      "resourceSubType": "Agent",
+      "propertyAttribute": "folderPath",
+      "name": "variance-agent",
+      "resourceKey": "3963cb83-fb46-4b0f-9913-7503af04d7e6",
+      "metadata": {
+        "BindingsVersion": "v1",
+        "DisplayLabel": "variance-agent",
+        "SolutionsSupport": "Required",
+        "SubType": "Agent",
+        "PropertyAttribute": "folderPath"
+      }
+    },
+    {
+      "id": "Binding_PostingPrepAgentName",
+      "kind": "process",
+      "resource": "process",
+      "resourceSubType": "Agent",
+      "propertyAttribute": "name",
+      "name": "posting-prep-agent",
+      "resourceKey": "13818f2e-f7f3-4de4-9448-095c56ad5441",
+      "metadata": {
+        "BindingsVersion": "v1",
+        "DisplayLabel": "posting-prep-agent",
+        "SolutionsSupport": "Required",
+        "SubType": "Agent",
+        "PropertyAttribute": "name"
+      }
+    },
+    {
+      "id": "Binding_PostingPrepAgentFolderPath",
+      "kind": "process",
+      "resource": "process",
+      "resourceSubType": "Agent",
+      "propertyAttribute": "folderPath",
+      "name": "posting-prep-agent",
+      "resourceKey": "13818f2e-f7f3-4de4-9448-095c56ad5441",
+      "metadata": {
+        "BindingsVersion": "v1",
+        "DisplayLabel": "posting-prep-agent",
+        "SolutionsSupport": "Required",
+        "SubType": "Agent",
+        "PropertyAttribute": "folderPath"
+      }
+    }
+  ]
+}

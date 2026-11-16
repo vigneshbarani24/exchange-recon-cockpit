@@ -7,6 +7,7 @@ instance parked at a gate (twin self-escalates at 10 minutes; canvas waits forev
 always finish what you start there).
 
 Verified PO contents these are built on:
+
 - 4500000021: item 10 = RM27 (Packaging Box) 50 PC at 25.00 GBP; item 20 = RM16 5 PC at 2.00 GBP
 - 4500001668: items 10-50 = Laptop Computer, 1 PAC at 2000.00 GBP each
 
@@ -57,15 +58,16 @@ match_confidence earn their keep. Q&A ammunition, not the main demo.
 ## Room-pick candidates (live-swept from the tenant on finale morning)
 
 Verified over MCP, read-only. Clean single-line GBP POs, safe for "any PO you name":
+
 - 4500001666: RM023 Temperature Sensor · 10 PC @ 48.50 GBP
 - 4500001665: 1740 Electric Motor 620W · 1 PC @ 50.00 GBP
 - 4500001664: 1891 Laptop Computer · 20 PAC @ 2000.00 GBP (10% variance = 4,000 GBP exposure)
 - 4500001663: 1978 Perfume · 2 L @ 10.00 GBP
-AVOID on stage: 4500001680 / 4500001679 (EUR docs, currency mismatch untested), any
-decimal-quantity AU-unit rows.
+  AVOID on stage: 4500001680 / 4500001679 (EUR docs, currency mismatch untested), any
+  decimal-quantity AU-unit rows.
 
 Recipe for an unseen PO: run the lookup, then compose the invoice as "Supplier invoice
-INV-9xxxx, ref PO <n>, GBP. Line 1: Material <code> (<text>) <qty> <unit> at
+INV-9xxxx, ref PO <n></n>, GBP. Line 1: Material <code></code> (<text></text>) <qty></qty> <unit></unit> at
 <price x 1.1> per ea." Price +10 percent is always a clean out-of-tolerance story.
 
 ```json
@@ -96,15 +98,6 @@ uip maestro bpmn instance message send -f 7ca50286-caae-4746-a228-c293e65bfd83 -
 ```
 
 Never fire a gate message unless the instance is suspended at the gate for that PO.
-Escalate uses message name EscalateGate: the gateway routes on the NAME, so
-ApproveGate with an escalate note still approves. And the iron rule again, because it
-nearly happened on finale day: 0021's invoice text is Packaging Box + RM16, 1668's is
-Laptop lines. Crossing them faults the run (finding #11, the class boundaries miss).
-Proven live at 10:40 UTC on instance 633f18bc: ApproveGate name won the gate despite an
-escalate note, and the crossed input killed posting-prep at input evaluation.
-STALE MESSAGE WARNING: a message sent with no instance at the gate may linger. An extra
-ApproveGate for 4500001668 is loose on the tenant; if a later 1668 run clears its gate
-instantly, that is why. STAGE RUNS USE 4500000021. Keep 1668 for Q&A talk only today.
 CLI auto-update check is disabled for the day (uip config set autoVersionSync false);
 if the update banner ever reappears, ignore it: a failed update changes nothing.
 

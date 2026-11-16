@@ -1,0 +1,28 @@
+{
+  "resources": [
+    {
+      "kind": "process",
+      "name": "ExchangeReconBpmn",
+      "resourceKey": "91df36c0-dace-4af3-a5a0-8e265d9f44a0",
+      "folderPaths": [
+        "solution_folder"
+      ],
+      "configuration": {
+        "description": null,
+        "packageName": null,
+        "inputArguments": "{}",
+        "hiddenForAttendedUser": false,
+        "alwaysRunning": false,
+        "autoStartProcess": false,
+        "retentionAction": "Delete",
+        "retentionPeriod": 30,
+        "retentionBucketRef": null,
+        "staleRetentionAction": "Delete",
+        "staleRetentionPeriod": 180,
+        "staleRetentionBucketRef": null,
+        "connections": null,
+        "tags": []
+      }
+    }
+  ]
+}
